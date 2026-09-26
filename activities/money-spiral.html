@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Money Spiral Activity</title><style>
+:root{--ink:#17243a;--green:#315f51;--gold:#b18a42;--paper:#fbfaf6;--muted:#657184;--line:#e7e0d4;--red:#8a3d3d}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 Arial,sans-serif}.wrap{width:min(980px,92%);margin:auto}
+nav{padding:18px 0;border-bottom:1px solid var(--line)}nav a{color:var(--ink);text-decoration:none;font-weight:700}header{padding:55px 0 30px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);font-weight:700}
+h1{font:700 clamp(38px,6vw,64px)/1.03 Georgia,serif;margin:8px 0 16px}h2{font:700 30px Georgia,serif}.lead{font-size:20px;color:var(--muted);max-width:780px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px;margin:20px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;font-weight:700;margin-bottom:7px}input,textarea{width:100%;padding:13px;border:1px solid #cfd5dc;border-radius:6px;font:inherit}textarea{min-height:100px}
+button{border:0;border-radius:6px;background:var(--ink);color:#fff;padding:13px 18px;font-weight:700;cursor:pointer}.secondary{background:var(--green)}
+.result{padding:22px;border-radius:8px;margin-top:20px;background:#f4f1e9}.big{font-size:34px;font-weight:800}.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--gold)}
+.spiral{height:210px;position:relative;margin:22px 0;overflow:hidden}.ring{position:absolute;left:50%;transform:translateX(-50%);border:5px solid;border-radius:50%;opacity:.75}
+.upspiral .ring{border-color:var(--green)}.downspiral .ring{border-color:var(--red)}
+.small{font-size:14px;color:var(--muted)}.case{padding:18px;border:1px solid var(--line);border-radius:8px;margin:12px 0;background:#fff}.choices{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.choice{background:#fff;color:var(--ink);border:1px solid var(--ink)}.selected{background:var(--ink);color:#fff}.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.sink{border-top:5px solid var(--red)}.tap{border-top:5px solid var(--green)}
+ul{padding-left:22px}.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#eef1ee;margin:4px;font-size:14px}.footer{padding:30px 0 50px;color:var(--muted);font-size:13px}
+@media(max-width:700px){.grid,.cols{grid-template-columns:1fr}}
+</style></head>
+<body><nav><div class="wrap"><a href="../index.html">← Personal Finance Story</a></div></nav><header><div class="wrap"><div class="eyebrow">Chapter 2 activity</div><h1>Money Spiral</h1>
+<p class="lead">If everything stayed the same in your financial life, which direction would you move? The book uses a simple starting point: <b>Spiral nature = Income − Expenses.</b></p></div></header>
+<main class="wrap">
+<div class="panel"><h2>1. Calculate your monthly spiral</h2><div class="grid"><div><label>Monthly income ($)</label><input id="income" type="number" min="0" step="1" placeholder="e.g. 5000"></div><div><label>Monthly expenses ($)</label><input id="expenses" type="number" min="0" step="1" placeholder="e.g. 4200"></div></div>
+<br><button onclick="calculate()">Calculate my spiral</button><div id="result" class="result"><span class="small">Enter your income and expenses to begin.</span></div><div id="visual" class="spiral"></div></div>
+<div class="panel"><h2>2. Change the equation</h2><p>The book asks you to think of ways to reduce the gap between income and expenses. Add your own ideas below.</p>
+<div class="grid"><div><label>Ways I could increase income</label><textarea id="incIdeas" placeholder="Write your ideas..."></textarea></div><div><label>Ways I could reduce expenses</label><textarea id="expIdeas" placeholder="Write your ideas..."></textarea></div></div></div>
+<div class="panel"><h2>3. Horse and cart check</h2><p>Which order best reflects the idea discussed in the book?</p><div class="choices"><button class="choice" onclick="order(this,false)">Buy now, pay later</button><button class="choice" onclick="order(this,false)">Spend before you earn</button><button class="choice" onclick="order(this,true)">Save up money and buy upfront</button></div><p id="orderMsg"></p></div>
+</main><div class="wrap footer">Educational activity based on <i>Personal Finance Story: From Fighting Affordability to Generational Wealth</i> by Abdullah Mohiuddin. This is not individualized financial advice.</div>
+<script>
+function money(n){return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n)}
+function calculate(){
+ let i=Number(document.getElementById('income').value),e=Number(document.getElementById('expenses').value),d=i-e,r=document.getElementById('result'),v=document.getElementById('visual');
+ if(!Number.isFinite(i)||!Number.isFinite(e))return;
+ let cls=d>0?'up':d<0?'down':'neutral',title=d>0?'UPWARD SPIRAL':d<0?'DOWNWARD SPIRAL':'BALANCED';
+ let text=d>0?'Your income is greater than your expenses.':d<0?'Your expenses are greater than your income.':'Your income and expenses are equal.';
+ r.innerHTML='<div class="big '+cls+'>'+title+'</div><p>'+text+'</p><b>Monthly difference: '+money(d)+'</b><br><span class="small">Annualized difference if nothing changes: '+money(d*12)+'</span>';
+ v.className='spiral '+(d>=0?'upspiral':'downspiral'); v.innerHTML='';
+ for(let x=0;x<6;x++){let q=document.createElement('div');q.className='ring';let s=(d>=0?45+x*25:170-x*25);q.style.width=s+'px';q.style.height=s+'px';q.style.top=(d>=0?145-x*25:10+x*25)+'px';v.appendChild(q)}
+}
+function order(el,ok){document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');document.getElementById('orderMsg').innerHTML=ok?'<b class="up">This matches the order presented in the activity.</b>':'<b class="down">Try again. Think about preparing and saving before the purchase.</b>'}
+</script></body></html>

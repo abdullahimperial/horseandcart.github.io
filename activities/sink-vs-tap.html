@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sink vs. Tap Activity</title><style>
+:root{--ink:#17243a;--green:#315f51;--gold:#b18a42;--paper:#fbfaf6;--muted:#657184;--line:#e7e0d4;--red:#8a3d3d}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 Arial,sans-serif}.wrap{width:min(980px,92%);margin:auto}
+nav{padding:18px 0;border-bottom:1px solid var(--line)}nav a{color:var(--ink);text-decoration:none;font-weight:700}header{padding:55px 0 30px}.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);font-weight:700}
+h1{font:700 clamp(38px,6vw,64px)/1.03 Georgia,serif;margin:8px 0 16px}h2{font:700 30px Georgia,serif}.lead{font-size:20px;color:var(--muted);max-width:780px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px;margin:20px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;font-weight:700;margin-bottom:7px}input,textarea{width:100%;padding:13px;border:1px solid #cfd5dc;border-radius:6px;font:inherit}textarea{min-height:100px}
+button{border:0;border-radius:6px;background:var(--ink);color:#fff;padding:13px 18px;font-weight:700;cursor:pointer}.secondary{background:var(--green)}
+.result{padding:22px;border-radius:8px;margin-top:20px;background:#f4f1e9}.big{font-size:34px;font-weight:800}.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--gold)}
+.spiral{height:210px;position:relative;margin:22px 0;overflow:hidden}.ring{position:absolute;left:50%;transform:translateX(-50%);border:5px solid;border-radius:50%;opacity:.75}
+.upspiral .ring{border-color:var(--green)}.downspiral .ring{border-color:var(--red)}
+.small{font-size:14px;color:var(--muted)}.case{padding:18px;border:1px solid var(--line);border-radius:8px;margin:12px 0;background:#fff}.choices{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.choice{background:#fff;color:var(--ink);border:1px solid var(--ink)}.selected{background:var(--ink);color:#fff}.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.sink{border-top:5px solid var(--red)}.tap{border-top:5px solid var(--green)}
+ul{padding-left:22px}.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#eef1ee;margin:4px;font-size:14px}.footer{padding:30px 0 50px;color:var(--muted);font-size:13px}
+@media(max-width:700px){.grid,.cols{grid-template-columns:1fr}}
+</style></head>
+<body><nav><div class="wrap"><a href="../index.html">← Personal Finance Story</a></div></nav><header><div class="wrap"><div class="eyebrow">Chapter 5 activity</div><h1>Sink vs. Tap</h1>
+<p class="lead">Choose an item or purchase and examine its outcomes. In the book, an outcome that takes money from you is a <b>sink</b>; an outcome that brings money to your pocket is a <b>tap</b>.</p></div></header>
+<main class="wrap"><div class="panel"><h2>Analyze something in your life</h2><label>Item or decision</label><input id="item" placeholder="e.g. a car, house, degree, equipment..."><br><br>
+<div class="cols"><div class="panel sink"><h2>↓ Sinks</h2><p class="small">Outcomes that take money from you.</p><div id="sinks"></div><div class="grid"><input id="sinkInput" placeholder="e.g. maintenance cost"><button onclick="add('sink')">Add sink</button></div></div>
+<div class="panel tap"><h2>↑ Taps</h2><p class="small">Outcomes that bring money to your pocket.</p><div id="taps"></div><div class="grid"><input id="tapInput" placeholder="e.g. rental income"><button class="secondary" onclick="add('tap')">Add tap</button></div></div></div>
+<button onclick="judge()">Review my list</button><div id="verdict" class="result"><span class="small">Add as many relevant outcomes as you can before reviewing the item.</span></div></div>
+<div class="panel"><h2>Try the three cases from the book</h2>
+<div class="case"><b>1. A college degree in the ancient Chinese craft of making cloth.</b><div class="choices"><button class="choice" onclick="caseAnswer(this,'sink')">Sink</button><button class="choice" onclick="caseAnswer(this,'tap')">Tap</button><button class="choice" onclick="caseAnswer(this,'depends')">It depends</button></div></div>
+<div class="case"><b>2. A luxury car with high mileage cost, high financing and maintenance costs, but which makes a great impression on friends and family.</b><div class="choices"><button class="choice" onclick="caseAnswer(this,'sink')">Sink</button><button class="choice" onclick="caseAnswer(this,'tap')">Tap</button><button class="choice" onclick="caseAnswer(this,'depends')">It depends</button></div></div>
+<div class="case"><b>3. A mortgaged house costing less than 30% of take-home monthly salary, versus a rental house with the same costs.</b><div class="choices"><button class="choice" onclick="caseAnswer(this,'sink')">Sink</button><button class="choice" onclick="caseAnswer(this,'tap')">Tap</button><button class="choice" onclick="caseAnswer(this,'depends')">It depends</button></div></div>
+<p class="small">The purpose is to identify the money-taking and money-producing outcomes and think through the decision, rather than rely on the label alone.</p></div>
+<div class="panel"><h2>A broader reminder from the book</h2><p>The Sink vs. Tap discussion explicitly notes that some spending creates a greater good in society even when it may not be financially productive. The exercise is intended as a financial-decision lens, not a measure of everything that gives something value.</p></div>
+</main><div class="wrap footer">Educational activity based on <i>Personal Finance Story: From Fighting Affordability to Generational Wealth</i> by Abdullah Mohiuddin. This is not individualized financial advice.</div>
+<script>
+let counts={sink:0,tap:0};
+function add(type){let inp=document.getElementById(type+'Input'),val=inp.value.trim();if(!val)return;let s=document.createElement('span');s.className='tag';s.textContent=val;document.getElementById(type+'s').appendChild(s);counts[type]++;inp.value=''}
+function judge(){let item=document.getElementById('item').value.trim()||'This item';let v=document.getElementById('verdict');if(!counts.sink&&!counts.tap){v.innerHTML='Add some sink and tap outcomes first.';return}let msg=counts.sink>counts.tap?'Your list currently contains more sink outcomes than tap outcomes.':counts.tap>counts.sink?'Your list currently contains more tap outcomes than sink outcomes.':'Your list currently has the same number of sink and tap outcomes.';v.innerHTML='<div class="big">'+item+'</div><p>'+msg+'</p><b>Sinks: '+counts.sink+' &nbsp; | &nbsp; Taps: '+counts.tap+'</b><p class="small">The book asks you to use the data points you identify to consider the nature of the item.</p>'}
+function caseAnswer(el,a){el.parentElement.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
+</script></body></html>
