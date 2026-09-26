@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Financial Life — Interactive Game</title>
+<style>
+  :root{
+    --bg:#f5f0e6;
+    --paper:#fffdf7;
+    --ink:#263238;
+    --muted:#6f776f;
+    --green:#3f6b55;
+    --green2:#6d8d72;
+    --gold:#c69c4f;
+    --rust:#b96146;
+    --line:#ded6c8;
+    --shadow:0 18px 55px rgba(63,54,41,.12);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(198,156,79,.13), transparent 30%),
+      radial-gradient(circle at 100% 20%, rgba(63,107,85,.12), transparent 26%),
+      var(--bg);
+    min-height:100vh;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 64px}
+  .hero{
+    background:linear-gradient(135deg,#334f43,#456f59);
+    color:white;border-radius:26px;padding:28px 30px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden
+  }
+  .hero:after{
+    content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+    right:-70px;top:-90px;background:rgba(255,255,255,.08)
+  }
+  .eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;opacity:.8}
+  h1{font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.8rem);line-height:1;margin:.35rem 0 .7rem}
+  .hero p{max-width:760px;line-height:1.55;margin:0;color:#e9efe9}
+  .layout{display:grid;grid-template-columns:1.55fr .8fr;gap:18px;margin-top:18px}
+  .card{background:var(--paper);border:1px solid rgba(120,100,70,.12);border-radius:22px;box-shadow:var(--shadow)}
+  .main{padding:24px}
+  .sidebar{padding:20px;position:sticky;top:16px;height:max-content}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+  .stat{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}
+  .stat small{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+  .stat strong{display:block;font-size:1.25rem;margin-top:4px}
+  .positive{color:var(--green)}
+  .negative{color:var(--rust)}
+  .timeline{
+    display:grid;grid-template-columns:repeat(9,minmax(38px,1fr));gap:6px;margin:18px 0 26px
+  }
+  .age-dot{
+    text-align:center;padding:9px 4px;border-radius:12px;border:1px solid var(--line);
+    font-size:.82rem;color:var(--muted);background:#fff
+  }
+  .age-dot.active{background:var(--gold);color:#211d14;border-color:var(--gold);font-weight:800}
+  .age-dot.done{background:#e5efe8;border-color:#c3d5c8;color:var(--green)}
+  .section-title{font-family:Georgia,serif;font-size:1.65rem;margin:0 0 8px}
+  .lead{color:var(--muted);line-height:1.5;margin-top:0}
+  .dice-area{
+    display:flex;align-items:center;gap:16px;padding:16px;border:1px dashed #ccb98f;
+    border-radius:18px;background:#fffaf0;margin:18px 0
+  }
+  .die{
+    width:74px;height:74px;border-radius:18px;background:#fff;border:2px solid #2d4036;
+    display:grid;place-items:center;font-size:2.1rem;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.08)
+  }
+  .die.rolling{animation:shake .12s linear infinite}
+  @keyframes shake{0%{transform:rotate(-7deg) translateY(-2px)}50%{transform:rotate(7deg) translateY(2px)}100%{transform:rotate(-7deg) translateY(-2px)}}
+  button{
+    border:0;border-radius:13px;padding:12px 16px;font-weight:800;cursor:pointer;
+    transition:.18s transform,.18s opacity,.18s background
+  }
+  button:hover{transform:translateY(-1px)}
+  button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .primary{background:var(--green);color:white}
+  .secondary{background:#ede6d8;color:#3a3328}
+  .danger{background:#f5e1db;color:#8b3f2d}
+  .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+  .choice{
+    text-align:left;border:1px solid var(--line);background:#fff;border-radius:16px;padding:16px;
+    cursor:pointer;transition:.18s ease;min-height:112px
+  }
+  .choice:hover{border-color:#9da99d;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
+  .choice.selected{border:2px solid var(--green);background:#f0f7f2}
+  .choice b{display:block;margin-bottom:6px}
+  .choice span{color:var(--muted);font-size:.9rem;line-height:1.4}
+  .impact{display:inline-block;margin-top:8px;font-size:.8rem;font-weight:800;color:var(--green)}
+  .impact.bad{color:var(--rust)}
+  .notice{padding:13px 15px;border-radius:14px;background:#f5efe3;border-left:4px solid var(--gold);line-height:1.45;margin:14px 0}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .ledger{max-height:330px;overflow:auto;border-top:1px solid var(--line);margin-top:14px;padding-top:8px}
+  .entry{display:flex;justify-content:space-between;gap:12px;padding:9px 2px;border-bottom:1px solid #eee7da;font-size:.88rem}
+  .entry .desc{color:#4f574f}
+  .entry .amt{font-weight:800;white-space:nowrap}
+  .sidebar h3{font-family:Georgia,serif;margin:0 0 10px}
+  .meter{height:10px;background:#e9e3d8;border-radius:999px;overflow:hidden;margin:8px 0 18px}
+  .meter > div{height:100%;background:linear-gradient(90deg,var(--rust),var(--gold),var(--green));width:0%;transition:.3s}
+  .assumption details{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}
+  summary{cursor:pointer;font-weight:800}
+  .inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+  label{font-size:.75rem;color:var(--muted)}
+  input{
+    width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:10px;background:#fff
+  }
+  .finish{text-align:center;padding:20px 0 6px}
+  .finish .big{font-family:Georgia,serif;font-size:3rem;margin:.3rem 0}
+  .hidden{display:none!important}
+  .footer{font-size:.75rem;color:var(--muted);margin-top:16px;line-height:1.4}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:99}
+  .piece{position:absolute;width:8px;height:14px;top:-20px;animation:fall 2.8s linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{position:static}.choices{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Interactive personal-finance exercise</div>
+    <h1>Your Financial Life</h1>
+    <p>Start at age 18. Some events are luck — roll the die. Others are decisions — choose carefully. Your goal is not to “win” every roll, but to see how choices and circumstances compound over a lifetime.</p>
+  </section>
+
+  <div class="layout">
+    <main class="card main">
+      <div class="stats">
+        <div class="stat"><small>Age</small><strong id="ageStat">18</strong></div>
+        <div class="stat"><small>Net worth</small><strong id="netStat">$0</strong></div>
+        <div class="stat"><small>Last change</small><strong id="changeStat">$0</strong></div>
+      </div>
+
+      <div id="timeline" class="timeline"></div>
+      <section id="gamePanel"></section>
+    </main>
+
+    <aside class="card sidebar">
+      <h3>Financial Journey</h3>
+      <div id="journeyText" class="lead">Your story has just begun.</div>
+      <div class="meter"><div id="meterFill"></div></div>
+
+      <h3>History</h3>
+      <div id="ledger" class="ledger"><div class="lead">No transactions yet.</div></div>
+
+      <div class="assumption">
+        <details>
+          <summary>Game assumptions</summary>
+          <p class="footer">The defaults follow the book game. You can adjust a few values before reaching the related event.</p>
+          <div class="inputs">
+            <label>Used car<input id="usedCar" type="number" value="5000"></label>
+            <label>New car cash<input id="newCarCash" type="number" value="30000"></label>
+            <label>Wedding — modest<input id="weddingLow" type="number" value="5000"></label>
+            <label>Wedding — expensive<input id="weddingHigh" type="number" value="50000"></label>
+            <label>Child / year<input id="childCost" type="number" value="5000"></label>
+            <label>RESP / child / year<input id="respCost" type="number" value="2500"></label>
+            <label>Rent / year<input id="rentCost" type="number" value="24000"></label>
+          </div>
+        </details>
+      </div>
+
+      <div class="actions">
+        <button class="secondary" onclick="restartGame()">Restart</button>
+      </div>
+      <p class="footer">Educational game only. The values are simplified assumptions, not financial advice or forecasts.</p>
+    </aside>
+  </div>
+</div>
+<div id="confetti" class="confetti"></div>
+
+<script>
+const milestones=[18,23,27,30,32,33,37,50,62];
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n);
+const val=id=>Number($(id).value)||0;
+
+let state;
+
+function freshState(){
+  return {
+    age:18, net:0, lastChange:0, ledger:[], stage:'age18roll',
+    eduAnnual:0, eduChoice:null, jobAnnual:0, carAnnual:0, carAnnualUntil:0,
+    partnerAnnual:0, married:false, childCount:0, resp:false,
+    housingAnnual:0, housingUntil:0, ownsHouse:false, houseBonusAge:null,
+    rentAnnual:0
+  };
+}
+function restartGame(){ state=freshState(); render(); }
+
+function add(amount,desc,age=state.age){
+  state.net += amount; state.lastChange=amount;
+  state.ledger.unshift({age,amount,desc});
+  sound(amount>=0?'good':'bad');
+}
+function log(desc,age=state.age){ state.ledger.unshift({age,amount:null,desc}); }
+
+function sound(type){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(type==='roll'){
+      o.type='square'; o.frequency.setValueAtTime(170,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(90,ctx.currentTime+.16);
+      g.gain.setValueAtTime(.045,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);
+    }else if(type==='good'){
+      o.type='sine'; o.frequency.setValueAtTime(520,ctx.currentTime);
+      o.frequency.setValueAtTime(720,ctx.currentTime+.08);
+      g.gain.setValueAtTime(.04,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.22);
+    }else{
+      o.type='triangle';o.frequency.setValueAtTime(210,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(120,ctx.currentTime+.2);
+      g.gain.setValueAtTime(.035,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);
+    }
+    o.start();o.stop(ctx.currentTime+.26);
+  }catch(e){}
+}
+
+function dieRoll(callback){
+  const die=$('die');
+  if(!die)return;
+  die.classList.add('rolling');
+  sound('roll');
+  let count=0;
+  const t=setInterval(()=>{die.textContent=1+Math.floor(Math.random()*6);count++},75);
+  setTimeout(()=>{
+    clearInterval(t);die.classList.remove('rolling');
+    const r=1+Math.floor(Math.random()*6);die.textContent=r;callback(r);
+  },650);
+}
+
+function applyYear(age){
+  let delta=0, parts=[];
+  if(age>=18 && age<=21 && state.eduAnnual){delta+=state.eduAnnual;parts.push('education path');}
+  if(age>=23 && state.jobAnnual){delta+=state.jobAnnual;parts.push('employment income');}
+  if(age>=23 && age<=state.carAnnualUntil && state.carAnnual){delta+=state.carAnnual;parts.push('car financing');}
+  if(age>=27 && (age<=29 || state.married) && state.partnerAnnual){delta+=state.partnerAnnual;parts.push('relationship spending');}
+  if(age>=32 && state.childCount){delta-=state.childCount*val('childCost');parts.push('children');}
+  if(age>=33 && state.childCount && state.resp){delta-=state.childCount*val('respCost');parts.push('education savings');}
+  if(age>=37 && age<=state.housingUntil && state.housingAnnual){delta+=state.housingAnnual;parts.push(state.ownsHouse?'housing/mortgage':'rent');}
+  if(state.houseBonusAge===age){delta+=300000;parts.push('home value added');}
+  if(delta!==0){ add(delta, parts.join(' + ') + ' — annual effect', age); }
+}
+
+function simulateTo(target){
+  for(let a=state.age+1;a<=target;a++) applyYear(a);
+  state.age=target;
+}
+
+function setStage(stage,age=state.age){state.stage=stage;state.age=age;render();}
+function choice(title,desc,impact,fn,bad=false){
+  return `<button class="choice" onclick="${fn}"><b>${title}</b><span>${desc}</span>${impact?`<em class="impact ${bad?'bad':''}">${impact}</em>`:''}</button>`;
+}
+
+function renderTimeline(){
+  $('timeline').innerHTML=milestones.map(a=>{
+    const c=a===state.age?'active':a<state.age?'done':'';
+    return `<div class="age-dot ${c}">${a}</div>`;
+  }).join('');
+}
+
+function renderLedger(){
+  $('ledger').innerHTML=state.ledger.length?state.ledger.map(x=>
+    `<div class="entry"><div class="desc"><b>Age ${x.age}</b><br>${x.desc}</div><div class="amt ${x.amount>0?'positive':x.amount<0?'negative':''}">${x.amount===null?'':(x.amount>0?'+':'')+money(x.amount)}</div></div>`
+  ).join(''):'<div class="lead">No transactions yet.</div>';
+}
+
+function renderStats(){
+  $('ageStat').textContent=state.age;
+  $('netStat').textContent=money(state.net);
+  $('netStat').className=state.net>=0?'positive':'negative';
+  $('changeStat').textContent=(state.lastChange>0?'+':'')+money(state.lastChange);
+  $('changeStat').className=state.lastChange>=0?'positive':'negative';
+  const pct=Math.min(100,Math.max(0,(state.age-18)/(62-18)*100));
+  $('meterFill').style.width=pct+'%';
+  $('journeyText').textContent=state.net>=100000?'Your financial position has strong momentum.':state.net>=0?'You are building your financial base.':'Your financial position is under pressure — later choices can still change the path.';
+}
+
+function age18(){
+ return `
+ <h2 class="section-title">Age 18 — Education & Opportunity</h2>
+ <p class="lead">Your first event is outside your control. Roll the die to see what financial start life gives you.</p>
+ <div class="dice-area"><div id="die" class="die">?</div><div><button class="primary" onclick="dieRoll(handle18Roll)">Roll the die</button><p class="lead">Luck determines your education support.</p></div></div>`;
+}
+function handle18Roll(r){
+  const outcomes={
+    1:['RESP support',0,'Your parents built a strong RESP fund.'],
+    2:['Scholarship',0,'You qualify for a scholarship.'],
+    3:['Part-time work',0,'Your part-time job covers school expenses.'],
+    4:['Interest-free loan',null,'You must choose a cheaper or more expensive degree.'],
+    5:['Family loan + work',-5000,'Subtract $5,000 per year during four study years.'],
+    6:['Partial scholarship + work',0,'Your costs are covered.']
+  };
+  const [name,amt,desc]=outcomes[r];
+  log(`Die ${r}: ${name}. ${desc}`,18);
+  if(r===4){state.stage='age18degree';render();return;}
+  state.eduAnnual=amt;
+  state.stage='age18decision';render();
+}
+function age18Degree(){
+ return `<h2 class="section-title">Age 18 — Choose Your Degree Cost</h2>
+ <div class="notice">Your die roll was 4: you qualify for an interest-free loan. Choose the education path.</div>
+ <div class="choices">
+ ${choice('Lower-cost degree','Education debt is $5,000 per year for four years.','−$5,000/year',"setEdu(-5000,'Lower-cost degree')",true)}
+ ${choice('Higher-cost degree','Education debt is $20,000 per year for four years.','−$20,000/year',"setEdu(-20000,'Higher-cost degree')",true)}
+ </div>`;
+}
+function setEdu(v,n){state.eduAnnual=v;state.eduChoice=n;log(n+' selected.',18);state.stage='age18decision';render();}
+function age18Decision(){
+ return `<h2 class="section-title">Age 18 — Your Decision</h2>
+ <p class="lead">You can choose a path. If you are already in the degree path from roll 4, continue to graduation. Otherwise, you may choose trades, work, or continue the education outcome you rolled.</p>
+ <div class="choices">
+ ${choice('Trades / apprenticeship','Build skills and save $10,000 per year through age 22.','+$10,000/year',"choose18Path('trades')")}
+ ${choice('Work instead of college','Take available work and save $5,000 per year through age 22.','+$5,000/year',"choose18Path('work')")}
+ ${choice('Continue education path','Keep the education outcome determined by the die.','Use dice result',"choose18Path('college')")}
+ </div>`;
+}
+function choose18Path(p){
+  if(p==='trades')state.eduAnnual=10000;
+  if(p==='work')state.eduAnnual=5000;
+  log('Decision: '+(p==='trades'?'trades/apprenticeship':p==='work'?'work instead of college':'continue education'),18);
+  // Apply ages 18–22 (5 years for trade/work, but education book text says next four years; use 18-21 for degree debt)
+  if(p==='trades'||p==='work'){
+    for(let a=18;a<=22;a++) add(state.eduAnnual,(p==='trades'?'apprenticeship savings':'work savings'),a);
+  } else {
+    for(let a=18;a<=21;a++) if(state.eduAnnual) add(state.eduAnnual,'education cost/support',a);
+  }
+  state.age=23;state.stage='age23roll';render();
+}
+
+function age23(){
+ return `<h2 class="section-title">Age 23 — Career</h2>
+ <p class="lead">You graduate or enter the next stage of working life. Roll the die for your annual employment income.</p>
+ <div class="dice-area"><div id="die" class="die">?</div><div><button class="primary" onclick="dieRoll(handle23Roll)">Roll the die</button></div></div>`;
+}
+function handle23Roll(r){
+ const vals={1:293800,2:50670,3:46384,4:31200,5:46384,6:31200};
+ const names={1:'Top income (top 1% threshold)',2:'Median Alberta wage income',3:'Edmonton living-wage income',4:'Alberta minimum-wage income',5:'Edmonton living-wage income',6:'Alberta minimum-wage income'};
+ state.jobAnnual=vals[r]; log(`Die ${r}: ${names[r]} (${money(vals[r])}/year total employment income).`,23);
+ state.stage='age23car';render();
+}
+function age23Car(){
+ return `<h2 class="section-title">Age 23 — Transportation Decision</h2>
+ <p class="lead">Now you choose how to get around.</p><div class="choices">
+ ${choice('Used functional car','Pay once and keep future annual costs simplified in this game.',`−${money(val('usedCar'))} once`,"chooseCar('used')",true)}
+ ${choice('New car — financed','The book game removes $10,000 every year for seven years.','−$10,000/year × 7',"chooseCar('finance')",true)}
+ ${choice('New car — cash','Pay upfront from savings.','−'+money(val('newCarCash'))+' once',"chooseCar('cash')",true)}
+ ${choice('Public transit','No car purchase subtraction in the game.','$0',"chooseCar('transit')")}
+ </div>`;
+}
+function chooseCar(c){
+ if(c==='used') add(-val('usedCar'),'used car purchase',23);
+ if(c==='cash') add(-val('newCarCash'),'new car paid upfront',23);
+ if(c==='finance'){state.carAnnual=-10000;state.carAnnualUntil=29;add(-10000,'new-car financing',23);}
+ log('Transportation choice: '+c,23);
+ // annual job effect at 23, then age24-26
+ if(state.jobAnnual) add(state.jobAnnual,'employment income — annual effect',23);
+ for(let a=24;a<=26;a++) applyYear(a);
+ state.age=27;state.stage='age27roll';render();
+}
+
+function age27(){
+ return `<h2 class="section-title">Age 27 — Love & Money</h2>
+ <p class="lead">Some relationship circumstances are represented by chance. Roll the die to see your partner's spending pattern in this simplified exercise.</p>
+ <div class="dice-area"><div id="die" class="die">?</div><div><button class="primary" onclick="dieRoll(handle27Roll)">Roll the die</button></div></div>`;
+}
+function handle27Roll(r){
+ const vals={1:-500,2:-2000,3:-3000,4:-4000,5:-10000,6:-20000};
+ const names={1:'Very money-conscious',2:'Moderately money-conscious',3:'Less future-focused',4:'Careless with money',5:'Heavy shopping',6:'Heavy shopping + recurring debt'};
+ state.partnerAnnual=vals[r];log(`Die ${r}: partner pattern — ${names[r]} (${money(vals[r])}/year).`,27);
+ for(let a=27;a<=29;a++) applyYear(a);
+ state.age=30;state.stage='age30marry';render();
+}
+
+function age30(){
+ return `<h2 class="section-title">Age 30 — Marriage & Wedding</h2>
+ <p class="lead">First decide whether to marry the partner from the previous stage.</p>
+ <div class="choices">
+ ${choice('Marry','The partner’s annual spending pattern continues through the rest of the game.','Continue partner effect',"chooseMarriage(true)")}
+ ${choice('Do not marry','The partner-related annual effect ends.','Stop partner effect',"chooseMarriage(false)")}
+ </div>`;
+}
+function chooseMarriage(m){state.married=m;log(m?'Decision: marry.':'Decision: do not marry.',30);state.stage='age30wedding';render();}
+function age30Wedding(){
+ return `<h2 class="section-title">Age 30 — Wedding Choice</h2>
+ <div class="choices">
+ ${choice('Reasonable wedding','Choose a modest celebration.','−'+money(val('weddingLow')),"chooseWedding('low')",true)}
+ ${choice('Expensive wedding','Choose the larger wedding in the book scenario.','−'+money(val('weddingHigh')),"chooseWedding('high')",true)}
+ </div>`;
+}
+function chooseWedding(w){
+ add(-(w==='high'?val('weddingHigh'):val('weddingLow')),w==='high'?'expensive wedding':'reasonable wedding',30);
+ if(state.jobAnnual)add(state.jobAnnual,'employment income — annual effect',30);
+ if(state.married && state.partnerAnnual)add(state.partnerAnnual,'relationship spending — annual effect',30);
+ simulateTo(32);state.stage='age32kids';render();
+}
+
+function age32(){
+ return `<h2 class="section-title">Age 32 — Children</h2>
+ <p class="lead">Choose the number of children in this scenario. The game subtracts ${money(val('childCost'))} per child per year.</p>
+ <div class="choices">
+ ${[0,1,2,3,4].map(n=>choice(n===0?'No children':`${n} ${n===1?'child':'children'}`,n===0?'No child-related annual subtraction.':`${money(val('childCost'))} per child/year`,n===0?'$0':`−${money(n*val('childCost'))}/year`,`chooseKids(${n})`,n>0)).join('')}
+ </div>`;
+}
+function chooseKids(n){state.childCount=n;log(`Decision: ${n} ${n===1?'child':'children'}.`,32);applyYear(32);state.age=33;state.stage='age33resp';render();}
+
+function age33(){
+ if(state.childCount===0){
+   setTimeout(()=>{log('RESP decision skipped — no children in this scenario.',33);simulateTo(37);state.stage='age37house';render()},0);
+   return `<h2 class="section-title">Age 33 — Education Savings</h2><p class="lead">No RESP decision is needed because you selected no children.</p>`;
+ }
+ return `<h2 class="section-title">Age 33 — Education Savings</h2>
+ <p class="lead">Would you create an RESP or education account? The book game subtracts ${money(val('respCost'))} per child per year.</p>
+ <div class="choices">
+ ${choice('Yes — save for education','Add the annual education-savings contribution to the simulation.',`−${money(state.childCount*val('respCost'))}/year`,"chooseResp(true)",true)}
+ ${choice('No','Do not add this annual contribution.','$0',"chooseResp(false)")}
+ </div>`;
+}
+function chooseResp(y){state.resp=y;log(y?'Decision: create education savings account(s).':'Decision: no education savings account.',33);applyYear(33);simulateTo(37);state.stage='age37house';render();}
+
+function age37(){
+ return `<h2 class="section-title">Age 37 — Housing</h2>
+ <p class="lead">Choose whether to buy a home and, if so, the down-payment path. The book uses simplified annual mortgage amounts for 25 years.</p>
+ <div class="choices">
+ ${choice('Buy — 5% down','Mortgage-path subtraction for 25 years.','−$50,000/year',"chooseHouse(50000,5)",true)}
+ ${choice('Buy — 10% down','Mortgage-path subtraction for 25 years.','−$40,000/year',"chooseHouse(40000,10)",true)}
+ ${choice('Buy — 15% down','Mortgage-path subtraction for 25 years.','−$30,000/year',"chooseHouse(30000,15)",true)}
+ ${choice('Buy — 20% down','Mortgage-path subtraction for 25 years.','−$15,000/year',"chooseHouse(15000,20)",true)}
+ ${choice('Keep renting','Continue renting instead of purchasing. You can edit the annual rent assumption in the sidebar.',`−${money(val('rentCost'))}/year`,"chooseRent()",true)}
+ </div>
+ <div class="notice">The original exercise adds $300,000 to net worth after 25 years if a home is purchased. This app preserves that simplified rule.</div>`;
+}
+function chooseHouse(annual,pct){
+ state.ownsHouse=true;state.housingAnnual=-annual;state.housingUntil=61;state.houseBonusAge=62;
+ log(`Home purchase: ${pct}% down-payment path; ${money(annual)}/year simplified mortgage cost.`,37);
+ applyYear(37);finishYears();
+}
+function chooseRent(){
+ state.ownsHouse=false;state.housingAnnual=-val('rentCost');state.housingUntil=61;state.houseBonusAge=null;
+ log(`Continue renting: ${money(val('rentCost'))}/year assumption.`,37);
+ applyYear(37);finishYears();
+}
+function finishYears(){
+ for(let a=38;a<=62;a++)applyYear(a);
+ state.age=62;state.stage='finish';render();celebrate();
+}
+
+function finish(){
+ const tone=state.net>=0?'You finished with a positive simulated net worth.':'You finished with a negative simulated net worth.';
+ return `<div class="finish">
+ <div class="eyebrow">Game complete</div>
+ <h2 class="section-title">Age 62 — Your Result</h2>
+ <div class="big ${state.net>=0?'positive':'negative'}">${money(state.net)}</div>
+ <p class="lead">${tone} The useful part is comparing this result with a second play-through after reading the book and seeing which decisions you change.</p>
+ <div class="actions" style="justify-content:center">
+ <button class="primary" onclick="restartGame()">Play again</button>
+ <button class="secondary" onclick="copySummary()">Copy result</button>
+ </div></div>`;
+}
+function celebrate(){
+ if(state.net<0)return;
+ const box=$('confetti');box.innerHTML='';
+ for(let i=0;i<60;i++){
+   const p=document.createElement('div');p.className='piece';
+   p.style.left=Math.random()*100+'vw';
+   p.style.background=['#c69c4f','#3f6b55','#b96146','#e5c879'][Math.floor(Math.random()*4)];
+   p.style.animationDelay=Math.random()*.6+'s';box.appendChild(p);
+ }
+ setTimeout(()=>box.innerHTML='',3600);
+}
+function copySummary(){
+ const text=`Financial Life Game result\nAge: ${state.age}\nFinal simulated net worth: ${money(state.net)}\nChildren: ${state.childCount}\nHousing: ${state.ownsHouse?'Bought a home':'Rented'}`;
+ navigator.clipboard?.writeText(text);
+ alert('Result copied.');
+}
+
+function render(){
+ renderTimeline();renderStats();renderLedger();
+ const panels={
+  age18roll:age18, age18degree:age18Degree, age18decision:age18Decision,
+  age23roll:age23, age23car:age23Car, age27roll:age27,
+  age30marry:age30, age30wedding:age30Wedding, age32kids:age32,
+  age33resp:age33, age37house:age37, finish:finish
+ };
+ $('gamePanel').innerHTML=panels[state.stage]();
+}
+restartGame();
+</script>
+</body>
+</html>
