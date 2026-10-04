@@ -27,10 +27,10 @@ ul{padding-left:22px}.tag{display:inline-block;padding:5px 9px;border-radius:20p
 function money(n){return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n)}
 function calculate(){
  let i=Number(document.getElementById('income').value),e=Number(document.getElementById('expenses').value),d=i-e,r=document.getElementById('result'),v=document.getElementById('visual');
- if(!Number.isFinite(i)||!Number.isFinite(e))return;
+ if(!document.getElementById('income').value.trim()||!document.getElementById('expenses').value.trim()||!Number.isFinite(i)||!Number.isFinite(e)||i<0||e<0){r.textContent='Enter valid non-negative amounts for both income and expenses.';v.innerHTML='';return;}
  let cls=d>0?'up':d<0?'down':'neutral',title=d>0?'UPWARD SPIRAL':d<0?'DOWNWARD SPIRAL':'BALANCED';
  let text=d>0?'Your income is greater than your expenses.':d<0?'Your expenses are greater than your income.':'Your income and expenses are equal.';
- r.innerHTML='<div class="big '+cls+'>'+title+'</div><p>'+text+'</p><b>Monthly difference: '+money(d)+'</b><br><span class="small">Annualized difference if nothing changes: '+money(d*12)+'</span>';
+ r.innerHTML='<div class="big '+cls+'">'+title+'</div><p>'+text+'</p><b>Monthly difference: '+money(d)+'</b><br><span class="small">Annualized difference if nothing changes: '+money(d*12)+'</span>';
  v.className='spiral '+(d>=0?'upspiral':'downspiral'); v.innerHTML='';
  for(let x=0;x<6;x++){let q=document.createElement('div');q.className='ring';let s=(d>=0?45+x*25:170-x*25);q.style.width=s+'px';q.style.height=s+'px';q.style.top=(d>=0?145-x*25:10+x*25)+'px';v.appendChild(q)}
 }
