@@ -17,6 +17,19 @@ const actions={
 'Debt payments':['Separate principal, interest and fees; verify the outstanding balance.','Review repayment terms, penalties and lower-cost alternatives before refinancing.','Check eligible repayment assistance and reputable nonprofit counselling.','Prioritize debts with verified rates, while protecting essentials and a cash buffer.'],
 'Giving':['Check recurring commitments and missing donation receipts.','Choose a giving amount that fits current obligations.','Check registered-charity receipts and charitable donation tax-credit eligibility.','Balance generosity, social value and household resilience.'],
 'Other':['Resolve merchant identity, refunds and transfers before treating these as spending.','Compare costs only after identifying what the transactions represent.','Eligibility depends on the actual expense; classify it first.','Keep receipts and improve categories for next month’s report.']};
+function spiral(s,c){
+ const uncertain=!!(s.unknown.length||s.otherCredits||s.duplicates.length||s.unrecognized.length||s.expenses<0);
+ const direction=s.surplus<0?'downward':s.surplus>0?'upward':'balanced';
+ const label=(uncertain?'Provisional · ':'')+(direction==='downward'?'Downward money-spiral signal':direction==='upward'?'Upward cash-flow signal':'Balanced cash-flow signal');
+ const reasons=[`Confirmed income ${s.income.toFixed(2)} CAD minus net spending ${s.expenses.toFixed(2)} CAD = ${s.surplus.toFixed(2)} CAD over this window.`];
+ if(uncertain)reasons.push('Unresolved classifications, credits, possible duplicates or unfamiliar charges may change the result.');
+ const debtPressure=(s.totals['Financing charges']||0)>0||c.debts.some(d=>d.balance>0&&d.rate!==null&&d.rate>=c.threshold);
+ const target=c.essentials===null?null:c.essentials*c.months;
+ const reserve=target===null||c.reserve===null||!(c.essentials>0)?'unknown':c.reserve<target?'below target':'target covered';
+ let meaning=direction==='downward'?'In this period, spending exceeded confirmed income. If repeated, this can deplete savings or add borrowing. Start by resolving the data and creating breathing room.':direction==='upward'?'In this period, confirmed income exceeded spending. This is a useful starting signal; debt, reserve adequacy and repeatability determine whether the broader situation is improving.':'In this period, spending matched confirmed income. There is no observed margin for new savings; examine resilience and irregular costs.';
+ if(debtPressure)meaning+=' Financing charges or entered expensive debt remain a source of pressure.';
+ return {direction,label,reasons,meaning,uncertain,debtPressure,reserve};
+}
 function build(s,c){
  const matrix=Object.entries(s.totals).filter(([cat,n])=>n!==0&&actions[cat]).sort((a,b)=>b[1]-a[1]).map(([category,amount])=>({category,amount,monthly:amount/s.months,cells:actions[category],evidence:s.active.filter(t=>t.category===category&&!['Exclude','Transfer / card payment'].includes(t.category)).slice(0,4)}));
  const recommendations=[];const add=(priority,title,evidence,action,verify,when)=>recommendations.push({priority,title,evidence,action,verify,when});
@@ -32,4 +45,4 @@ function build(s,c){
  add(4,ready?'Investigate investing your verified surplus':'Prepare for future growth',ready?`${c.confirmedSurplus.toFixed(2)} CAD entered as sustainable monthly surplus with the chosen reserve covered.`:'Investment readiness has not been established.',ready?'Review employer matching and suitable TFSA/RRSP, RESP or RDSP opportunities. Verify contribution room, eligibility, time horizon, risk tolerance and fees before choosing investments.':'Resolve transaction and debt questions, cover near-term obligations and build a reserve before deciding how much surplus can support long-term goals.','Two CSVs cannot determine suitability, tax position, account room or asset allocation.','After the immediate checks');
  return {matrix,recommendations:recommendations.sort((a,b)=>a.priority-b.priority),ready};
 }
-root.ResetGuidance={build,pillars};})(typeof window!=='undefined'?window:globalThis);
+root.ResetGuidance={build,pillars,spiral};})(typeof window!=='undefined'?window:globalThis);

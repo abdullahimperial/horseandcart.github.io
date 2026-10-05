@@ -44,3 +44,5 @@ Browser validation additionally covers real file upload, demo arithmetic, transa
 `demo.js` supplies three complete fictional months and explicit context for deficit, recovery and growth cases. One click imports, reviews known fictional transfers, supplies fictional coverage/debt/reserve assumptions, and generates the report. Actual uploads still require users to verify mappings and period coverage.
 
 For browser tests, serve the repository and run `APP_TEST_URL=http://localhost:8004 python apps/financial-reset/tests/report-browser.py` (Playwright and Chromium required). Tests cover all demos, actual CSV uploads, medical guidance, the category-by-pillar table, download, stale reports and mobile layout.
+
+The report starts with an observed money-spiral assessment: cash-flow direction, borrowing pressure and reserve adequacy are separate dimensions. Unresolved rows make the direction provisional. Complete-month deficits and first/latest monthly surplus provide context without claiming a durable trend. A workflow overview connects the report sections to the manual book exercise.
