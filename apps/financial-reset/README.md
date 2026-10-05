@@ -62,3 +62,9 @@ The Family demo includes fictional CCB and RRSP contribution transactions plus m
 Run `APP_TEST_URL=http://localhost:8011 python apps/financial-reset/tests/plan-browser.py` for family insights, overrides, plan round-tripping, next-quarter comparisons, stale/malformed plans, blocked browser storage and mobile behavior. Run all pure engine tests with `node --test apps/financial-reset/tests/*.test.cjs`.
 
 Netflix remains in the spending/subscription review but is excluded from annual-payment candidates. No annual Netflix quote or prepaid discount is implied in the fictional demos. Other subscription candidates require a provider-confirmed offer; recurring billing alone does not establish a discount.
+
+## Compact report dashboard
+
+The default report starts with financial status, three expandable priorities and a next-action prompt. The prompt advances when an action is marked done; all actions and their notes remain accessible. `dashboard.js` groups supporting evidence, four-pillar matrices, annual-payment quotes, month-by-month figures and resources into closed native details sections. The action tracker is the single location for individual recommendations, replacing repeated insight/recommendation lists.
+
+Report downloads temporarily expand every section and restore its prior state; print events do the same. Exports contain the detailed analysis, current annual-quote results and action records. Financial assumptions and calculations are unchanged. Use `APP_TEST_URL=http://localhost:8015 python apps/financial-reset/tests/dashboard-browser.py` to verify the compact defaults, next-action progression, details, exports, print state restoration and mobile behavior.
