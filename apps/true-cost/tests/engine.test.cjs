@@ -1,0 +1,5 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');require('../engine.js');const E=globalThis.TrueCost,base={mode:'hour',pay:25,price:100,hours:40,weeks:52,day:8,sales:5,tax:20,cpp:5,ei:0};
+test('gross up sales-tax-inclusive price, not simply add deduction percentages',()=>{const r=E.calculate(base);assert.equal(r.total,105);assert.equal(r.gross,140);assert.equal(r.work,5.6);assert.equal(r.tax+r.cpp+r.ei+r.total,r.gross);});
+test('annual and hourly wage yield same estimate',()=>assert.deepEqual(E.calculate({...base,mode:'year',pay:52000}),E.calculate(base)));
+test('zero-price and zero-deduction estimates',()=>{assert.equal(E.calculate({...base,price:0}).work,0);const r=E.calculate({...base,sales:0,tax:0,cpp:0,ei:0});assert.equal(r.gross,100);assert.equal(r.work,4);});
+test('reject invalid pay, missing values, time and deductions',()=>{for(const patch of [{pay:0},{tax:100},{price:-1},{ei:NaN},{weeks:54},{hours:0},{day:25}])assert.throws(()=>E.calculate({...base,...patch}));});
