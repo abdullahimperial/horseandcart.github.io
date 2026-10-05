@@ -1,11 +1,22 @@
 'use strict';
 const G=BoardGeometry,$=id=>document.getElementById(id),snakes={43:1,64:41,77:10},ladders={8:17,27:49,52:80,61:83,44:66};
 const labels={43:'Credit card debt',64:'Vacation you can’t afford',77:'Financial emergency',8:'Promotion',27:'Investment accounts',44:'Investment accounts',61:'Investment accounts',52:'Inheritance'};
+
+const eventIcons={
+ promotion:'<path d="M4 18V12H9V18M10 18V8H15V18M16 18V4H21V18"/>',
+ investment:'<path d="M3 18L9 12L13 15L21 5M15 5H21V11"/>',
+ inheritance:'<rect x="4" y="9" width="16" height="12" rx="1"/><path d="M2 6H22V10H2ZM12 6V21M12 6C3 6 6-2 12 6C18-2 21 6 12 6"/>',
+ debt:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10H22M6 15H10"/>',
+ vacation:'<path d="M2 12H22M5 12L9 4H12L10 12L14 20H11L6 12M17 12L19 8H21L20 12L21 16H19Z"/>',
+ emergency:'<path d="M12 3L23 21H1ZM12 9V14M12 17V18"/>'
+};
+function eventBadge(n){const snake=!!snakes[n],type=n===8?'promotion':n===52?'inheritance':n===43?'debt':n===64?'vacation':n===77?'emergency':'investment';return `<span class="event-mark ${snake?'snake':'ladder'}" title="${labels[n]}: ${n} to ${snakes[n]||ladders[n]}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true">${eventIcons[type]}</svg><span>${labels[n]}</span></span>`;}
+
 let geometry={x:G.uniform(11),y:G.uniform(8)},position=1,busy=false,epoch=0,url=null,hasCustom=false;
 const clone=g=>({x:[...g.x],y:[...g.y]}),defaults=()=>clone($('theme').value==='book'?G.book:{x:G.uniform(11),y:G.uniform(8)});
 function dice(n){const spots={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};$('die').innerHTML=Array.from({length:9},(_,i)=>`<i class="pip ${spots[n].includes(i)?'visible':''}"></i>`).join('');$('die').setAttribute('aria-label','Die: '+n);}
 function draw(){const g=geometry,grid=$('grid');grid.style.left=g.x[0]+'%';grid.style.top=g.y[0]+'%';grid.style.width=(g.x.at(-1)-g.x[0])+'%';grid.style.height=(g.y.at(-1)-g.y[0])+'%';grid.style.gridTemplateColumns=g.x.slice(1).map((v,i)=>(v-g.x[i])+'fr').join(' ');grid.style.gridTemplateRows=g.y.slice(1).map((v,i)=>(v-g.y[i])+'fr').join(' ');
- grid.innerHTML=Array.from({length:88},(_,i)=>{const n=i+1,c=G.cell(n);return `<div class="board-cell ${n===position?'current':''}" style="grid-row:${c.row+1};grid-column:${c.col+1}" data-square="${n}"><span class="number">${n}</span>${labels[n]?`<span class="event-mark ${snakes[n]?'snake':''}">${snakes[n]?'−':'+'}</span>`:''}</div>`;}).join('');
+ grid.innerHTML=Array.from({length:88},(_,i)=>{const n=i+1,c=G.cell(n);return `<div class="board-cell ${n===position?'current':''}" style="grid-row:${c.row+1};grid-column:${c.col+1}" data-square="${n}"><span class="number">${n}</span>${labels[n]?eventBadge(n):''}</div>`;}).join('');
  const lines=[];for(const [start,end] of Object.entries({...ladders,...snakes})){const a=G.center(Number(start),g),b=G.center(end,g),isSnake=!!snakes[start],ax=a.x*10,ay=a.y*5,bx=b.x*10,by=b.y*5;
  if(isSnake){lines.push(`<path d="M ${ax} ${ay} C ${ax+80} ${ay+40},${bx-80} ${by-40},${bx} ${by}" stroke="#e17768" stroke-width="12" stroke-linecap="round" fill="none"/><ellipse cx="${ax}" cy="${ay}" rx="10" ry="8" fill="#cc6054"/><circle cx="${ax-3}" cy="${ay-3}" r="2" fill="white"/><circle cx="${ax+3}" cy="${ay-3}" r="2" fill="white"/>`);}else{const len=Math.hypot(bx-ax,by-ay),px=-(by-ay)/len*7,py=(bx-ax)/len*7;for(const side of [-1,1])lines.push(`<line x1="${ax+side*px}" y1="${ay+side*py}" x2="${bx+side*px}" y2="${by+side*py}" stroke="#168a75" stroke-width="4" stroke-linecap="round"/>`);const steps=Math.max(3,Math.round(len/18));for(let i=0;i<=steps;i++){const x=ax+(bx-ax)*i/steps,y=ay+(by-ay)*i/steps;lines.push(`<line x1="${x-px}" y1="${y-py}" x2="${x+px}" y2="${y+py}" stroke="#168a75" stroke-width="3"/>`);}}}$('paths').innerHTML=lines.join('');moveToken();handles();}
 function moveToken(){const c=G.center(position,geometry);$('token').style.left=c.x+'%';$('token').style.top=c.y+'%';$('token').style.transform='translate(-50%,-50%)';$('token').setAttribute('aria-label','You are on square '+position);$('board').dataset.position=position;$('progress').value=position;document.querySelectorAll('.board-cell').forEach(e=>e.classList.toggle('current',Number(e.dataset.square)===position));}
