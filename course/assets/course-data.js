@@ -193,7 +193,7 @@ window.COURSE = [
       {
         "type": "tool",
         "title": "Play the Financial Life game",
-        "prompt": "Play once now. Record a decision you found difficult, then revisit it after the course. This digital adaptation uses adjustable illustrative amounts; focus on the reasoning rather than matching every printed rule.",
+        "prompt": "Play once now. Record a decision you found difficult, then revisit it after the course. The digital game uses the manuscript’s fixed amounts and choices. Its rules panel explains the annual timing conventions.",
         "href": "../games/financial-life.html",
         "label": "Open Financial Life",
         "origin": "From the book"
