@@ -50,6 +50,7 @@ function isBenefit(description){return /\b(?:canada child benefit|child benefit|
 function classify(description,flow,account){
  const s=description.toLowerCase();
  if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*payment|online payment.*(?:card|credit)/.test(s))return 'Transfer / card payment';
+ if(flow==='out'&&/\b(?:rrsp|tfsa|resp) contribution\b|investment transfer/.test(s))return 'Transfer / card payment';
  if(/transfer|e[- ]?transfer|etransfer|xfer|cashback reward|cash back reward/.test(s))return 'Other';
  if(flow==='in'&&account==='chequing'&&isBenefit(description))return 'Government benefits & support';
  if(flow==='in')return account==='chequing'&&/payroll|salary|direct deposit.*pay|pension|child benefit|gst credit|employer pay/.test(s)?'Income':'Other';
