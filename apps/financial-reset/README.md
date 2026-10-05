@@ -60,3 +60,5 @@ Annual-payment guidance detects stable near-monthly insurance, subscription and 
 The Family demo includes fictional CCB and RRSP contribution transactions plus medical expenses. Context and actions remain educational. Independent professional review and real intended-user validation have not been completed.
 
 Run `APP_TEST_URL=http://localhost:8011 python apps/financial-reset/tests/plan-browser.py` for family insights, overrides, plan round-tripping, next-quarter comparisons, stale/malformed plans, blocked browser storage and mobile behavior. Run all pure engine tests with `node --test apps/financial-reset/tests/*.test.cjs`.
+
+Netflix remains in the spending/subscription review but is excluded from annual-payment candidates. No annual Netflix quote or prepaid discount is implied in the fictional demos. Other subscription candidates require a provider-confirmed offer; recurring billing alone does not establish a discount.

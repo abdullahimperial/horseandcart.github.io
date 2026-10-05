@@ -35,7 +35,7 @@ function support(s){
  return {deposits,total:deposits.reduce((n,t)=>n+t.amount,0),found:deposits.length>0};
 }
 function annualCandidates(s){
- const groups=new Map();for(const t of s.active){if(t.flow!=='out'||!(['Insurance','Subscriptions'].includes(t.category)||t.category==='Utilities'&&/phone|internet|telus|koodo/i.test(t.description)))continue;const key=t.category+'|'+t.merchant;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(t);}
+ const groups=new Map();for(const t of s.active){if(/\bnetflix\b/i.test(t.description)||t.flow!=='out'||!(['Insurance','Subscriptions'].includes(t.category)||t.category==='Utilities'&&/phone|internet|telus|koodo/i.test(t.description)))continue;const key=t.category+'|'+t.merchant;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(t);}
  const result=[];for(const items of groups.values()){const months=new Map();for(const t of items){const m=t.date.slice(0,7);months.set(m,(months.get(m)||0)+1);}if(months.size<2||[...months.values()].some(n=>n!==1))continue;const dates=items.map(t=>t.date).sort(),gap=(new Date(dates.at(-1))-new Date(dates[0]))/86400000/(dates.length-1);if(gap<20||gap>40)continue;const average=items.reduce((n,t)=>n+t.amount,0)/items.length;if(items.some(t=>Math.abs(t.amount-average)>average*.1))continue;result.push({merchant:items[0].merchant,category:items[0].category,monthly:average,count:items.length});}return result.sort((a,b)=>b.monthly-a.monthly);
 }
 function annualComparison(monthly,quote,c,essential){

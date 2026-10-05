@@ -178,7 +178,7 @@ $('#demo').addEventListener('click',()=>{
  for(const key of fieldNames)$('#'+key).value=['months'].includes(key)?'3':key==='threshold'?'10':['feesCut','subscriptionCut','livingCut','habitCut','benefitGain'].includes(key)?'0':'';
  for(const [key,value]of Object.entries(example.context))$('#'+(key==='debtStatus'?'debt-status':key)).value=value;
  debts=example.debts;debtRows();renderTransactions();analyze();
- const fictionalQuotes={'LIFE INSURANCE':360,'NETFLIX SUBSCRIPTION':180,'PHONE PLAN':720};
+ const fictionalQuotes={'LIFE INSURANCE':360,'PHONE PLAN':720};
  window.ResetGuidance.annualCandidates(lastReport.s).forEach((a,i)=>{if(fictionalQuotes[a.merchant]!==undefined){const input=$(`[data-annual-quote="${i}"]`);input.value=fictionalQuotes[a.merchant];$(`[data-annual-essential="${i}"]`).checked=a.category==='Insurance'||a.category==='Utilities';input.dispatchEvent(new Event('input'));}});
  status('Fictional report generated automatically: three complete months, illustrative context and reviewed transfer classifications. Explore the findings below.');
 });
