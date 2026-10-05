@@ -15,7 +15,7 @@ One credit-card and one chequing CSV, with a header row, up to 5 MB / 10,000 row
 
 ## Accounting model
 
-Confirmed chequing credits categorized as Income count toward income. Unresolved chequing credits do not. Card purchases and direct chequing outflows count toward spending; classified purchase refunds offset spending. Identified settlements and transfers are excluded to avoid counting a card purchase and its payment twice. Generic transfers are deliberately left for user review. Mortgage and loan payments remain cash obligations, including principal. Imported chequing inflows/outflows are separately reported, even for rows excluded from the spending view.
+Chequing credits categorized as Income or Government benefits & support count toward income. Unresolved chequing credits do not. Card purchases and direct chequing outflows count toward spending; classified purchase refunds offset spending. Identified settlements and transfers are excluded to avoid counting a card purchase and its payment twice. Generic transfers are deliberately left for user review. Mortgage and loan payments remain cash obligations, including principal. Imported chequing inflows/outflows are separately reported, even for rows excluded from the spending view.
 
 The selected period's totals are reported directly. Monthly equivalents scale totals to 30.4375 days, with explicit limits; a short period is not a durable trend. Transaction dates do not establish statement coverage, and a running balance is never assumed to be accessible emergency savings.
 
@@ -46,3 +46,5 @@ Browser validation additionally covers real file upload, demo arithmetic, transa
 For browser tests, serve the repository and run `APP_TEST_URL=http://localhost:8004 python apps/financial-reset/tests/report-browser.py` (Playwright and Chromium required). Tests cover all demos, actual CSV uploads, medical guidance, the category-by-pillar table, download, stale reports and mobile layout.
 
 The report starts with an observed money-spiral assessment: cash-flow direction, borrowing pressure and reserve adequacy are separate dimensions. Unresolved rows make the direction provisional. Complete-month deficits and first/latest monthly surplus provide context without claiming a durable trend. A workflow overview connects the report sections to the manual book exercise.
+
+Government support descriptions receive a reviewable category. A prominent report section lists categorized support deposits, or explicitly states none were identified in the selected account/period. Users can correct missed deposits; absence is not proof of no support elsewhere. Covered entered reserves plus observed surplus trigger investment planning even before full readiness, with outstanding checks retained. Only full readiness triggers the stronger verified-surplus guidance.

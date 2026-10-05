@@ -1,7 +1,7 @@
 /* Pure, browser-local CSV and financial arithmetic. No network or storage. */
 (function(root){
 'use strict';
-const categories=['Income','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
+const categories=['Income','Government benefits & support','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
 function parseCSV(text,delimiter){
  text=String(text).replace(/^\uFEFF/,'');
  if(!delimiter){
@@ -46,10 +46,12 @@ function date(value,format='auto'){
  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
 function merchant(s){return String(s).toUpperCase().replace(/\b\d{4,}\b/g,'').replace(/[^A-Z0-9]/g,' ').replace(/\s+/g,' ').trim();}
+function isBenefit(description){return /\b(?:canada child benefit|child benefit|ccb|gst(?:[ /-]*hst)? (?:credit|benefit)|hst credit|employment insurance|ei (?:benefit|payment)|income support|social assistance|welfare|disability benefit|aish|odsp|ontario works|old age security|oas|guaranteed income supplement|gis benefit|government grant|student grant|housing benefit|rent subsidy)\b/i.test(description);}
 function classify(description,flow,account){
  const s=description.toLowerCase();
  if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*payment|online payment.*(?:card|credit)/.test(s))return 'Transfer / card payment';
  if(/transfer|e[- ]?transfer|etransfer|xfer|cashback reward|cash back reward/.test(s))return 'Other';
+ if(flow==='in'&&account==='chequing'&&isBenefit(description))return 'Government benefits & support';
  if(flow==='in')return account==='chequing'&&/payroll|salary|direct deposit.*pay|pension|child benefit|gst credit|employer pay/.test(s)?'Income':'Other';
  if(/overdraft.*interest|interest charge|purchase interest|cash advance.*interest|finance charge/.test(s))return 'Financing charges';
  if(/overdraft fee|nsf|bank fee|monthly (?:account|service) fee|service charge|late (?:payment )?fee|annual fee|account fee/.test(s))return 'Bank fees';
@@ -109,10 +111,10 @@ function summarize(transactions,start,end){
   if(t.category==='Exclude'){excluded++;return;}
   if(t.category==='Transfer / card payment'){transfers+=t.amount;return;}
   if(t.flow==='in'&&t.account==='chequing') {
-   if(t.category==='Income'){income+=t.amount;return;}
+   if(['Income','Government benefits & support'].includes(t.category)){income+=t.amount;return;}
    if(t.category==='Other'){otherCredits+=t.amount;return;}
   }
-  if(t.category==='Income')return;
+  if(['Income','Government benefits & support'].includes(t.category))return;
   const net=t.flow==='out'?t.amount:-t.amount;expenses+=net;totals[t.category]=(totals[t.category]||0)+net;
   if(t.flow==='in')refunds+=t.amount;
  });
@@ -133,5 +135,5 @@ function contextNumbers(values){
  if(n.threshold===null||n.threshold<=0||n.threshold>100)throw Error('Choose an expensive-debt screening rate above 0% and at most 100%.');
  return n;
 }
-root.ResetEngine={parseCSV,number,date,merchant,classify,normalize,summarize,contextNumbers,categories};
+root.ResetEngine={parseCSV,number,date,merchant,classify,normalize,summarize,contextNumbers,categories,isBenefit};
 })(typeof window!=='undefined'?window:globalThis);
