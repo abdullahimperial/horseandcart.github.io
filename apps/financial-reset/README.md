@@ -32,7 +32,15 @@ Changing mappings requires re-import. Changing transactions/context marks the ex
 No package installation or build required:
 
 ```sh
-node --test apps/financial-reset/tests/engine.test.cjs
+node --test apps/financial-reset/tests/*.test.cjs
 ```
 
 Browser validation additionally covers real file upload, demo arithmetic, transaction corrections, confirmations, debt/reserve scenarios, stale reports, preserved notes, downloading/printing, malformed and non-CAD data, text injection, mobile layout, blocked storage APIs, and absence of external requests.
+
+## Report guidance and demonstration
+
+`guidance.js` builds expense-category rows with four pillar action cells, transaction evidence, and prioritized recommendations. Medical, donation, education and childcare expenses prompt eligibility checks, not automatic tax claims. Official CRA and benefits links let readers verify current Canadian rules. No LLM or financial data transmission is used.
+
+`demo.js` supplies three complete fictional months and explicit context for deficit, recovery and growth cases. One click imports, reviews known fictional transfers, supplies fictional coverage/debt/reserve assumptions, and generates the report. Actual uploads still require users to verify mappings and period coverage.
+
+For browser tests, serve the repository and run `APP_TEST_URL=http://localhost:8004 python apps/financial-reset/tests/report-browser.py` (Playwright and Chromium required). Tests cover all demos, actual CSV uploads, medical guidance, the category-by-pillar table, download, stale reports and mobile layout.

@@ -1,7 +1,7 @@
 /* Pure, browser-local CSV and financial arithmetic. No network or storage. */
 (function(root){
 'use strict';
-const categories=['Income','Housing','Groceries','Transport','Utilities','Health & care','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
+const categories=['Income','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
 function parseCSV(text,delimiter){
  text=String(text).replace(/^\uFEFF/,'');
  if(!delimiter){
@@ -59,6 +59,9 @@ function classify(description,flow,account){
  if(/transit|uber(?! eats)|lyft|parking|gas station|fuel|petro|esso|shell/.test(s))return 'Transport';
  if(/electric|utility|utilities|epcor|enmax|telus|internet|phone plan|koodo/.test(s))return 'Utilities';
  if(/pharmacy|dental|dentist|medical|clinic|therapy/.test(s))return 'Health & care';
+ if(/tuition|course fee|college fee|university fee|training fee/.test(s))return 'Education & training';
+ if(/childcare|child care|daycare|day care/.test(s))return 'Childcare';
+ if(/insurance|life policy/.test(s))return 'Insurance';
  if(/netflix|spotify|disney|prime membership|subscription|gym membership|apple\.com\/bill/.test(s))return 'Subscriptions';
  if(/restaurant|coffee|cafe|tim hortons|starbucks|uber eats|doordash|shopping|amazon|clothing/.test(s))return 'Dining & shopping';
  if(/charity|donation/.test(s))return 'Giving';
