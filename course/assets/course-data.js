@@ -477,6 +477,14 @@ window.COURSE = [
         ],
         "origin": "Additional practice",
         "tip": ""
+      },
+      {
+        "type": "tool",
+        "title": "Try the true cost of a purchase",
+        "prompt": "Use fictional pay and an item price to compare the sticker price with gross earnings and working time. Verify the deduction assumptions.",
+        "href": "../apps/true-cost/",
+        "label": "Open True Cost",
+        "origin": "Additional practice"
       }
     ],
     "action": "Choose one spending sequence to change, and set a review date.",
@@ -901,6 +909,14 @@ window.COURSE = [
         ],
         "origin": "From the book · Closing checklist",
         "tip": ""
+      },
+      {
+        "type": "tool",
+        "title": "Apply all four saving pillars",
+        "prompt": "Generate a fictional Financial Reset report. Review one expense row across all four pillar cells, then choose an action to investigate.",
+        "href": "../apps/financial-reset/",
+        "label": "Open Financial Reset",
+        "origin": "Additional practice"
       }
     ],
     "action": "Implement one audited saving and check the actual result next month.",
@@ -1162,6 +1178,14 @@ window.COURSE = [
         ],
         "answer": 1,
         "feedback": "Minimum payments may leave a balance at the deadline. A safe plan accounts for the full terms, timing, and repayment funds.",
+        "origin": "Additional practice"
+      },
+      {
+        "type": "tool",
+        "title": "Inspect an emergency-system assessment",
+        "prompt": "Compare fictional recovery and growth reports. Identify the reserve assumptions, upfront-payment trade-offs and information still needed.",
+        "href": "../apps/financial-reset/",
+        "label": "Explore emergency readiness",
         "origin": "Additional practice"
       }
     ],
@@ -1867,6 +1891,14 @@ window.COURSE = [
         ],
         "origin": "Additional practice",
         "tip": ""
+      },
+      {
+        "type": "tool",
+        "title": "Explore the growth-readiness checks",
+        "prompt": "Generate the fictional growth report. Examine why the app suggests investment planning and which facts it asks you to verify.",
+        "href": "../apps/financial-reset/",
+        "label": "Explore a growth report",
+        "origin": "Additional practice"
       }
     ],
     "action": "Verify one account opportunity and write a sustainable contribution plan.",

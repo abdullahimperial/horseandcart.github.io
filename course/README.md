@@ -6,7 +6,7 @@ A static, accessible slide course based on Abdullah Mohiuddin's supplied 109-pag
 
 Serve the repository root with `python3 -m http.server 8000 --bind 127.0.0.1` and open `course/index.html` in a browser. There is no build step or package dependency. Course pages load three local shared assets:
 
-- `assets/course-data.js`: nine chapter-based modules, 102 slides, 48 workshop activities plus nine next-action plans. Page references identify the manuscript source. Book activities and additional practice are labeled separately.
+- `assets/course-data.js`: nine chapter-based modules, 102 slides, 52 workshop activities plus nine next-action plans. Page references identify the manuscript source. Book activities and additional practice are labeled separately.
 - `assets/course.js`: slide navigation, conceptual SVG illustrations, calculators, quizzes, local notes, workbook export, and print views.
 - `assets/course.css`: responsive presentation, keyboard focus, reduced-motion handling, and print styles.
 
