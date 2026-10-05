@@ -1,0 +1,27 @@
+/* Shared, nonblocking status notice on every public page. */
+.site-notice {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 12px 24px;
+  border: 0;
+  border-bottom: 1px solid #d3b56b;
+  background: #fff0c9;
+  color: #493714;
+  font: 13px/1.55 Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+.site-notice strong {
+  display: inline;
+  margin-right: 8px;
+  font-weight: 700;
+}
+@media (max-width: 600px) {
+  .site-notice { padding: 10px 16px; text-align: left; font-size: 12px; }
+  .site-notice strong { display: block; margin: 0 0 3px; }
+}
+@media print {
+  .site-notice { display: block; }
+}
