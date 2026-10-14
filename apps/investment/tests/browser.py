@@ -11,5 +11,9 @@ with sync_playwright() as p:
  page.locator('#timeline').fill('0');assert page.locator('#total').inner_text()=='$1,200.00';page.locator('#timeline').focus();page.keyboard.press('ArrowRight');assert page.locator('#selected-year').inner_text()=='Year 1'
  page.locator('#years').fill('2.5');assert page.locator('#error').is_visible();assert page.locator('#timeline').is_disabled();page.locator('#years').fill('10');page.locator('#rate').fill('6');page.locator('#principal').fill('0');assert page.locator('#total').inner_text()=='$0.00'
  page.locator('#principal').fill('1200');page.locator('#timeline').fill('10');page.screenshot(path='/tmp/investment-desktop.png',full_page=True)
- page.set_viewport_size({'width':390,'height':844});assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path='/tmp/investment-mobile.png',full_page=True);assert not errors,errors;b.close()
+ page.set_viewport_size({'width':390,'height':844});assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path='/tmp/investment-mobile.png',full_page=True);assert not errors,errors
+ # Simulate cached markup from the earlier pie-slice version with the current script.
+ def old_markup(route):
+  response=route.fetch();html=response.text().replace('<circle id="profit-ring" fill="#c97624"/>','<path id="profit-wedge" fill="#c97624"/>').replace('<circle id="core-outline" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>','');route.fulfill(response=response,body=html)
+ page.route('**/apps/investment/',old_markup);page.reload();page.locator('#timeline').fill('10');assert page.locator('#total').inner_text()=='$2,149.02';assert page.locator('#profit-ring').count()==1;assert page.locator('#error').is_hidden();assert not errors,errors;b.close()
  print('Slider, compounding, updated horizon, loss/zero scenarios, validation, keyboard and mobile checks passed.')
