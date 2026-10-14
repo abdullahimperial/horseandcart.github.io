@@ -14,6 +14,6 @@ with sync_playwright() as p:
  page.set_viewport_size({'width':390,'height':844});assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path='/tmp/investment-mobile.png',full_page=True);assert not errors,errors
  # Simulate cached markup from the earlier pie-slice version with the current script.
  def old_markup(route):
-  response=route.fetch();html=response.text().replace('<circle id="profit-ring" fill="#c97624"/>','<path id="profit-wedge" fill="#c97624"/>').replace('<circle id="core-outline" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>','');route.fulfill(response=response,body=html)
+  response=route.fetch();html=response.text().replace('<circle id="profit-ring" fill="url(#ice-amber)"/>','<path id="profit-wedge" fill="#c97624"/>').replace('<circle id="core-outline" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>','');route.fulfill(response=response,body=html)
  page.route('**/apps/investment/',old_markup);page.reload();page.locator('#timeline').fill('10');assert page.locator('#total').inner_text()=='$2,149.02';assert page.locator('#profit-ring').count()==1;assert page.locator('#error').is_hidden();assert not errors,errors;b.close()
  print('Slider, compounding, updated horizon, loss/zero scenarios, validation, keyboard and mobile checks passed.')
