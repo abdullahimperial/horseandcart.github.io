@@ -1,0 +1,3 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');require('../engine.js');const E=globalThis.Investment;
+test('annual reinvestment and year zero',()=>{assert.equal(E.project(1200,6,0).total,1200);assert.ok(Math.abs(E.project(1200,6,10).total-2149.017235851425)<1e-8);assert.equal(E.project(100,-100,0).total,100);assert.equal(E.project(100,-100,1).total,0);});
+test('loss, zero and invalid scenarios',()=>{assert.equal(E.project(0,6,10).total,0);assert.equal(E.project(100,0,100).total,100);assert.ok(E.project(100,-5,10).growth<0);for(const args of [[-1,6,10],[100,101,10],[100,6,1.5],[100,6,101],[100,NaN,10]])assert.throws(()=>E.project(...args));});
