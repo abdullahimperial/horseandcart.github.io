@@ -3,3 +3,5 @@ test('gross up sales-tax-inclusive price, not simply add deduction percentages',
 test('annual and hourly wage yield same estimate',()=>assert.deepEqual(E.calculate({...base,mode:'year',pay:52000}),E.calculate(base)));
 test('zero-price and zero-deduction estimates',()=>{assert.equal(E.calculate({...base,price:0}).work,0);const r=E.calculate({...base,sales:0,tax:0,cpp:0,ei:0});assert.equal(r.gross,100);assert.equal(r.work,4);});
 test('reject invalid pay, missing values, time and deductions',()=>{for(const patch of [{pay:0},{tax:100},{price:-1},{ei:NaN},{weeks:54},{hours:0},{day:25}])assert.throws(()=>E.calculate({...base,...patch}));});
+
+test('ten-year annual compounding, growth, zero and loss scenarios',()=>{assert.ok(Math.abs(E.investment(1200,6).total-2149.017235851425)<1e-8);assert.equal(E.investment(100,0).total,100);assert.equal(E.investment(0,6).total,0);assert.equal(E.investment(100,-100).growth,-100);assert.ok(E.investment(100,-5).total<100);for(const args of [[100,101],[100,-101],[100,NaN],[-1,6]])assert.throws(()=>E.investment(...args));});

@@ -9,3 +9,5 @@ Prefilled rates are expressly fictional editable assumptions. This is a flat-rat
 Time blocks represent a workday by default and group multiple days when necessary; the last is fractional. Costs of ownership, financing, foregone returns and existing household obligations are excluded. These are work-time equivalents, not a forecast of saving time. Asset explanations are general category-level patterns rather than appreciation predictions or investment advice.
 
 Run `node --test apps/true-cost/tests/engine.test.cjs`. With the repository served on port 8006, run `python apps/true-cost/tests/browser.py` (Playwright and Chromium). Override the server URL with `APP_TEST_URL`.
+
+Investment comparison: invests the pre-sales-tax item price once for 10 years, compounded annually at an editable assumed return (default 6%). Shows ending value and growth/loss, excludes fees, taxes and inflation, and assumes reinvestment without additional contributions. This is a scenario, not a forecast.
