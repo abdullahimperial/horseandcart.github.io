@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 import os
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page(viewport={'width':1280,'height':900});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page(locale='en-CA',timezone_id='America/Edmonton',viewport={'width':1280,'height':900});errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  page.goto(os.environ.get('APP_TEST_URL','http://localhost:8024')+'/apps/investment/')
  assert page.locator('#total').inner_text()=='$1,200.00'
  initial=page.locator('#ball-position').get_attribute('transform');initial_radius=float(page.locator('#ball-outline').get_attribute('r'))

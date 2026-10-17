@@ -4,7 +4,15 @@
 const courses = window.COURSE;
 const $ = (selector, root = document) => root.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money = value => new Intl.NumberFormat('en-CA', {style:'currency', currency:'CAD', maximumFractionDigits:2}).format(value);
+const currency = () => window.SiteCurrency?.code || 'CAD';
+const cadMoney = value => new Intl.NumberFormat('en-CA', {style:'currency', currency:'CAD', currencyDisplay:'code', maximumFractionDigits:2}).format(value);
+const money = value => window.SiteCurrency?.format(value, {maximumFractionDigits:2}) || cadMoney(value);
+const worksheetCurrency = kind => kind === 'weekly' ? 'CAD' : currency();
+const worksheetLabel = (kind, label) => label.replace(/CAD/g, worksheetCurrency(kind));
+function worksheetCurrencyNote(kind) {
+ if (kind === 'weekly') return 'Editable Canadian registered-account example. All amounts remain in CAD, regardless of your selected currency. Verify Canadian eligibility and contribution room.';
+ return `Editable example — enter all amounts in ${currency()}. Changing the currency keeps your numbers; it does not convert them. Book examples and Canadian tax and benefit rules remain Canadian.`;
+}
 let storageWorks = true;
 function warnStorage() {
  storageWorks = false;
@@ -84,22 +92,23 @@ const specs = {
 };
 function calculate(kind, values) {
  const spec=specs[kind], nums={};
+ const formatMoney = kind === 'weekly' ? cadMoney : money;
  for (const [key,label,,type] of spec.fields) {
   if (type==='frequency') { if (!['daily','weekly','monthly'].includes(values[key])) throw Error('Choose a supported contribution frequency.'); nums[key]=values[key]; continue; }
   const raw=String(values[key] ?? '').trim(); const value=Number(raw);
-  if (raw==='' || !Number.isFinite(value) || value<0 || value>1e9) throw Error(`Enter a valid non-negative number for “${label}” (up to 1 billion).`);
+  if (raw==='' || !Number.isFinite(value) || value<0 || value>1e9) throw Error(`Enter a valid non-negative number for “${worksheetLabel(kind,label)}” (up to 1 billion).`);
   nums[key]=value;
  }
  const n=nums, mult={daily:365,weekly:52,monthly:12};
  let items=[], explanation='';
  switch(kind) {
- case 'cashflow': {const surplus=n.income-n.expenses; items=[['Monthly cash-flow surplus',money(surplus)],['Annualized at this pace',money(surplus*12)]]; explanation=surplus>0?'You have a surplus in this example. Decide how to direct it while keeping essential needs covered.':surplus<0?'Cash outflows exceed income in this example. Look for practical income, spending, or support changes.':'This example breaks even. A buffer or savings goal will need additional room.'; break;}
- case 'annualize': {const f=mult[n.frequency]; items=[['Current yearly cost',money(n.current*f)],['Replacement yearly cost',money(n.replacement*f)],['Potential yearly difference',money((n.current-n.replacement)*f)]]; explanation=n.current>=n.replacement?'The difference assumes you consistently substitute the cheaper habit at the selected frequency.':'The replacement costs more at this frequency. Consider whether its extra value is worth the difference.'; break;}
- case 'cost': {if(n.deductions>=100)throw Error('Estimated deductions must be less than 100%.'); if(n.wage<=0)throw Error('Gross hourly earnings must be greater than zero.'); const gross=n.price/(1-n.deductions/100); items=[['Estimated gross earnings needed',money(gross)],['Working time at this wage',`${(gross/n.wage).toLocaleString('en-CA',{maximumFractionDigits:1})} hours`]]; explanation='This simplified estimate helps you compare a purchase with working time. It is not a tax calculation.'; break;}
- case 'emergency': {if(n.months<=0||n.months>120)throw Error('Choose a planning duration greater than zero and up to 120 months.'); const target=n.expenses*n.months; items=[['Illustrative reserve target',money(target)],['Gap above current savings',money(Math.max(0,target-n.cash))],['Current savings runway',n.expenses?`${(n.cash/n.expenses).toLocaleString('en-CA',{maximumFractionDigits:1})} months`:'No monthly essentials entered']]; explanation='This calculation only counts liquid savings against remaining essential bills. Your wider emergency system needs separate eligibility, timing, and risk checks.'; break;}
- case 'savings': {const cuts=n.leaks+n.bills+n.habits; if(cuts>n.expenses)throw Error('Expense reductions cannot exceed your current expenses. Check for duplicated savings.'); const before=n.income-n.expenses, after=n.income+n.benefits-(n.expenses-cuts); items=[['Estimated new monthly expenses',money(n.expenses-cuts)],['Monthly surplus before',money(before)],['Monthly surplus after',money(after)],['Annualized improvement',money((after-before)*12)]]; explanation='Benefits increase income; the other categories reduce expenses. Confirm estimates against actual statements and program eligibility.'; break;}
- case 'weekly': {const total=Object.values(n).reduce((sum,value)=>sum+value,0); items=[['Planned annual total',money(total)],['Total per weekly deposit',money(total/52)],...Object.entries(n).map(([key,value])=>[`${key.toUpperCase()} per week`,money(value/52)])]; explanation='Figures are rounded for display; reconcile the final deposit with your annual target and verified room. Employer or government contributions are not included.'; break;}
- case 'giving': items=[['Planned annual contribution',money(n.amount*mult[n.frequency])],['Average monthly amount',money(n.amount*mult[n.frequency]/12)]]; explanation='Choose a level that leaves essential obligations and your resilience plan supported.'; break;
+ case 'cashflow': {const surplus=n.income-n.expenses; items=[['Monthly cash-flow surplus',formatMoney(surplus)],['Annualized at this pace',formatMoney(surplus*12)]]; explanation=surplus>0?'You have a surplus in this example. Decide how to direct it while keeping essential needs covered.':surplus<0?'Cash outflows exceed income in this example. Look for practical income, spending, or support changes.':'This example breaks even. A buffer or savings goal will need additional room.'; break;}
+ case 'annualize': {const f=mult[n.frequency]; items=[['Current yearly cost',formatMoney(n.current*f)],['Replacement yearly cost',formatMoney(n.replacement*f)],['Potential yearly difference',formatMoney((n.current-n.replacement)*f)]]; explanation=n.current>=n.replacement?'The difference assumes you consistently substitute the cheaper habit at the selected frequency.':'The replacement costs more at this frequency. Consider whether its extra value is worth the difference.'; break;}
+ case 'cost': {if(n.deductions>=100)throw Error('Estimated deductions must be less than 100%.'); if(n.wage<=0)throw Error('Gross hourly earnings must be greater than zero.'); const gross=n.price/(1-n.deductions/100); items=[['Estimated gross earnings needed',formatMoney(gross)],['Working time at this wage',`${(gross/n.wage).toLocaleString('en-CA',{maximumFractionDigits:1})} hours`]]; explanation='This simplified estimate helps you compare a purchase with working time. It is not a tax calculation.'; break;}
+ case 'emergency': {if(n.months<=0||n.months>120)throw Error('Choose a planning duration greater than zero and up to 120 months.'); const target=n.expenses*n.months; items=[['Illustrative reserve target',formatMoney(target)],['Gap above current savings',formatMoney(Math.max(0,target-n.cash))],['Current savings runway',n.expenses?`${(n.cash/n.expenses).toLocaleString('en-CA',{maximumFractionDigits:1})} months`:'No monthly essentials entered']]; explanation='This calculation only counts liquid savings against remaining essential bills. Your wider emergency system needs separate eligibility, timing, and risk checks.'; break;}
+ case 'savings': {const cuts=n.leaks+n.bills+n.habits; if(cuts>n.expenses)throw Error('Expense reductions cannot exceed your current expenses. Check for duplicated savings.'); const before=n.income-n.expenses, after=n.income+n.benefits-(n.expenses-cuts); items=[['Estimated new monthly expenses',formatMoney(n.expenses-cuts)],['Monthly surplus before',formatMoney(before)],['Monthly surplus after',formatMoney(after)],['Annualized improvement',formatMoney((after-before)*12)]]; explanation='Benefits increase income; the other categories reduce expenses. Confirm estimates against actual statements and program eligibility.'; break;}
+ case 'weekly': {const total=Object.values(n).reduce((sum,value)=>sum+value,0); items=[['Planned annual total',formatMoney(total)],['Total per weekly deposit',formatMoney(total/52)],...Object.entries(n).map(([key,value])=>[`${key.toUpperCase()} per week`,formatMoney(value/52)])]; explanation='Figures are rounded for display; reconcile the final deposit with your annual target and verified room. Employer or government contributions are not included.'; break;}
+ case 'giving': items=[['Planned annual contribution',formatMoney(n.amount*mult[n.frequency])],['Average monthly amount',formatMoney(n.amount*mult[n.frequency]/12)]]; explanation='Choose a level that leaves essential obligations and your resilience plan supported.'; break;
  }
  return {items,explanation};
 }
@@ -115,8 +124,8 @@ function workbook(mods) {
    if(a.type==='tool')lines.push(a.prompt, a.href);
    if(a.type==='quiz') {const q=n.quizzes[i];lines.push(a.prompt,`My answer: ${Number.isInteger(q?.selected)?a.options[q.selected]||'[Not answered]':'[Not answered]'}`,q?.checked?`Feedback: ${a.feedback}`:'[Not checked]');}
    if(a.type==='calculator') {
-    const vals={}; specs[a.kind].fields.forEach(([key,label,def])=>{vals[key]=n.fields[`a${i}-c-${key}`]??String(def);lines.push(`${label}: ${vals[key]}`);});
-    lines.push('Any unchanged values above are editable examples.');
+    const vals={}; specs[a.kind].fields.forEach(([key,label,def])=>{vals[key]=n.fields[`a${i}-c-${key}`]??String(def);lines.push(`${worksheetLabel(a.kind,label)}: ${vals[key]}`);});
+    lines.push(worksheetCurrencyNote(a.kind),'Any unchanged values above are editable examples.');
     if(n.fields[`a${i}-calculated`])try {const r=calculate(a.kind,vals);r.items.forEach(([label,value])=>lines.push(`${label}: ${value}`));lines.push(r.explanation);}catch(e){lines.push(`Calculation needs review: ${e.message}`);}
    }
    lines.push('');
@@ -170,9 +179,9 @@ function modulePlayer(id) {
   }
   if(a.type==='calculator') {
    const spec=specs[a.kind];
-   body=`<p>${esc(a.prompt)}</p><p class="calc-help">Editable example — replace the figures with your own estimates. All dollar amounts are CAD.</p><form data-calculator="${i}" novalidate><div class="calculator-grid">${spec.fields.map(([key,label,def,type])=>{
+   body=`<p>${esc(a.prompt)}</p><p class="calc-help" data-currency-note="${esc(a.kind)}">${esc(worksheetCurrencyNote(a.kind))}</p><form data-calculator="${i}" novalidate><div class="calculator-grid">${spec.fields.map(([key,label,def,type])=>{
     const val=notes.fields[`${prefix}-c-${key}`]??String(def), fieldId=`m${id}-${prefix}-${key}`;
-    return `<label class="field" for="${fieldId}"><span class="field-label">${esc(label)}</span>${type==='frequency'?`<select id="${fieldId}" name="${key}" data-note="${prefix}-c-${key}">${['daily','weekly','monthly'].map(v=>`<option value="${v}" ${val===v?'selected':''}>${v[0].toUpperCase()+v.slice(1)}</option>`).join('')}</select>`:`<input id="${fieldId}" name="${key}" type="number" inputmode="decimal" min="0" max="1000000000" step="any" value="${esc(val)}" data-note="${prefix}-c-${key}">`}</label>`;
+    return `<label class="field" for="${fieldId}"><span class="field-label" data-worksheet-currency-label="${esc(label)}" data-calculator-kind="${esc(a.kind)}">${esc(worksheetLabel(a.kind,label))}</span>${type==='frequency'?`<select id="${fieldId}" name="${key}" data-note="${prefix}-c-${key}">${['daily','weekly','monthly'].map(v=>`<option value="${v}" ${val===v?'selected':''}>${v[0].toUpperCase()+v.slice(1)}</option>`).join('')}</select>`:`<input id="${fieldId}" name="${key}" type="number" inputmode="decimal" min="0" max="1000000000" step="any" value="${esc(val)}" data-note="${prefix}-c-${key}">`}</label>`;
    }).join('')}</div><button class="btn primary" type="submit">Calculate & compare</button><p class="calc-help">${esc(spec.help)}</p><div class="feedback" id="result-${i}" role="status"></div></form>`;
   }
   return `<section class="activity-card" aria-labelledby="activity-title-${i}"><div><span class="activity-number">${String(i+1).padStart(2,'0')}</span><span class="origin">${esc(a.origin)}</span></div><h2 id="activity-title-${i}">${esc(a.title)}</h2>${body}</section>`;
@@ -196,12 +205,13 @@ function modulePlayer(id) {
   }));
   stage.querySelectorAll('[data-calculator]').forEach(form=>{
    const idx=Number(form.dataset.calculator), a=m.activities[idx];
-   function run() {
+   function run(persist=true) {
     const result=$(`#result-${idx}`), values=Object.fromEntries(new FormData(form));
-    try {const calculated=calculate(a.kind,values);result.className='feedback';result.innerHTML=resultHTML(calculated);for(const [key,value]of Object.entries(values))notes.fields[`a${idx}-c-${key}`]=value;notes.fields[`a${idx}-calculated`]='yes';save();}
-    catch(e){result.className='feedback error';result.textContent=e.message;delete notes.fields[`a${idx}-calculated`];save();}
+    try {const calculated=calculate(a.kind,values);result.className='feedback';result.innerHTML=resultHTML(calculated);if(persist){for(const [key,value]of Object.entries(values))notes.fields[`a${idx}-c-${key}`]=value;notes.fields[`a${idx}-calculated`]='yes';save();}}
+    catch(e){result.className='feedback error';result.textContent=e.message;if(persist){delete notes.fields[`a${idx}-calculated`];save();}}
    }
    form.addEventListener('submit',e=>{e.preventDefault();run();});
+   form.addEventListener('worksheetcurrencychange',()=>{if(notes.fields[`a${idx}-calculated`])run(false);});
    if(notes.fields[`a${idx}-calculated`])run();
   });
   $('#download-module').addEventListener('click',()=>download([m]));
@@ -239,6 +249,11 @@ function modulePlayer(id) {
  document.addEventListener('keydown',e=>{
   if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey||e.shiftKey||e.target.closest('input,textarea,select,[contenteditable=true]'))return;
   if(e.key==='ArrowRight'&&pos<m.slides.length){e.preventDefault();go(pos+1);}if(e.key==='ArrowLeft'&&pos>0){e.preventDefault();go(pos-1);}
+ });
+ window.addEventListener('sitecurrencychange',()=>{
+  stage.querySelectorAll('[data-worksheet-currency-label]').forEach(el=>{el.textContent=worksheetLabel(el.dataset.calculatorKind,el.dataset.worksheetCurrencyLabel);});
+  stage.querySelectorAll('[data-currency-note]').forEach(el=>{el.textContent=worksheetCurrencyNote(el.dataset.currencyNote);});
+  stage.querySelectorAll('[data-calculator]').forEach(form=>form.dispatchEvent(new Event('worksheetcurrencychange')));
  });
  window.addEventListener('hashchange',()=>{pos=fromHash();render(true);});render();
 }

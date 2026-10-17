@@ -3,3 +3,7 @@
 @media(max-width:600px){.site-header .site-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:5px}.site-header .site-links a{text-align:center}}
 
 #email-inquiry[hidden]{display:none}
+/* A compact preference control; amounts are units, never implied FX conversions. */
+.site-currency{width:min(1280px,calc(100% - 40px));margin:auto;padding:0 0 12px;display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;font:12px/1.5 Arial,sans-serif;color:#35584b}.site-currency label{font-weight:bold}.site-currency select{max-width:240px;min-height:36px;padding:5px 8px;border:1px solid #a5bbb0;border-radius:6px;background:#fffdf8;color:#173b36;font:12px Arial,sans-serif}.site-currency details{position:relative}.site-currency summary{cursor:pointer;padding:8px 0}.site-currency details p{position:absolute;z-index:30;right:0;top:25px;width:min(390px,80vw);padding:16px;border:1px solid #b8c9c0;border-radius:9px;background:#fffdf8;box-shadow:0 8px 20px #173b3620;font:12px/1.7 Arial,sans-serif;color:#173b36}.currency-page-note{font-weight:bold}.site-currency :focus-visible{outline:3px solid #ae4f2c;outline-offset:3px}@media(max-width:600px){.site-currency{width:calc(100% - 28px)}.site-currency details p{right:auto;left:0;max-width:calc(100vw - 40px)}}@media print{.site-currency{display:none!important}}
+
+.site-currency{position:relative}.site-currency details{position:static}.site-currency details p{left:0;right:auto;top:100%;margin-top:0;max-width:100%}

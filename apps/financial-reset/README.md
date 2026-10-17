@@ -4,7 +4,7 @@ A static, browser-local transaction review and book-based action-plan app for *P
 
 ## Privacy and data lifecycle
 
-- CSVs are read with the browser File API. No financial data is uploaded, sent to an AI service, or written to local/session storage.
+- CSVs are read with the browser File API. No financial data is uploaded, sent to an AI service, or written to local/session storage. The site-wide currency selector may save only its manual preference on this device; it does not change the CAD-only report or CSV requirements.
 - Only session memory holds transactions, context, and notes. Reloading clears the analysis. A user can explicitly download a plain-text report.
 - A Content Security Policy prevents fetch/XHR/WebSocket connections and disallows inline scripts, object embeds, external assets, and form submissions.
 - Descriptions, filenames, and user notes are escaped before HTML rendering. Reports use plain text rather than a spreadsheet-compatible CSV export.

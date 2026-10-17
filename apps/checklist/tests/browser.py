@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 import os
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page(viewport={'width':1280,'height':900});errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto(os.environ.get('APP_TEST_URL','http://localhost:8032')+'/apps/checklist/')
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',args=['--no-sandbox']);page=b.new_page(locale='en-CA',timezone_id='America/Edmonton',viewport={'width':1280,'height':900});errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto(os.environ.get('APP_TEST_URL','http://localhost:8032')+'/apps/checklist/')
  assert page.locator('fieldset').count()==43
  page.click('#show-report');assert 'No applicable answers' in page.locator('#scorecard').inner_text()
  for id,value in [('0-0','yes'),('0-1','part'),('0-2','no'),('0-3','na')]:page.locator(f'input[name="q-{id}"][value="{value}"]').check()
