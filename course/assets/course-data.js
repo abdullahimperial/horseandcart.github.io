@@ -1201,7 +1201,7 @@ window.COURSE = [
     "id": 5,
     "stage": "Preserve",
     "title": "Protect what you build",
-    "summary": "Recognize wealth-eroding risks and use the Sink vs. Tap lens without losing sight of human value.",
+    "summary": "Recognize wealth-eroding risks and use the Tap vs. Leak lens without losing sight of human value.",
     "page": 66,
     "slides": [
       {
@@ -1346,8 +1346,8 @@ window.COURSE = [
         "heading": "House As A Wealth Preservation Tool"
       },
       {
-        "title": "Sink vs. Tap: examine the outcomes",
-        "body": "The book suggests two columns: outcomes that take money out and outcomes that bring money back.",
+        "title": "Tap vs. Leak: examine the outcomes",
+        "body": "Imagine a bucket under a tap. Taps bring money in; leaks let it out. Compare both sides of a decision, including their amounts, timing, and risks.",
         "points": [
           "A single purchase can have both types of outcome.",
           "List ongoing costs and potential financial benefits.",
@@ -1356,13 +1356,13 @@ window.COURSE = [
         "visual": {
           "kind": "split",
           "labels": [
-            "Sink|Costs, fees, upkeep",
+            "Leak|Costs, fees, upkeep",
             "Tap|Income or financial benefit"
           ]
         },
         "page": 68,
         "note": "Counting labels does not measure the financial size of each outcome.",
-        "heading": "Sink vs. Tap"
+        "heading": "Tap vs. Leak"
       },
       {
         "title": "Financial productivity is not all value",
@@ -1386,12 +1386,12 @@ window.COURSE = [
         "heading": "Financial productivity is not all value"
       },
       {
-        "title": "Three cases, better questions",
-        "body": "The chapter asks about a specialist degree, a luxury car, and buying versus renting. Context makes the exercise useful.",
+        "title": "Five choices, better questions",
+        "body": "The chapter asks about a vacation on credit, a luxury purchase on credit, investing, business equipment, and a rental property. Some decisions create both taps and leaks.",
         "points": [
-          "A degree: what opportunities, costs, and personal purpose?",
-          "A car: what practical value versus financing and running costs?",
-          "A home: what total costs, risks, equity, and flexibility?"
+          "Vacation or luxury purchase on credit: what spending and interest costs follow?",
+          "Investments and business equipment: what potential income, costs, and risks?",
+          "Rental property: what rent, financing, maintenance, and vacancy risks?"
         ],
         "visual": {
           "kind": "steps",
@@ -1403,16 +1403,16 @@ window.COURSE = [
         },
         "page": 70,
         "note": "",
-        "heading": "Activity: Sink or Tap"
+        "heading": "Activity: Tap or Leak"
       }
     ],
     "activities": [
       {
         "type": "tool",
-        "title": "Try the book’s three cases",
-        "prompt": "Use the Sink vs. Tap activity to list financial outcomes. Also record a non-financial benefit where relevant.",
-        "href": "../activities/sink-vs-tap.html",
-        "label": "Open Sink vs. Tap",
+        "title": "Try the book’s five choices",
+        "prompt": "Choose Tap, Leak, or Both for five visual scenarios, then explore a better decision. Use the worksheet to compare amounts and record non-financial value.",
+        "href": "../activities/tap-vs-leak.html",
+        "label": "Open Tap vs. Leak",
         "origin": "From the book"
       },
       {
@@ -2797,3 +2797,4 @@ window.COURSE = [
     "resources": []
   }
 ];
+
