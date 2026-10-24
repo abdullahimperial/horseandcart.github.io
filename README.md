@@ -6,7 +6,7 @@ Static book companion for Abdullah Mohiuddin's *Personal Finance Story: From Fig
 
 - `index.html`: homepage with book, course and tool entry points.
 - `start-here.html`: guided route through understanding, saving, resilience, preservation, growth, transfer and giving.
-- `tools.html`: directory of the CSV Financial Reset app, True Cost of a Purchase, Money Spiral, Sink vs. Tap, mortgage calculator and two games.
+- `tools.html`: directory of the CSV Financial Reset app, True Cost of a Purchase, Money Spiral, Tap vs. Leak, mortgage calculator and two games.
 - `book.html` / `about.html`: book overview, purchase/video placeholders and author/project context drawn from the manuscript.
 - `workshops.html` / `contact.html`: proposed pilot outline and a local inquiry-draft form. The form does **not** send or store messages; copy/download works in the browser. Public email and booking details are not configured.
 - `course/`: nine modules with visual lessons, workshops, local workbook notes and relevant tool links. Tools link back to the lessons.
@@ -29,3 +29,4 @@ APP_TEST_URL=http://localhost:8010 python games/tests/browser.py
 ```
 
 Browser checks require Playwright and `/usr/bin/chromium`. The website suite checks local destinations, desktop/mobile navigation, layout, course connections and the inquiry-draft flow. Individual app directories document their calculation assumptions and privacy behavior.
+
