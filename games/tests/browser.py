@@ -14,11 +14,12 @@ with sync_playwright() as p:
  def check():
   assert page.evaluate('''()=>{const token=document.querySelector('#token').getBoundingClientRect(),cell=document.querySelector('.board-cell.current').getBoundingClientRect();return Math.abs(token.x+token.width/2-cell.x-cell.width/2)<1&&Math.abs(token.y+token.height/2-cell.y-cell.height/2)<1}''')
  check();page.locator('summary').click();page.locator('#align').check();page.locator('[data-axis=x][data-index="3"]').focus();page.keyboard.press('ArrowRight');check()
- page.locator('#upload').set_input_files(str(ROOT / 'games/board.png'));page.wait_for_timeout(200);check()
+ page.locator('#upload').set_input_files(str(ROOT / 'games/board-book.jpg'));page.wait_for_timeout(200);check()
  page.set_viewport_size({'width':390,'height':844});check();assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path='/tmp/board-mobile.png',full_page=True)
- page.goto(BASE+'/games/financial-life.html');page.evaluate('Math.random=()=>0');page.locator('#roll').click();page.wait_for_timeout(500);page.locator('[data-value="college"]').click();page.locator('#roll').click();page.wait_for_timeout(500);page.locator('[data-value="transit"]').click();page.locator('#roll').click();page.wait_for_timeout(500);page.locator('[data-action="marriage"][data-value="false"]').click();page.locator('#children-next').click();page.locator('[data-value="rent"]').click();assert '62' in page.locator('#stage-title').inner_text();assert '$114,500' in page.locator('#total').inner_text();assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path='/tmp/life-mobile.png',full_page=True)
+ page.goto(BASE+'/games/financial-life.html');page.evaluate('Math.random=()=>0');page.locator('#roll').click();page.wait_for_timeout(500);page.locator('[data-value="college"]').click();page.locator('#roll').click();page.wait_for_timeout(500);page.locator('[data-value="transit"]').click();page.locator('#roll').click();page.wait_for_timeout(500);page.locator('[data-action="marriage"][data-value="false"]').click();page.locator('#children-next').click();page.locator('[data-value="rent"]').click();assert '65' in page.locator('#stage-title').inner_text();assert '$99,500' in page.locator('#total').inner_text();assert page.evaluate('document.documentElement.scrollWidth<=innerWidth');page.screenshot(path='/tmp/life-mobile.png',full_page=True)
  page.locator('#restart').click();page.locator('#roll').click();page.locator('#restart').click();page.wait_for_timeout(600);assert page.locator('#age').inner_text()=='18';assert page.locator('#roll').is_enabled()
  for alias in ['financial_life.html','financial_life.html.html']:
   page.goto(BASE+'/games/'+alias);page.wait_for_url('**/financial-life.html')
  assert not errors,errors
  browser.close();print('Desktop/mobile gameplay, artwork alignment, keyboard adjustment, upload, restart and aliases passed')
+

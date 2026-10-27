@@ -12,4 +12,6 @@ Square 7's printed snake ends outside the numbered grid. The online game asks pl
 
 Excluded book corrections remain excluded: RESP $1,595 receipt story and digital-twin pricing claim. No new tax numbers were introduced.
 
-Status: implementation recovered after workspace pruning; verification and publication pending. Resume by checking current GitHub head and this file; never assume a local file is persistent or that a commit is deployed without checking.
+Status: implementation and automated verification complete. Checks passed for 570 local links/assets, all 102 print-page-and-section references, JavaScript syntax, Financial Life annual ledgers, all 100 board positions, interactive ladders/snakes/square-7 choice/exact finish/restart, True Cost, and Tap vs. Leak. Browser layout was not tested locally because Chromium is unavailable. For publication status, inspect the Pages deployment associated with this revision. Resume from the current GitHub head and this file.
+
+Web artwork is served as optimized JPEG copies; manuscript files and original image assets are not rewritten. Both uploaded web images passed Git blob SHA verification. No paid services were used.
