@@ -1,6 +1,6 @@
 # Financial Reset
 
-A static, browser-local transaction review and book-based action-plan app for *Personal Finance Story* by Abdullah Mohiuddin. Open `apps/financial-reset/index.html` through the site's HTTP server. The fictional demo requires no files.
+A static, browser-local transaction review and book-based action-plan app for *Let’s Fix Money* by Abdullah Mohiuddin. Open `apps/financial-reset/index.html` through the site's HTTP server. The fictional demo requires no files.
 
 ## Privacy and data lifecycle
 
@@ -68,3 +68,4 @@ Netflix remains in the spending/subscription review but is excluded from annual-
 The default report starts with financial status, three expandable priorities and a next-action prompt. The prompt advances when an action is marked done; all actions and their notes remain accessible. `dashboard.js` groups supporting evidence, four-pillar matrices, annual-payment quotes, month-by-month figures and resources into closed native details sections. The action tracker is the single location for individual recommendations, replacing repeated insight/recommendation lists.
 
 Report downloads temporarily expand every section and restore its prior state; print events do the same. Exports contain the detailed analysis, current annual-quote results and action records. Financial assumptions and calculations are unchanged. Use `APP_TEST_URL=http://localhost:8015 python apps/financial-reset/tests/dashboard-browser.py` to verify the compact defaults, next-action progression, details, exports, print state restoration and mobile behavior.
+

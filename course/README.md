@@ -1,6 +1,6 @@
-# Personal Finance Story course
+# Let’s Fix Money course
 
-A static, accessible slide course based on Abdullah Mohiuddin's supplied 109-page manuscript of *Personal Finance Story: From Fighting Affordability to Generational Wealth*.
+A static, accessible slide course based on Abdullah Mohiuddin's supplied 109-page manuscript of *Let’s Fix Money: From Fighting Affordability to Generational Wealth*.
 
 ## Development
 
@@ -27,3 +27,4 @@ Diagrams are original conceptual illustrations, not reproductions of image-only 
 The updated course was exercised in headless Chromium at desktop and mobile sizes: all 102 slides, nine workshops, quiz feedback, calculator defaults and invalid inputs, persisted notes, completion records, resume navigation, downloads, printing, no-JavaScript reading, and blocked-storage fallback. Independent arithmetic checks covered each calculator type and key boundaries. Local page, asset, and activity-tool links returned HTTP 200. The existing Money Spiral and mortgage prepayment tools were also exercised. External eligibility and tax rules are linked for learners to verify; no individual financial entitlement is calculated.
 
 A malformed class attribute in the linked Money Spiral activity was repaired so its direction and monthly difference display correctly. Empty and negative inputs now show a validation message.
+

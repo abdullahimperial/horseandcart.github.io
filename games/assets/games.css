@@ -9,3 +9,8 @@
 /* Event meanings remain visible on every board theme. */
 .board-frame{min-width:880px}.board-grid{z-index:3}.board-cell .number{position:relative;z-index:1}.event-mark{left:3px;right:3px;bottom:3px;display:flex;align-items:center;gap:3px;padding:3px;border:1px solid #168a7560;background:#f0fff7f5;font-size:9px;line-height:1.05;min-height:25px;box-shadow:0 1px 3px #18334b15}.event-mark svg{width:17px;height:17px;flex-shrink:0}.event-mark span{overflow-wrap:normal}.event-mark.snake{background:#fff3edf5;border-color:#cc605470;color:#933e31}.board-frame.vector .board-cell:has(.event-mark.ladder){background:#bde8d2}.board-frame.vector .board-cell:has(.event-mark.snake){background:#f3c7b9}
 .board-grid{z-index:auto}.board-cell .number,.event-mark{z-index:3}
+
+
+.board-frame:not(.vector):not(.show-grid) .board-cell{border-color:transparent}
+.board-frame:not(.vector):not(.show-grid) .board-cell .number,.board-frame:not(.vector):not(.show-grid) .event-mark,.board-frame:not(.vector) .board-paths{display:none}
+.board-frame{aspect-ratio:1312 / 1199;min-width:720px}.book-reference{line-height:1.5;overflow-wrap:anywhere}

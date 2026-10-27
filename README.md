@@ -1,6 +1,6 @@
-# Horse & Cart — Personal Finance Story companion
+# Let’s Fix Money — Let’s Fix Money companion
 
-Static book companion for Abdullah Mohiuddin's *Personal Finance Story: From Fighting Affordability to Generational Wealth*. No build step or package installation is required. Serve the repository root with `python -m http.server 8010`.
+Static book companion for Abdullah Mohiuddin's *Let’s Fix Money: From Fighting Affordability to Generational Wealth*. No build step or package installation is required. Serve the repository root with `python -m http.server 8010`.
 
 ## Website journey
 
@@ -29,4 +29,5 @@ APP_TEST_URL=http://localhost:8010 python games/tests/browser.py
 ```
 
 Browser checks require Playwright and `/usr/bin/chromium`. The website suite checks local destinations, desktop/mobile navigation, layout, course connections and the inquiry-draft flow. Individual app directories document their calculation assumptions and privacy behavior.
+
 

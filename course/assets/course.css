@@ -9,3 +9,6 @@
 [hidden]{display:none!important}
 input[type=checkbox]{width:18px;min-width:18px;height:18px;padding:0;accent-color:var(--green);margin:4px 0 0}
 .action-checklist .quiz-choice:has(input:checked){background:#edf2e9;border-color:var(--green)}
+
+
+.slide-top{flex-wrap:wrap;gap:12px}.slide-top .source{max-width:none;flex:1 1 100%;text-align:left;line-height:1.5;overflow-wrap:anywhere}.slide-bottom{flex-wrap:wrap;gap:10px}.slide-bottom>span:first-child{flex:1 1 75%;overflow-wrap:anywhere}

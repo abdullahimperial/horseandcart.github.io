@@ -6,8 +6,8 @@ function fresh(){return {age:18,stage:'education-roll',net:0,ledger:[],education
 function record(s,amount,text,age=s.age){s.net+=amount;s.ledger.push({age,amount,text,total:s.net});}
 function year(s,age){
  if(age>=23)record(s,s.job,s.job<0?'Career outcome: annual debt':'Career outcome: annual savings',age);
- if(s.car==='finance'&&age>=23&&age<=29)record(s,-RULES.carFinance,'New-car financing · year '+(age-22)+' of 7',age);
- if(s.car==='transit'&&age>=23)record(s,-RULES.transit,'Public transit',age);
+ if(s.car==='finance'&&age>=24&&age<=30)record(s,-RULES.carFinance,'New-car financing · year '+(age-23)+' of 7',age);
+ if(s.car==='transit'&&age>=24)record(s,-RULES.transit,'Public transit',age);
  if(age>=27&&(age<30||s.married))record(s,-s.partner,'Relationship spending',age);
  if(age>=32&&s.children)record(s,-s.children*RULES.child,'Children · '+s.children+' × $8,000',age);
  if(age>=33&&s.resp&&s.children)record(s,-s.children*RULES.resp,'RESP contributions',age);
@@ -21,7 +21,7 @@ function roll(s,r){
  if(!['education-roll','career-roll','partner-roll'].includes(s.stage))throw Error('This stage does not ask for a die roll.');
  s.rolls.push({age:s.age,value:r});
  if(s.stage==='education-roll'){s.educationRoll=r;s.stage=r===4?'degree':'education';}
- else if(s.stage==='career-roll'){s.job=RULES.jobs[r];record(s,s.job,s.job<0?'Career roll: annual debt':'Career roll: annual savings',23);s.stage='transport';}
+ else if(s.stage==='career-roll'){s.job=RULES.jobs[r];record(s,s.job,s.job<0?'Career roll: annual debt':'Career roll: annual savings',23);s.age=24;s.stage='transport';}
  else if(s.stage==='partner-roll'){s.partner=RULES.partners[r];years(s,27,29);s.age=30;s.stage='marriage';}
  else throw Error('This stage does not ask for a die roll.');
  return s;
@@ -40,9 +40,9 @@ function choose(s,action,value){
   s.car=value;
   if(value==='used')record(s,-RULES.usedCar,'Used functional car');
   if(value==='cash')record(s,-RULES.newCar,'New car paid upfront');
-  if(value==='finance')record(s,-RULES.carFinance,'New-car financing · year 1 of 7');
-  if(value==='transit')record(s,-RULES.transit,'Public transit');
-  years(s,24,26);s.age=27;s.stage='partner-roll';
+  
+  
+  year(s,24);years(s,25,26);s.age=27;s.stage='partner-roll';
  }
  else if(s.stage==='marriage'&&action==='marriage'){
   s.married=value===true;
@@ -58,9 +58,10 @@ function choose(s,action,value){
  }
  else if(s.stage==='resp'&&action==='resp'){s.resp=value===true;years(s,33,36);s.age=37;s.stage='housing';}
  else if(s.stage==='housing'&&action==='housing'){
-  if(value!=='rent'&&!Object.hasOwn(RULES.mortgages,value))throw Error('Choose a printed housing path.');s.housing=value==='rent'?'rent':Number(value);years(s,37,62);s.stage='finish';
+  if(value!=='rent'&&!Object.hasOwn(RULES.mortgages,value))throw Error('Choose a printed housing path.');s.housing=value==='rent'?'rent':Number(value);years(s,37,65);s.stage='finish';
  }else throw Error('This choice is not available at this stage.');
  return s;
 }
 root.LifeEngine={RULES,fresh,roll,choose};
 })(typeof window!=='undefined'?window:globalThis);
+

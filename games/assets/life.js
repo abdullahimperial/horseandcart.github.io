@@ -1,11 +1,11 @@
 'use strict';
 const E=LifeEngine;let state=E.fresh(),busy=false,epoch=0;
 const $=id=>document.getElementById(id),money=n=>new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n);
-const chapters=[18,23,27,30,32,37,62];
+const chapters=[18,23,24,27,30,32,33,37,65];
 const option=(action,value,title,detail,disabled=false)=>`<button class="choice" data-action="${action}" data-value="${value}" ${disabled?'disabled':''}><strong>${title}</strong><span class="impact">${detail}</span></button>`;
 function die(n){const spots={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};return Array.from({length:9},(_,i)=>`<i class="pip ${spots[n]?.includes(i)?'visible':''}"></i>`).join('');}
 function render(focus=false){
- $('age').textContent=state.age;$('total').textContent=money(state.net);$('progress').textContent=(chapters.indexOf(state.age)+1)+' / 7';
+ $('age').textContent=state.age;$('total').textContent=money(state.net);$('progress').textContent=(chapters.indexOf(state.age)+1)+' / 9';
  $('timeline').innerHTML=chapters.map(a=>`<span class="age-dot ${a===state.age?'active':a<state.age?'done':''}">Age ${a}</span>`).join('');
  let title='',copy='',content='',icon='↗';const s=state.stage;
  if(s.endsWith('-roll')){title=s==='education-roll'?'How will you fund your education?':s==='career-roll'?'Your career begins':'Your relationship spending';copy=s==='education-roll'?'Roll to discover the education support available to you.':s==='career-roll'?'The die sets your annual savings or debt from age 23.':'The die sets annual partner spending from age 27.';content=`<div class="dice-zone"><div class="die" id="die" aria-label="Die not rolled">${die(1)}</div><button class="button primary" id="roll">Roll the dice</button></div>`;icon='🎲';}
@@ -17,7 +17,7 @@ function render(focus=false){
  if(s==='children'){title='How many children?';copy='Each child adds $8,000 in annual expenses from age 32.';content='<label class="input-label">Number of children <input id="children" type="number" min="0" max="99" step="1" value="0"></label><button class="button primary" id="children-next">Continue</button>';}
  if(s==='resp'){title='Save for their education?';copy='An RESP contribution adds $2,500 per child each year from age 33.';content=option('resp',true,'Contribute to an RESP',money(2500*state.children)+' / year')+option('resp',false,'No RESP contributions','Continue without this expense');}
  if(s==='housing'){title='Choose your housing path';copy='The book specifies annual housing costs. Mortgage paths run for 25 years and add $450,000 in home value at age 62.';content=Object.entries(E.RULES.mortgages).map(([v,n])=>option('housing',v,v+'% down-payment path',money(n)+' / year')).join('')+option('housing','rent','Rent','$24,000 / year');}
- if(s==='finish'){title='You’ve reached age 62';copy='Look back at your decisions. Which recurring costs had the largest effect? Replay to compare a different path.';content=`<div class="finish-value">${money(state.net)}</div><p>Final simulated net worth under the book’s simplified rules.</p><button class="button primary" id="again">Play another life</button>`;icon='🏁';}
+ if(s==='finish'){title='You’ve reached age 65';copy='Look back at your decisions. Which recurring costs had the largest effect? Replay to compare a different path.';content=`<div class="finish-value">${money(state.net)}</div><p>Final simulated net worth under the book’s simplified rules.</p><button class="button primary" id="again">Play another life</button>`;icon='🏁';}
  $('stage').innerHTML=`<div class="stage-heading"><span class="stage-icon" aria-hidden="true">${icon}</span><div><span class="eyebrow">AGE ${state.age}</span><h2 id="stage-title" tabindex="-1">${title}</h2></div></div><p class="stage-copy">${copy}</p><div class="choices">${content}</div>`;
  const grouped=new Map();for(const e of state.ledger){const key=e.text;grouped.set(key,(grouped.get(key)||0)+e.amount);}
  $('ledger').innerHTML=Array.from(grouped).reverse().map(([t,n])=>`<div class="entry"><span>${t}</span><strong class="amount ${n>=0?'positive':'negative'}">${money(n)}</strong></div>`).join('')||'<p>Your first decision starts the story.</p>';
@@ -29,3 +29,4 @@ function choose(a,v){try{E.choose(state,a,v);$('feedback').textContent='';render
 $('stage').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||busy)return;if(b.id==='again'){restart();return;}if(b.id==='children-next'){choose('children',Number($('children').value));return;}if(b.dataset.action){let v=b.dataset.value;if(v==='true'||v==='false')v=v==='true';choose(b.dataset.action,v);return;}if(b.id==='roll'){busy=true;b.disabled=true;const ticket=epoch;const n=1+Math.floor(Math.random()*6);$('die').classList.add('rolling');await new Promise(r=>setTimeout(r,450));if(ticket!==epoch)return;E.roll(state,n);busy=false;render(true);$('feedback').textContent='You rolled '+n+'.';}});
 function restart(){epoch++;busy=false;state=E.fresh();$('feedback').textContent='A new life begins.';render(true);}
 $('restart').addEventListener('click',restart);render();
+
