@@ -2,7 +2,7 @@
 
 User authorized syncing the website with the edited book. References must include print-edition page AND chapter/section/subsection for Kindle readers. No paid credits or purchases are authorized. Preserve the manuscript and game artwork.
 
-Source: Word version 16 (libfile_bf1cb6c68a0c8191b0da6987cd09462f), print PDF version 15 with 77 pages (libfile_68d30c86931081918ec57c5a30352408). Kindle EPUB (libfile_87ad252264e08191afcb3c58c1b6e715) has variable pagination.
+Source: Word version 18 (libfile_bf1cb6c68a0c8191b0da6987cd09462f), print PDF version 17 with 77 pages (libfile_68d30c86931081918ec57c5a30352408). Kindle EPUB version 2 (libfile_87ad252264e08191afcb3c58c1b6e715) has variable pagination.
 
 Baseline: 6bd05cb175cbc32e083ce79dddc96f1f4be684c0.
 
@@ -28,3 +28,16 @@ Web update: six course modules plus shared lesson data/runtime and mortgage calc
 Verification: 570 local links/assets, 102 print-page/section references, static/dynamic lesson parity, JavaScript syntax, Financial Life/board geometry, True Cost engine and Tap vs. Leak tests passed. PDF pages visually reviewed. EPUB structure checked, but Amazon Kindle Previewer and KDP Print Previewer were not run. Live browser verification remains limited by environment network restrictions.
 
 Remaining review matters: the personal RESP grant/bond breakdown requires the author's account records; financial rules and product terms change; third-party endorsement/image permissions have not been independently audited; this editorial work is not legal clearance or an assurance against claims.
+
+
+## Consolidated approved wording follow-up — 28 October 2026
+
+Applied the approved ten replacements and three explanatory notes in Word, print PDF and Kindle EPUB. Clarified credit-card churning, spouse referrals, disability eligibility, savings-rate/emergency-reserve distinction, EI eligibility, promotional credit, the remembered RESP support total, and inheritance uncertainty. Added notes explaining illustration/game limitations, reviewer scope and introductory registered-account summaries. Personal figures, reviewer wording, original artwork and game designs are preserved.
+
+Final saved sources: Word version 18, PDF version 17 (77 pages), EPUB version 2. The contents now lists Tax Sheltered Growth on p. 55 and RRSP on p. 57. Website references match: Tax Sheltered Growth p. 55, RRSP p. 57, FHSA pp. 57–58; chapter and section names retained. Layout uses modest spacing/answer-row adjustments and proportionate resizing of the existing snowball illustration. No original media bytes were changed.
+
+Web: corresponding lesson notes plus estimates/assumptions near mortgage and investment results, emergency planning outputs, financial-reset printable reports and game results. Existing True Cost output limitations retained. No calculation or game rules changed.
+
+Checks: all ten website test suites passed; 570 local links/assets, 102 page/section references, static/dynamic lesson parity and JavaScript syntax passed. All 271 EPUB internal references resolve. Approved text verified in Word, PDF and EPUB; all 77 print pages reviewed in overview, affected pages inspected at readable size, no text outside PDF page bounds. KDP/Kindle Previewer, physical proof, author records and third-party permissions remain external checks; no legal clearance is implied.
+
+Publish this revision to main and codex/book-print-kindle-sync. Verify the associated GitHub Pages workflow before reporting publication complete.

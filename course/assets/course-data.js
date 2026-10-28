@@ -192,7 +192,7 @@ window.COURSE = [
           ]
         },
         "page": 6,
-        "note": "A higher score alone does not prove a better real-world financial plan.",
+        "note": "The illustrations, diagrams and games simplify ideas, not financial outcomes. Read the surrounding text for assumptions, trade-offs and limitations.",
         "heading": "How To Best Use This Book",
         "bookReference": "Print edition, p. 6 · Front matter · How To Best Use This Book"
       }
@@ -535,7 +535,7 @@ window.COURSE = [
           ]
         },
         "page": 28,
-        "note": "",
+        "note": "Lower essential expenses may reduce the reserve needed for those expenses. A higher savings rate alone does not mean less emergency money is needed.",
         "heading": "Save Money",
         "bookReference": "Print edition, p. 28 · Chapter 3 · Save Money"
       },
@@ -621,7 +621,7 @@ window.COURSE = [
           ]
         },
         "page": 30,
-        "note": "Payment timing and autopay can help, but do not guarantee payment. Check sufficient funds, settings and successful processing; fees can still occur.",
+        "note": "Payment timing and autopay can help, but do not guarantee payment. Check sufficient funds, settings and successful processing; fees can still occur. Credit card churning can cost more than its rewards; it is discussed as something to understand, not a strategy for everyone.",
         "heading": "Credit Cards",
         "bookReference": "Print edition, p. 30 · Chapter 3 · Credit Cards"
       },
@@ -729,7 +729,7 @@ window.COURSE = [
           ]
         },
         "page": "34–35",
-        "note": "",
+        "note": "Referral offers may exclude spouses or household members. Disability-related programs have separate eligibility and application requirements; having a disability does not establish eligibility for every program.",
         "heading": "Get Government/Corporate Benefits And Free Support → Storing Your Recyclables / Referral Bonuses / Newbie Benefits / Disability Benefits / Free Glasses For Children / Corporate Rewards",
         "bookReference": "Print edition, pp. 34–35 · Chapter 3 · Get Government/Corporate Benefits And Free Support → Storing Your Recyclables / Referral Bonuses / Newbie Benefits / Disability Benefits / Free Glasses For Children / Corporate Rewards"
       },
@@ -1059,7 +1059,7 @@ window.COURSE = [
           ]
         },
         "page": 43,
-        "note": "",
+        "note": "Paying EI premiums does not, by itself, guarantee eligibility. Possible benefits are part of planning, not guaranteed replacement income.",
         "heading": "Ensuring Alternative Cash Flow",
         "bookReference": "Print edition, p. 43 · Chapter 4 · Ensuring Alternative Cash Flow"
       },
@@ -1146,7 +1146,7 @@ window.COURSE = [
           ]
         },
         "page": 44,
-        "note": "The author’s extra $5 payment was a precaution, not a guarantee. Payment timing, the amount due and all promotional conditions still matter.",
+        "note": "The author’s extra $5 payment was a precaution, not a guarantee. Payment timing, the amount due and all promotional conditions still matter. A strong credit score does not establish repayment capacity or guarantee the availability or terms of a future offer.",
         "heading": "Identify Interest-Free Resources",
         "bookReference": "Print edition, p. 44 · Chapter 4 · Identify Interest-Free Resources"
       },
@@ -1766,10 +1766,10 @@ window.COURSE = [
             "Investments inside|Risk, fees, potential returns"
           ]
         },
-        "page": "54–55",
-        "note": "",
+        "page": "55",
+        "note": "These introductory summaries are not complete account instructions. Check personal eligibility, contribution room, withdrawal conditions, taxes and possible repayment of government support with current guidance and qualified help.",
         "heading": "Tax Sheltered Growth",
-        "bookReference": "Print edition, pp. 54–55 · Chapter 6 · Tax Sheltered Growth"
+        "bookReference": "Print edition, pp. 55 · Chapter 6 · Tax Sheltered Growth"
       },
       {
         "title": "RESP: prepare for education",
@@ -1789,7 +1789,7 @@ window.COURSE = [
           ]
         },
         "page": "55–56",
-        "note": "The author recalls about $50 initially deposited and more than $1,595 in government support for three children. Eligibility determined that support; it was not a return on the deposit or an amount everyone receives. The Canada Learning Bond requires no personal contribution. Account records identify the actual grants and bonds.",
+        "note": "The author recalls about $50 initially deposited and more than $1,595 in government support for three children, rather than a verified grant/bond breakdown. It was not a return on that deposit or an amount every family receives. Eligibility and amounts vary; the Canada Learning Bond requires no personal contribution.",
         "heading": "RESP",
         "bookReference": "Print edition, pp. 55–56 · Chapter 6 · RESP"
       },
@@ -1832,10 +1832,10 @@ window.COURSE = [
             "Withdrawal rules"
           ]
         },
-        "page": "56–57",
+        "page": "57",
         "note": "The book’s couple’s down-payment example uses their own savings, not a government cash gift.",
         "heading": "RRSP",
-        "bookReference": "Print edition, pp. 56–57 · Chapter 6 · RRSP"
+        "bookReference": "Print edition, pp. 57 · Chapter 6 · RRSP"
       },
       {
         "title": "TFSA: flexible tax-free treatment",
@@ -1876,10 +1876,10 @@ window.COURSE = [
             "Qualifying purchase"
           ]
         },
-        "page": 57,
+        "page": "57–58",
         "note": "",
         "heading": "FHSA",
-        "bookReference": "Print edition, p. 57 · Chapter 6 · FHSA"
+        "bookReference": "Print edition, p. 57–58 · Chapter 6 · FHSA"
       },
       {
         "title": "Rules change. Build verification into the plan.",
@@ -2032,7 +2032,7 @@ window.COURSE = [
           ]
         },
         "page": 60,
-        "note": "",
+        "note": "A home or its value might support the next generation; ownership, debts, estate expenses and estate distribution affect what can be passed on.",
         "heading": "Generational Wealth Transfer and Sustainability",
         "bookReference": "Print edition, p. 60 · Chapter 7 · Generational Wealth Transfer and Sustainability"
       },
@@ -2183,7 +2183,7 @@ window.COURSE = [
           ]
         },
         "page": 63,
-        "note": "The author is still learning about wills and trusts; the book does not provide a legal blueprint.",
+        "note": "Inheritance is a possibility, not a guarantee. Circumstances, ownership, debts, estate expenses and legal arrangements affect what remains. The author is still learning about wills and trusts.",
         "heading": "Inheritance",
         "bookReference": "Print edition, p. 63 · Chapter 7 · Inheritance"
       },
