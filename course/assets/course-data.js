@@ -1,4 +1,4 @@
-/* Let’s Fix Money: current 77-page print edition. */
+/* Let’s Fix Money: current print edition. */
 window.COURSE = [
   {
     "id": 1,
@@ -341,7 +341,7 @@ window.COURSE = [
           ]
         },
         "page": 23,
-        "note": "Homeownership is not automatically better than renting.",
+        "note": "A down payment alone does not establish readiness. Budget for the full mortgage payment, ownership costs and accessible emergency savings; homeownership is not automatically better than renting.",
         "heading": "Home Sweet Home",
         "bookReference": "Print edition, p. 23 · Chapter 2 · Home Sweet Home"
       },
@@ -383,7 +383,7 @@ window.COURSE = [
           ]
         },
         "page": 23,
-        "note": "Illustration uses a flat 25% deduction assumption, not a Canadian tax calculation.",
+        "note": "Illustration uses a flat 25% deduction assumption, not a Canadian tax calculation. Any mortgage-prepayment comparison also needs contract limits, penalties and cash reserves.",
         "heading": "Understanding Actual Costs",
         "bookReference": "Print edition, p. 23 · Chapter 2 · Understanding Actual Costs"
       },
@@ -621,7 +621,7 @@ window.COURSE = [
           ]
         },
         "page": 30,
-        "note": "",
+        "note": "Payment timing and autopay can help, but do not guarantee payment. Check sufficient funds, settings and successful processing; fees can still occur.",
         "heading": "Credit Cards",
         "bookReference": "Print edition, p. 30 · Chapter 3 · Credit Cards"
       },
@@ -836,7 +836,7 @@ window.COURSE = [
           ]
         },
         "page": 38,
-        "note": "The book’s “digital twin” pricing idea is a hypothesis; a frugal habit does not guarantee an algorithmic discount.",
+        "note": "The book’s “digital twin” pricing idea is the author’s hypothesis, not a verified description of platform pricing. There is no evidence supplied that frugality causes algorithmic discounts.",
         "heading": "Change Your Mindset And Other Strategies → Join Like-Minded People Focused On Savings / Spirituality, Self-Confidence, Self-Esteem, And Minimalism / Train The Market, Create Frugal Digital Twin",
         "bookReference": "Print edition, p. 38 · Chapter 3 · Change Your Mindset And Other Strategies → Join Like-Minded People Focused On Savings / Spirituality, Self-Confidence, Self-Esteem, And Minimalism / Train The Market, Create Frugal Digital Twin"
       },
@@ -1037,7 +1037,7 @@ window.COURSE = [
           ]
         },
         "page": 43,
-        "note": "A prepaid bill is not cash you can withdraw for an unrelated emergency.",
+        "note": "A prepaid bill is not cash available for an unrelated emergency. Include the next annual renewal and unexpected expenses when assessing remaining cash.",
         "heading": "Reducing Dependency On Emergency Fund",
         "bookReference": "Print edition, p. 43 · Chapter 4 · Reducing Dependency On Emergency Fund"
       },
@@ -1108,7 +1108,7 @@ window.COURSE = [
       },
       {
         "title": "A grace period is not free emergency money",
-        "body": "The author describes timing purchases around statement cycles. This depends on card terms and disciplined full repayment.",
+        "body": "The author describes timing purchases around statement cycles. Interest-free treatment depends on card conditions and full repayment by the due date.",
         "points": [
           "Know the statement date, due date, and grace-period rules.",
           "Carrying a balance can remove advantages and add expensive interest.",
@@ -1124,7 +1124,7 @@ window.COURSE = [
           ]
         },
         "page": 44,
-        "note": "No fixed number of interest-free days is promised for every card or purchase.",
+        "note": "Discipline and confidence in finding a job cannot guarantee replacement income or repayment. No fixed number of interest-free days is promised for every purchase.",
         "heading": "Credit Cards As A Buffer",
         "bookReference": "Print edition, p. 44 · Chapter 4 · Credit Cards As A Buffer"
       },
@@ -1146,7 +1146,7 @@ window.COURSE = [
           ]
         },
         "page": 44,
-        "note": "",
+        "note": "The author’s extra $5 payment was a precaution, not a guarantee. Payment timing, the amount due and all promotional conditions still matter.",
         "heading": "Identify Interest-Free Resources",
         "bookReference": "Print edition, p. 44 · Chapter 4 · Identify Interest-Free Resources"
       },
@@ -1176,14 +1176,14 @@ window.COURSE = [
         "type": "calculator",
         "title": "Estimate a liquid reserve",
         "kind": "emergency",
-        "prompt": "Enter remaining essential monthly expenses after any prepaid obligations, and a planning duration. This is an estimate, not a personal recommendation.",
+        "prompt": "Enter essential monthly expenses still payable and a planning duration. Separately allow for annual renewals and unexpected expenses; prepaid bills are not accessible cash. This partial estimate is not a personal recommendation.",
         "origin": "From the book · Print edition, p. 45 · Chapter 4 · Activity"
       },
       {
         "type": "reflection",
         "title": "Build your five-pillar map",
         "prompts": [
-          "Which recurring bill could be reduced or paid annually more cheaply?",
+          "If a bill is paid annually, what cash remains for emergencies and its next renewal?",
           "Which cash flows are confirmed, and which need eligibility checks?",
           "What liquid savings and practical social support are available?",
           "For any credit resource, what are the risks and the repayment plan?"
@@ -1789,7 +1789,7 @@ window.COURSE = [
           ]
         },
         "page": "55–56",
-        "note": "Scholarships and RESP planning can complement each other.",
+        "note": "The author recalls about $50 initially deposited and more than $1,595 in government support for three children. Eligibility determined that support; it was not a return on the deposit or an amount everyone receives. The Canada Learning Bond requires no personal contribution. Account records identify the actual grants and bonds.",
         "heading": "RESP",
         "bookReference": "Print edition, pp. 55–56 · Chapter 6 · RESP"
       },
@@ -2076,7 +2076,7 @@ window.COURSE = [
           ]
         },
         "page": "61–62",
-        "note": "The author’s family-timing preferences are personal examples, not universal advice.",
+        "note": "Four-year spacing does not guarantee non-overlapping college costs. Study lengths, start dates and family circumstances vary; family planning involves more than finances.",
         "heading": "Planning A Family For The Future",
         "bookReference": "Print edition, pp. 61–62 · Chapter 7 · Planning A Family For The Future"
       },
@@ -2161,7 +2161,7 @@ window.COURSE = [
           ]
         },
         "page": 63,
-        "note": "Family support can be uncertain and does not automatically eliminate the need for personal savings.",
+        "note": "Parental wealth does not guarantee available support. Willingness and circumstances can change; family help is additional support, not an automatic replacement for accessible savings.",
         "heading": "Reduce The Need For An Emergency Fund For Your Children / Safety Net",
         "bookReference": "Print edition, p. 63 · Chapter 7 · Reduce The Need For An Emergency Fund For Your Children / Safety Net"
       },
@@ -2696,7 +2696,7 @@ window.COURSE = [
           ]
         },
         "page": "68–69",
-        "note": "These are the author’s priorities. Product rules and personal circumstances vary; verify actual terms.",
+        "note": "The rent comparison is one measure, not an affordability test. The full mortgage payment, including principal, and all ownership costs must fit the budget.",
         "heading": "My Housing Story",
         "bookReference": "Print edition, pp. 68–69 · Chapter 9 · My Housing Story"
       },
@@ -2782,7 +2782,7 @@ window.COURSE = [
           ]
         },
         "page": 69,
-        "note": "",
+        "note": "Calculator savings are estimates before any unmodelled fees or penalties. Confirm permitted prepayments and preserve cash for other needs.",
         "heading": "Home Mortgage Milestones",
         "bookReference": "Print edition, p. 69 · Chapter 9 · Home Mortgage Milestones"
       },
@@ -2855,7 +2855,7 @@ window.COURSE = [
       {
         "type": "tool",
         "title": "Explore a mortgage prepayment",
-        "prompt": "Compare a baseline and a one-time prepayment. Then try the book’s question: what changes when $1 is prepaid in year one? Read the calculator assumptions and your actual lender terms.",
+        "prompt": "Compare a baseline with a permitted one-time prepayment, including the book’s $1-in-year-one example. Verify lender terms and any penalties. Compare net savings after charges and how much cash remains accessible.",
         "href": "../calculators/mortgage-prepayment.html",
         "label": "Open Mortgage Calculator",
         "origin": "From the book · Print edition, p. 71 · Chapter 9 · Activity"
@@ -2866,7 +2866,8 @@ window.COURSE = [
         "prompts": [
           "What assumptions and permitted prepayments did you use?",
           "What happened to projected total financing costs and payoff time?",
-          "Which mortgage milestone would be meaningful to you?"
+          "Which mortgage milestone would be meaningful to you?",
+          "What penalties or charges are excluded, and what cash would remain for emergencies?"
         ],
         "origin": "From the book · Print edition, p. 71 · Chapter 9 · Activity",
         "tip": ""
