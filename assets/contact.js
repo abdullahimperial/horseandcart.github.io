@@ -1,3 +1,4 @@
+/* FUTURE DELIVERY: This module currently only prepares drafts and mailto links. A backend must validate and rate-limit submissions, protect email credentials, obtain appropriate consent, and report actual delivery failures before replacing this behavior. Never display sent for a local draft. */
 'use strict';
 const $=id=>document.getElementById(id);let draft='';
 const topic=new URLSearchParams(location.search).get('topic');if(['workshop','book','feedback'].includes(topic))$('inquiry-topic').value=topic;
