@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore how a credit-card statement period and 21-day grace period affect a purchase due date and possible interest.">
+  <meta name="theme-color" content="#173b36">
+  <title>Credit Card Statement Calendar | Let’s Fix Money</title>
+  <link rel="stylesheet" href="../assets/site-notice.css">
+  <link rel="stylesheet" href="../assets/companion.css">
+  <link rel="stylesheet" href="../assets/site-shell.css?v=20261027-book-sync">
+  <link rel="stylesheet" href="assets/statement-calendar.css?v=20261101">
+</head>
+<body>
+  <a class="site-skip" href="#main">Skip to content</a>
+  <aside class="site-notice" role="note" aria-label="Website status"><strong>Under construction · Simulation only</strong> Use fictional examples. This activity is educational and does not calculate the terms of a specific credit-card account.</aside>
+  <header class="site-header"><div class="site-header-inner"><a class="site-brand" href="../index.html"><span class="site-mark" aria-hidden="true">L</span><span><strong>Let’s Fix Money</strong><small>Learn. Apply. Build your financial future.</small></span></a><nav class="site-links" aria-label="Website navigation"><a class="site-start" href="../start-here.html">Start here</a><a href="../course/index.html">Course</a><a href="../tools.html" aria-current="page">Tools &amp; games</a><a href="../book.html">Book</a><a href="../about.html">About</a><a href="../workshops.html">Workshops</a></nav></div></header>
+  <main class="pc-wrap sc-wrap" id="main">
+    <p class="sc-breadcrumb"><a href="../tools.html">Tools &amp; games</a> <span aria-hidden="true">/</span> Credit-card activity</p>
+    <header class="sc-intro">
+      <p class="pc-eyebrow">Interactive activity · Chapter 3 · Credit Cards</p>
+      <h1 class="pc-page-title">When would this purchase be due?</h1>
+      <p class="pc-lead">Choose a purchase date and amount. Set an example statement closing day, then see the assumed statement period, payment due date and what interest might look like if the balance is not paid in full.</p>
+    </header>
+    <section class="sc-explainer" aria-label="How the activity works">
+      <div class="sc-explainer-icon" aria-hidden="true">21</div>
+      <div><strong>The 21-day countdown starts at the statement close.</strong><p>This activity assumes the selected purchase posts on the date you choose and is included in the statement cycle that contains it. The example due date is 21 calendar days after that cycle closes.</p></div>
+    </section>
+    <div class="sc-layout">
+      <section class="sc-panel sc-controls" aria-labelledby="inputs-heading">
+        <div class="sc-panel-heading"><span class="sc-step">1</span><div><p class="sc-kicker">Your example</p><h2 id="inputs-heading">Choose the details</h2></div></div>
+        <div class="sc-field"><label for="purchase-date">Purchase posts on</label><input id="purchase-date" type="date" required><small>Use the date the transaction appears or is expected to post. Posting after a statement closes may move it to the next cycle.</small></div>
+        <div class="sc-field"><label for="purchase-price">Purchase amount</label><div class="sc-input-affix"><span aria-hidden="true">$</span><input id="purchase-price" type="number" min="0.01" max="1000000" step="0.01" value="250" inputmode="decimal" aria-describedby="price-help"></div><small id="price-help">CAD example only. Enter a fictional amount.</small></div>
+        <div class="sc-field"><label for="closing-day">Statement closes on this day each month</label><select id="closing-day"></select><small>If a month does not have that day, the activity uses that month’s last calendar day.</small></div>
+        <div class="sc-field"><label for="apr">Assumed purchase interest rate (APR)</label><div class="sc-input-affix sc-rate"><input id="apr" type="number" min="0" max="100" step="0.01" value="19.00" inputmode="decimal" aria-describedby="apr-help"><span>%</span></div><small id="apr-help">Example rate: 19% per year. Change it to match a fictional scenario; your card agreement controls your actual rate.</small></div>
+        <p class="sc-error" id="input-error" role="alert" hidden></p><div class="sc-field"><label for="days-after-due">If the balance remains unpaid, estimate interest through</label><select id="days-after-due"><option value="30" selected>30 days after the due date</option><option value="60">60 days after the due date</option><option value="90">90 days after the due date</option></select><small>This is an illustrative payoff date, not a prediction about what you will pay.</small></div>
+      </section>
+      <section class="sc-panel sc-calendar-panel" aria-labelledby="calendar-heading">
+        <div class="sc-panel-heading"><span class="sc-step">2</span><div><p class="sc-kicker">Your billing cycle</p><h2 id="calendar-heading">Statement calendar</h2></div></div>
+        <p class="sc-period" id="period-label" aria-live="polite"></p>
+        <div class="sc-calendar-key" aria-label="Calendar key"><span><i class="key-period"></i> Statement period</span><span><i class="key-purchase"></i> Purchase</span><span><i class="key-close"></i> Statement closes</span></div>
+        <div id="calendars" class="sc-calendars"></div>
+        <p class="sc-calendar-hint">Select any highlighted day to move the purchase date within this statement period. Use the date field to choose a different month.</p>
+      </section>
+    </div>
+    <section class="sc-results" aria-labelledby="results-heading" aria-live="polite">
+      <div class="sc-panel-heading"><span class="sc-step sc-step-gold">3</span><div><p class="sc-kicker">What the dates mean</p><h2 id="results-heading">Your estimated timeline</h2></div></div>
+      <div class="sc-date-strip">
+        <article class="sc-date-card"><span>Purchase posts</span><strong id="out-purchase">—</strong><small id="out-price">—</small></article>
+        <div class="sc-arrow" aria-hidden="true">→</div>
+        <article class="sc-date-card"><span>Statement closes</span><strong id="out-close">—</strong><small id="out-period">—</small></article>
+        <div class="sc-arrow" aria-hidden="true">→</div>
+        <article class="sc-date-card sc-due-card"><span>Payment due · 21 days later</span><strong id="out-due">—</strong><small>Pay the full statement balance by this date to keep the assumed purchase grace period.</small></article>
+      </div>
+      <div class="sc-interest-grid">
+        <article class="sc-outcome sc-on-time"><span class="sc-outcome-icon" aria-hidden="true">✓</span><div><h3>If the full statement balance is paid by the due date</h3><strong id="out-ontime">$0.00</strong><p>Estimated purchase interest on this purchase, assuming the grace-period conditions apply.</p></div></article>
+        <article class="sc-outcome sc-late"><span class="sc-outcome-icon" aria-hidden="true">↗</span><div><h3>If the full balance is not paid by the due date</h3><strong id="out-interest">$—</strong><p>Illustrative purchase interest from the purchase date through <b id="out-payoff">—</b> (<span id="out-days">—</span> days), using a simple daily-rate estimate.</p></div></article>
+      </div>
+      <p class="sc-interest-note" id="interest-note">The estimate assumes no payments toward this purchase before the example payoff date.</p>
+    </section>
+    <section class="sc-disclaimer" aria-labelledby="disclaimer-heading">
+      <h2 id="disclaimer-heading">Important assumptions and limits</h2>
+      <ul>
+        <li>This is an educational illustration, not financial, credit, legal or tax advice, and not a recommendation to borrow or spend.</li>
+        <li>The 21-day period is an assumption for this activity. Federally regulated financial institutions must provide at least 21 days for purchases, but the dates and rules on your own statement and cardholder agreement control.</li>
+        <li>The activity assumes the selected purchase posts on the selected date, belongs to the statement period shown, and qualifies for a purchase grace period. A transaction that posts after the closing date may appear in the next statement period.</li>
+        <li>A purchase grace period generally depends on paying the required full statement balance by the due date. Cash advances, balance transfers and cash-like transactions may not have a grace period.</li>
+        <li>This is not a deferred-interest financing offer. It illustrates how purchase interest may be applied from the purchase date when the normal grace period is lost.</li>
+        <li>If the required balance is not paid in full, interest may be calculated from the purchase date. The estimate uses purchase amount × APR ÷ 365 × days, with no payments before the example payoff date. It is a simple approximation, not your issuer’s calculation.</li>
+        <li>Actual interest can differ because issuers use the account’s terms and balance calculation method, and because of other transactions, payment timing, daily balances, compounding, fees, rate changes, holidays and processing cutoffs. The activity does not estimate late fees, minimum payments, credit-score effects or interest on other balances.</li>
+        <li>Your statement, agreement and issuer are the authoritative sources for your closing date, due date, rates, grace-period eligibility, payment allocation and charges. Contact your issuer if you need account-specific information.</li>
+      </ul>
+      <p class="sc-sources">Official information: <a href="https://www.canada.ca/en/financial-consumer-agency/services/credit-cards/credit-card-work.html" target="_blank" rel="noopener noreferrer">How interest and grace periods work</a> · <a href="https://www.canada.ca/en/financial-consumer-agency/services/credit-cards/pay-off-credit-card.html" target="_blank" rel="noopener noreferrer">Paying off your credit card</a></p>
+      <p class="sc-privacy">This activity runs in your browser. It does not save or send the values you enter.</p>
+    </section>
+    <p class="pc-meta book-reference">Print edition, p. 30 · Chapter 3 · “Credit Cards”. Kindle page numbers vary; follow the chapter and section name.</p>
+  </main>
+  <footer class="site-footer"><div class="site-footer-inner"><strong>Let’s Fix Money. One step at a time.</strong><p>A learning companion to <cite>Let’s Fix Money: From Struggling with Affordability to Building Generational Wealth</cite> by Abdullah Mohiuddin.</p><nav aria-label="Footer navigation"><a href="../start-here.html">Start here</a><a href="../tools.html">Explore the tools</a><a href="../contact.html">Contact &amp; workshop inquiries</a><a href="../about.html">About this project</a></nav><p>Contact Abdullah: <a href="mailto:abdullah@letsfixmoney.com">abdullah@letsfixmoney.com</a></p><p>Educational simulations. Check assumptions, current rules and your circumstances before making financial decisions.</p></div></footer>
+  <script src="assets/statement-calendar.js?v=20261101"></script>
+</body>
+</html>
