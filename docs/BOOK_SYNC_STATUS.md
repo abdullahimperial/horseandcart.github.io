@@ -34,10 +34,15 @@ Remaining review matters: the personal RESP grant/bond breakdown requires the au
 
 Applied the approved ten replacements and three explanatory notes in Word, print PDF and Kindle EPUB. Clarified credit-card churning, spouse referrals, disability eligibility, savings-rate/emergency-reserve distinction, EI eligibility, promotional credit, the remembered RESP support total, and inheritance uncertainty. Added notes explaining illustration/game limitations, reviewer scope and introductory registered-account summaries. Personal figures, reviewer wording, original artwork and game designs are preserved.
 
-Final saved sources: Word version 18, PDF version 17 (77 pages), EPUB version 2. The contents now lists Tax Sheltered Growth on p. 55 and RRSP on p. 57. Website references match: Tax Sheltered Growth p. 55, RRSP p. 57, FHSA pp. 57–58; chapter and section names retained. Layout uses modest spacing/answer-row adjustments and proportionate resizing of the existing snowball illustration. No original media bytes were changed.
+Final saved sources: Word version 18, PDF version 17 (77 pages), EPUB version 2. The contents now lists Tax-Sheltered Growth on p. 55 and RRSP on p. 57. Website references match: Tax-Sheltered Growth p. 55, RRSP p. 57, FHSA pp. 57–58; chapter and section names retained. Layout uses modest spacing/answer-row adjustments and proportionate resizing of the existing snowball illustration. No original media bytes were changed.
 
 Web: corresponding lesson notes plus estimates/assumptions near mortgage and investment results, emergency planning outputs, financial-reset printable reports and game results. Existing True Cost output limitations retained. No calculation or game rules changed.
 
 Checks: all ten website test suites passed; 570 local links/assets, 102 page/section references, static/dynamic lesson parity and JavaScript syntax passed. All 271 EPUB internal references resolve. Approved text verified in Word, PDF and EPUB; all 77 print pages reviewed in overview, affected pages inspected at readable size, no text outside PDF page bounds. KDP/Kindle Previewer, physical proof, author records and third-party permissions remain external checks; no legal clearance is implied.
 
 Publish this revision to main and codex/book-print-kindle-sync. Verify the associated GitHub Pages workflow before reporting publication complete.
+
+
+## Website reconciliation — 1 November 2026
+
+Reconciled the GitHub Pages source against the current 77-page print manuscript. Updated the book subtitle, course and activity print-page references and section names, RDSP account status, tools-page references, and Financial Life score label. Website references identify print pages with chapter and section names where available so Kindle readers can locate the material. No manuscript, PDF, Kindle file, or paid service was changed.

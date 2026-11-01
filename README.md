@@ -1,6 +1,6 @@
 # Let’s Fix Money — Let’s Fix Money companion
 
-Static book companion for Abdullah Mohiuddin's *Let’s Fix Money: From Fighting Affordability to Generational Wealth*. No build step or package installation is required. Serve the repository root with `python -m http.server 8010`.
+Static book companion for Abdullah Mohiuddin's *Let’s Fix Money: From Struggling with Affordability to Building Generational Wealth*. No build step or package installation is required. Serve the repository root with `python -m http.server 8010`.
 
 ## Website journey
 

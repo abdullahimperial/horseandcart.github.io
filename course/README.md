@@ -1,6 +1,6 @@
 # Let’s Fix Money course
 
-A static, accessible slide course based on Abdullah Mohiuddin's supplied 109-page manuscript of *Let’s Fix Money: From Fighting Affordability to Generational Wealth*.
+A static, accessible slide course based on Abdullah Mohiuddin's supplied 77-page print edition of *Let’s Fix Money: From Struggling with Affordability to Building Generational Wealth*.
 
 ## Development
 
