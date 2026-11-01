@@ -1,7 +1,7 @@
 'use strict';
 /*
 FUTURE LIVE DATA BACKEND:
-Replace the fictional seed data with a versioned, server-validated response from a same-origin budget-report API.
+Replace the mixed sourced/illustrative seed data with a versioned, server-validated response from a same-origin budget-report API.
 Suggested contract: {household, generatedAt, dataAsOf, items:[{category,monthlyCost,sourceUrl,sourceTitle,checkedAt,availability,eligibility,fees,confidence}], benefits, warnings}.
 Keep provider/search keys server-side. Use permissioned APIs; respect source terms. Never promise "cheapest" without a defined comparable search scope, availability, fees and location.
 Cache with expiry; label stale/missing data and offer manual entry rather than silently using sample prices. Authenticate/validate/rate-limit as appropriate; minimize personal data and set retention policy.
@@ -23,6 +23,10 @@ Do not equate page-load time with source verification time. Render sources per i
   const values=[['Monthly income',income],['Spending and allocations',out],[income-out>=0?'Unallocated monthly balance':'Monthly shortfall',Math.abs(income-out)]];
   values.forEach(([label,value])=>{const p=document.createElement('p');p.className='total';p.textContent=label+': '+money(value);byId('report').appendChild(p);});
  }
+ // FUTURE: bind offer selection to versioned offer IDs, quoted tax/fees and expiry, not a universal cheapest-price claim.
+ document.querySelectorAll('[data-budget-set]').forEach(button=>button.addEventListener('click',()=>{
+  byId('cost-'+button.dataset.budgetSet).value=button.dataset.value;update();
+ }));
  inputs.forEach(x=>x.addEventListener('input',update));
  byId('reset').addEventListener('click',()=>{inputs.forEach((x,i)=>x.value=original[i]);update();});
  byId('print').addEventListener('click',()=>window.print());
