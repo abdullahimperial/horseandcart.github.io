@@ -1,0 +1,7 @@
+.stage-launcher{padding:4px 0 12px}
+.stage-launcher .app-section{padding:22px 0 30px}
+.stage-resources{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-around;gap:18px 14px}
+.stage-resources>.app-card{flex:1 1 140px;max-width:180px}
+.stage-launcher .nav-return{margin-top:18px}
+@media(max-width:760px){.stage-resources{justify-content:space-around;gap:12px}.stage-resources>.app-card{flex:1 1 calc(33.333% - 12px);max-width:calc(33.333% - 8px)}}
+@media(max-width:420px){.stage-resources{gap:8px}.stage-resources>.app-card{flex:1 1 calc(50% - 8px);max-width:calc(50% - 4px)}}
