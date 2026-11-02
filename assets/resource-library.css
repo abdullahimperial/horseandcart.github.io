@@ -24,3 +24,11 @@
  .resource-page .resource-tabs{gap:6px}
  .resource-page .resource-tabs a{font-size:12px;padding:8px 10px}
 }
+
+
+.resource-page .pc-intro{padding:24px clamp(20px,4vw,36px)}
+.resource-page .destination-grid .app-card small{font-size:14px;line-height:1.5}
+.resource-page .destination-grid .app-card strong{font-size:15px;line-height:1.4}
+.resource-stage-filter{display:grid;gap:8px;margin:16px 0;max-width:700px}
+.resource-stage-filter select{min-height:48px;font:inherit;padding:10px;border:1px solid #8ba498;border-radius:10px;background:#fffdf8;color:#173b36}
+.resource-tabs a[hidden]{display:none!important}

@@ -159,7 +159,7 @@ function renderReport(){
 function downloadReport(){
  if(!lastReport||!$('#report-stale').hidden)return;
  const text=window.ResetDashboard.withExpanded(()=>$('#report').innerText).replace('Download report ↓\nPrint report\nReview assumptions ↑','')+'\n\nMY TOP THREE ACTIONS\n'+($('#action-notes').value||'[Not entered]')+'\n\nACTION TRACKER\n'+window.ResetPlanUI.text();
- const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`financial-reset-${lastReport.start}-to-${lastReport.end}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`money-snapshot-${lastReport.start}-to-${lastReport.end}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 $('#plan-file').addEventListener('change',e=>window.ResetPlanUI.load(e.target.files[0]));
 $('#card-file').addEventListener('change',e=>load('card',e.target.files[0]));$('#chequing-file').addEventListener('change',e=>load('chequing',e.target.files[0]));$('#import').addEventListener('click',importTransactions);

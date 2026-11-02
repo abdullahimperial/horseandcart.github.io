@@ -14,7 +14,7 @@ home:'<path d="m3 11 9-8 9 8M5 10v10h14V10M9 20v-6h6v6"/>',
 game:'<path d="M6.5 8h11a4 4 0 0 1 3.8 5.2l-1.2 4a2.5 2.5 0 0 1-4.2 1l-2-2.2h-3.8l-2 2.2a2.5 2.5 0 0 1-4.2-1l-1.2-4A4 4 0 0 1 6.5 8z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>',
 dice:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/>'
 };
-const rules=[[/resource library/i,'resources','book'],[/survival budget/i,'budget','tools'],[/saving practice/i,'checklist','course'],[/money snapshot/i,'snapshot','about'],[/recommendations/i,'book','course'],[/investment snowball/i,'chart','tools'],[/statement calendar/i,'calendar','calculators'],[/true cost/i,'calculator','calculators'],[/money spiral/i,'spiral','tools'],[/tap vs/i,'drop','games'],[/mortgage prepayment/i,'home','calculators'],[/financial life/i,'game','games'],[/snakes/i,'dice','games']];
+const rules=[[/resource library/i,'resources','book'],[/survival budget/i,'budget','tools'],[/saving practice/i,'checklist','course'],[/money snapshot/i,'snapshot','about'],[/recommendations/i,'book','course'],[/investment snowball/i,'chart','calculators'],[/statement calendar/i,'calendar','calculators'],[/true cost/i,'calculator','calculators'],[/money spiral/i,'spiral','tools'],[/tap vs/i,'drop','games'],[/mortgage prepayment/i,'home','calculators'],[/financial life/i,'game','games'],[/snakes/i,'dice','games']];
 document.querySelectorAll('.pc-tool-list article[data-goal]').forEach(card=>{
  const title=card.querySelector('h3')?.textContent.trim()||'';
  const match=rules.find(([pattern])=>pattern.test(title));
@@ -56,3 +56,4 @@ document.querySelectorAll('.pc-tool-list article[data-goal]').forEach(card=>{
  card.append(info);
 });
 })();
+

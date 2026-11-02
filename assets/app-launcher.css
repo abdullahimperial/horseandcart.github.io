@@ -42,4 +42,4 @@
 .app-card:focus-visible{outline:3px solid #155148;outline-offset:4px}
 
 
-.app-card--games:hover .app-icon,.app-card--contact:hover .app-icon,.app-card--calculators:hover .app-icon,.app-card--about:hover .app-icon,.app-card--book:hover .app-icon{color:#123b38}
+@media(min-width:761px){.app-grid--secondary{grid-template-columns:repeat(3,minmax(140px,190px));justify-content:center}}

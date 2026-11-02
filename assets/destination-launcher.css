@@ -65,5 +65,3 @@
 .destination-grid .app-card--games .app-icon,.tools-directory .app-card--games .app-icon{background:linear-gradient(145deg,#f4dfaf,#d4b471);color:#123b38}
 .destination-grid .app-card--calculators .app-icon,.tools-directory .app-card--calculators .app-icon,.tools-directory .app-card--book .app-icon{background:linear-gradient(145deg,#c4f2df,#80c6ac);color:#123b38}
 
-
-.destination-grid .app-card:focus-visible{outline-color:#155148}

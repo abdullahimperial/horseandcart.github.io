@@ -27,3 +27,5 @@
 .site-header a:focus-visible,.site-next a:focus-visible,.site-currency :focus-visible{outline:3px solid #155148;outline-offset:4px}
 .site-footer a:focus-visible{outline-color:#f0d49a}
 
+
+.site-copyright{margin:18px auto 0;padding:12px 0;font:13px/1.6 Arial,Helvetica,sans-serif;max-width:1100px}.site-copyright small{font-size:12px}.site-copyright-footer{padding:12px 24px;text-align:center}

@@ -953,9 +953,9 @@ window.COURSE = [
       {
         "type": "tool",
         "title": "Apply all four saving pillars",
-        "prompt": "Generate a fictional Financial Reset report. Review one expense row across all four pillar cells, then choose an action to investigate.",
+        "prompt": "Generate a fictional Money Snapshot report. Review one expense row across all four pillar cells, then choose an action to investigate.",
         "href": "../apps/financial-reset/",
-        "label": "Open Financial Reset",
+        "label": "Open Money Snapshot",
         "origin": "Additional practice"
       }
     ],

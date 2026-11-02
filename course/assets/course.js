@@ -136,7 +136,7 @@ function workbook(mods) {
  return lines.join('\n');
 }
 function download(mods) {
- const blob=new Blob([workbook(mods)],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=mods.length===1?`personal-finance-module-${mods[0].id}-workbook.txt`:'personal-finance-course-workbook.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Workbook downloaded. Keep it somewhere private.');
+ const blob=new Blob([workbook(mods)],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=mods.length===1?`lets-fix-money-module-${mods[0].id}-workbook.txt`:'lets-fix-money-course-workbook.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Workbook downloaded. Keep it somewhere private.');
 }
 function home() {
  const done=courses.filter(m=>read(`pf-course-module-${m.id}`)==='complete').length;
@@ -145,7 +145,7 @@ function home() {
  const completed=read(`pf-course-module-${m.id}`)==='complete';const position=Number(read(`pf-course-position-m${m.id}`,0)); const started=position>0;
  const kinds=['path','horse','bucket','shield','spiral','steps','network','cycle','house'];
  return `<article class="module-card"><div class="card-art"><span class="card-number">${String(m.id).padStart(2,'0')}</span>${svg(kinds[m.id-1])}</div><div class="card-body"><span class="eyebrow" style="margin:0">${esc(m.stage)}</span><h3>${esc(m.title)}</h3><p>${esc(m.summary)}</p><div class="card-meta">${m.slides.length} slides · ${m.activities.length+1} activities</div><details class="book-disclosure"><summary>Related book section</summary><p>${esc(m.bookReference)}</p></details><div class="card-status">${completed?'✓ Marked complete':started?'In progress · resume where you left off':''}</div><a class="btn ${m.id===next.id?'primary':'light'}" href="module-${m.id}.html">${completed?'Revisit module':started?'Continue module':'Explore module'} <span aria-hidden="true">→</span></a></div></article>`;
- }).join('')}</div></section><section class="home-workbook"><div><div class="eyebrow">Learn → Apply → Act</div><h3>A workbook that grows with you.</h3><p>Save reflections and activity answers on this browser, revisit your decisions, and download your notes. Your next action matters more than finishing every page.</p><p class="storage-note">Notes stay on this device and browser. Clearing browser data removes them. Download a copy before switching devices. Completion is self-reported.</p></div><a class="btn light" href="../apps/financial-reset/">Try Financial Reset →</a><button class="btn light" id="download-all">Download my workbook <span aria-hidden="true">↓</span></button></section></div>`;
+ }).join('')}</div></section><section class="home-workbook"><div><div class="eyebrow">Learn → Apply → Act</div><h3>A workbook that grows with you.</h3><p>Save reflections and activity answers on this browser, revisit your decisions, and download your notes. Your next action matters more than finishing every page.</p><p class="storage-note">Notes stay on this device and browser. Clearing browser data removes them. Download a copy before switching devices. Completion is self-reported.</p></div><a class="btn light" href="../apps/financial-reset/">Try Money Snapshot →</a><button class="btn light" id="download-all">Download my workbook <span aria-hidden="true">↓</span></button></section></div>`;
  $('#download-all').addEventListener('click',()=>download(courses));
 }
 function modulePlayer(id) {
