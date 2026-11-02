@@ -1,7 +1,27 @@
-.stage-launcher{padding:4px 0 12px}
-.stage-launcher .app-section{padding:22px 0 30px}
-.stage-resources{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-around;gap:18px 14px}
-.stage-resources>.app-card{flex:1 1 140px;max-width:180px}
-.stage-launcher .nav-return{margin-top:18px}
-@media(max-width:760px){.stage-resources{justify-content:space-around;gap:12px}.stage-resources>.app-card{flex:1 1 calc(33.333% - 12px);max-width:calc(33.333% - 8px)}}
-@media(max-width:420px){.stage-resources{gap:8px}.stage-resources>.app-card{flex:1 1 calc(50% - 8px);max-width:calc(50% - 4px)}}
+/* Stage pages reuse the Explore app tiles, in a compact grid suited to lessons and activities. */
+.stage-page main.nav-wrap{max-width:960px}
+.stage-page .nav-intro{padding:18px 0 4px}
+.stage-page .nav-intro h1{font-size:clamp(32px,4vw,44px);margin:8px 0 10px}
+.stage-page .nav-intro>p:not(.nav-kicker){font-size:16px;line-height:1.55;margin:0;max-width:700px}
+.stage-launcher{padding:0 0 8px}
+.stage-launcher .app-section{padding:16px 0 20px}
+.stage-launcher .app-section h2{font:700 19px/1.35 Arial,Helvetica,sans-serif;margin:0 0 8px;color:#173b36}
+.stage-resources{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,160px));justify-content:center;align-items:start;gap:8px;width:100%}
+.stage-resources>.app-card{width:100%;min-height:116px;align-items:center;justify-content:flex-start;gap:8px;padding:8px 6px 10px}
+.stage-resources .app-icon{width:62px;height:62px;flex-basis:62px;border-radius:18px}
+.stage-resources .app-icon svg{width:30px;height:30px}
+.stage-resources .app-card strong{font-size:13px;line-height:1.25;max-width:150px}
+.stage-card-title{display:block;margin-top:3px;font-weight:600}
+.stage-launcher .nav-return{margin-top:10px}
+.stage-page .stage-note{margin:8px 0 18px;padding:12px 14px;font-size:13px}
+@media(max-width:420px){
+  .stage-page .nav-intro{padding-top:14px}
+  .stage-page .nav-intro h1{font-size:34px}
+  .stage-launcher .app-section{padding:13px 0 16px}
+  .stage-launcher .app-section h2{font-size:18px;margin-bottom:6px}
+  .stage-resources{grid-template-columns:repeat(2,minmax(0,148px));gap:6px;justify-content:center}
+  .stage-resources>.app-card{min-height:104px;padding:7px 4px 9px;gap:7px}
+  .stage-resources .app-icon{width:56px;height:56px;flex-basis:56px;border-radius:16px}
+  .stage-resources .app-icon svg{width:28px;height:28px}
+  .stage-resources .app-card strong{font-size:12px}
+}
