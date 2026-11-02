@@ -41,3 +41,13 @@
 }
 @media(max-width:360px){.destination-grid--two{grid-template-columns:repeat(2,minmax(0,1fr))}.destination-grid .app-card small{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.destination-grid .app-card{transition:none}}
+
+/* Destination menus use the same teal and mint icon treatment as Explore. */
+.destination-grid .app-card{color:#123b38}
+.destination-grid .app-card:hover{background:#eaf6ef;border-color:#c5dfd3}
+.destination-grid .app-card:focus-visible{outline-color:#c69b4e}
+.destination-grid .app-icon,.tools-directory .tool-launcher-card .app-icon{background:linear-gradient(145deg,#267a6e 0%,#155148 48%,#0b3035 100%);color:#e6f8ee;box-shadow:0 8px 18px #061b222e,inset 0 1px 0 #ffffff4d}
+.destination-grid .app-card:hover .app-icon,.tools-directory .tool-launcher-card:hover .app-icon{background:linear-gradient(145deg,#319985 0%,#1b6257 50%,#0b3035 100%)}
+.destination-grid .app-card strong,.tools-directory .tool-launcher-card strong{color:#123b38}
+.destination-grid .app-card small,.tools-directory .tool-launcher-card small{color:#4f6c62}
+.tools-directory .tool-card-details summary{color:#155148}
