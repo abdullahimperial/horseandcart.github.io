@@ -25,3 +25,11 @@
 @media(prefers-reduced-motion:reduce){.app-card{transition:none}}
 .nav-page .nav-footer a{color:#285b4c;text-decoration-thickness:1px;text-underline-offset:3px}
 .nav-page .nav-footer a:hover{color:#173b36}
+
+/* One icon family echoes the opening animation instead of assigning a new palette to every category. */
+.app-card{color:#123b38}
+.app-card:hover{background:#eaf6ef;border-color:#c5dfd3}
+.app-card:focus-visible{outline-color:#c69b4e}
+.app-icon,.app-card--course .app-icon,.app-card--games .app-icon,.app-card--calculators .app-icon,.app-card--tools .app-icon,.app-card--book .app-icon,.app-card--youtube .app-icon,.app-card--workshops .app-icon,.app-card--about .app-icon,.app-card--contact .app-icon{background:linear-gradient(145deg,#267a6e 0%,#155148 48%,#0b3035 100%);color:#e6f8ee;box-shadow:0 8px 18px #061b222e,inset 0 1px 0 #ffffff4d}
+.app-card:hover .app-icon{background:linear-gradient(145deg,#319985 0%,#1b6257 50%,#0b3035 100%)}
+.app-card strong{color:#123b38}
