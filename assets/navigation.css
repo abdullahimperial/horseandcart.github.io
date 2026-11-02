@@ -51,3 +51,9 @@
 .stage-link span{color:#a77b36}
 .stage-note{border:1px solid #cbe1d5;background:#e8f3e9;color:#315c50}
 .nav-page .nav-footer a{color:#155148}
+
+
+.nav-page a:focus-visible{outline-color:#155148}
+.nav-intro a:focus-visible{outline-color:#f0d49a}
+.nav-page .nav-intro{margin-top:0}
+

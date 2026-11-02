@@ -51,3 +51,19 @@
 .destination-grid .app-card strong,.tools-directory .tool-launcher-card strong{color:#123b38}
 .destination-grid .app-card small,.tools-directory .tool-launcher-card small{color:#4f6c62}
 .tools-directory .tool-card-details summary{color:#155148}
+
+
+/* Usability fixes: hidden tiles must stay hidden after icon enhancement. */
+.tools-directory .tool-launcher-item[hidden],.tools-directory .pc-tool-list[hidden]{display:none!important}
+.tools-directory .pc-section{padding:20px 0}
+.tools-directory .tool-launcher-card strong,.destination-grid .app-card strong{font-size:15px;line-height:1.4}
+.tools-directory .tool-launcher-card small,.destination-grid .app-card small,.tools-directory .tool-card-details summary{font-size:14px;line-height:1.5}
+.tools-directory .tool-card-details summary{min-height:44px}
+.tools-directory .pc-intro h1{font-size:clamp(30px,4vw,42px)}
+
+
+.destination-grid .app-card--games .app-icon,.tools-directory .app-card--games .app-icon{background:linear-gradient(145deg,#f4dfaf,#d4b471);color:#123b38}
+.destination-grid .app-card--calculators .app-icon,.tools-directory .app-card--calculators .app-icon,.tools-directory .app-card--book .app-icon{background:linear-gradient(145deg,#c4f2df,#80c6ac);color:#123b38}
+
+
+.destination-grid .app-card:focus-visible{outline-color:#155148}

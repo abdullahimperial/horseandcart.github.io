@@ -25,3 +25,9 @@
   .stage-resources .app-icon svg{width:28px;height:28px}
   .stage-resources .app-card strong{font-size:12px}
 }
+
+
+.stage-page .nav-intro{padding:24px clamp(20px,4vw,36px)}
+.stage-resources>.app-card strong{font-size:14px;line-height:1.4}
+.stage-resources>.app-card{min-height:126px}
+

@@ -33,3 +33,13 @@
 .app-icon,.app-card--course .app-icon,.app-card--games .app-icon,.app-card--calculators .app-icon,.app-card--tools .app-icon,.app-card--book .app-icon,.app-card--youtube .app-icon,.app-card--workshops .app-icon,.app-card--about .app-icon,.app-card--contact .app-icon{background:linear-gradient(145deg,#267a6e 0%,#155148 48%,#0b3035 100%);color:#e6f8ee;box-shadow:0 8px 18px #061b222e,inset 0 1px 0 #ffffff4d}
 .app-card:hover .app-icon{background:linear-gradient(145deg,#319985 0%,#1b6257 50%,#0b3035 100%)}
 .app-card strong{color:#123b38}
+
+
+/* Restrained category variation within the shared palette. */
+.app-card--games .app-icon,.app-card--contact .app-icon{background:linear-gradient(145deg,#f4dfaf,#d4b471);color:#123b38}
+.app-card--calculators .app-icon,.app-card--about .app-icon,.app-card--book .app-icon{background:linear-gradient(145deg,#c4f2df,#80c6ac);color:#123b38}
+.app-card:hover .app-icon{color:#e6f8ee}
+.app-card:focus-visible{outline:3px solid #155148;outline-offset:4px}
+
+
+.app-card--games:hover .app-icon,.app-card--contact:hover .app-icon,.app-card--calculators:hover .app-icon,.app-card--about:hover .app-icon,.app-card--book:hover .app-icon{color:#123b38}

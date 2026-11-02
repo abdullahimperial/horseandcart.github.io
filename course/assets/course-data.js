@@ -1,4 +1,4 @@
-/* Let’s Fix Money: current print edition. */
+/* Let’s Fix Money: synchronized with manuscript version 146, 77-page print edition. */
 window.COURSE = [
   {
     "id": 1,
@@ -71,8 +71,8 @@ window.COURSE = [
         "bookReference": "Print edition, p. 15 · Chapter 1 · When You Turn 18"
       },
       {
-        "title": "At 23: income meets lifestyle",
-        "body": "Your job outcome affects what you can save. Your transport decision affects how much of that income you keep.",
+        "title": "At 23 and 24: career outcome and transport",
+        "body": "At age 23, the die determines an annual game-score change, not a salary. At age 24, the player chooses transport.",
         "points": [
           "The game offers a used car, financed new car, upfront new car, or transit.",
           "A one-time purchase and a recurring payment behave differently.",
@@ -88,8 +88,8 @@ window.COURSE = [
         },
         "page": 15,
         "note": "Illustrative game amounts only; fuel, insurance, resale, and other costs are not fully modeled.",
-        "heading": "When You Turn 23 and Graduate / At 24, Decide About Transport",
-        "bookReference": "Print edition, p. 15 · Chapter 1 · When You Turn 23 and Graduate / At 24, Decide About Transport"
+        "heading": "When You Turn 23: Annual Financial Outcome / At 24, Decide About Transport",
+        "bookReference": "Print edition, p. 15 · Chapter 1 · When You Turn 23: Annual Financial Outcome / At 24, Decide About Transport"
       },
       {
         "title": "At 27 and 30: money becomes shared",
@@ -117,7 +117,7 @@ window.COURSE = [
         "points": [
           "Family decisions bring care, time, and financial responsibilities.",
           "Education contributions belong in the household plan.",
-          "In real life, RESP savings remain an asset; the game uses simplified cash-flow deductions."
+          "The $2,500 per-child education-savings deduction at ages 33–65 is a fictional game-score rule, not an actual RESP contribution schedule."
         ],
         "visual": {
           "kind": "steps",
@@ -204,7 +204,7 @@ window.COURSE = [
         "prompt": "Play once now. Record a decision you found difficult, then revisit it after the course. The digital game uses the manuscript’s fixed amounts and choices. Its rules panel explains the annual timing conventions.",
         "href": "../games/financial-life.html",
         "label": "Open Financial Life",
-        "origin": "From the book · Print edition, p. 14 · Chapter 1 · Let Us Play a Game"
+        "origin": "Adapted from the book · Print edition, p. 14 · Chapter 1 · Let Us Play a Game"
       },
       {
         "type": "tool",
@@ -212,7 +212,7 @@ window.COURSE = [
         "prompt": "Identify one snake and one ladder relevant to your life. Think about whether their labels fit your circumstances.",
         "href": "../games/snakes-and-ladders.html",
         "label": "Open Snakes & Ladders",
-        "origin": "From the book · Print edition, pp. 18–19 · Chapter 1 · Snakes and Ladders with a Financial Theme"
+        "origin": "Adapted from the book · Print edition, pp. 18–19 · Chapter 1 · Snakes and Ladders with a Financial Theme"
       },
       {
         "type": "reflection",
@@ -222,7 +222,7 @@ window.COURSE = [
           "What was outside your control?",
           "After the course, what would you do differently?"
         ],
-        "origin": "From the book · Print edition, p. 14 · Chapter 1 · Let Us Play a Game",
+        "origin": "Adapted from the book · Print edition, p. 14 · Chapter 1 · Let Us Play a Game",
         "tip": ""
       },
       {
@@ -283,12 +283,12 @@ window.COURSE = [
         "bookReference": "Print edition, p. 21 · Chapter 2 · Horse and Cart Story"
       },
       {
-        "title": "Pay yourself before you buy",
-        "body": "The car example replaces repeated financing with a used car and a savings account for future purchases.",
+        "title": "Saving before the next car purchase",
+        "body": "In the podcast story retold in the book, a man bought an old but functional, inexpensive car. After five years of saving, he bought the new car outright and began saving for the next one.",
         "points": [
-          "Start with a workable, affordable alternative.",
-          "Make regular virtual car payments to yourself.",
-          "Buy upfront when you have the savings, then keep saving for replacement."
+          "He bought an inexpensive functional car while he saved.",
+          "He saved for the new car, bought it outright, and then started saving for its replacement.",
+          "Buying outright avoided financing costs and monthly car-loan payments."
         ],
         "visual": {
           "kind": "split",
@@ -297,10 +297,10 @@ window.COURSE = [
             "Prepare first|Used car → Save → Buy upfront"
           ]
         },
-        "page": 23,
+        "page": 22,
         "note": "A used car must still be safe and suitable; upfront buying is not immediately possible for everyone.",
-        "heading": "How to Put the Cart Behind the Horse",
-        "bookReference": "Print edition, p. 23 · Chapter 2 · How to Put the Cart Behind the Horse"
+        "heading": "Horse and Cart Story — car-saving example",
+        "bookReference": "Print edition, p. 22 · Chapter 2 · Horse and Cart Story — car-saving example"
       },
       {
         "title": "Poverty charges interest",
@@ -391,7 +391,7 @@ window.COURSE = [
         "title": "Find your financial direction",
         "body": "The book uses a spiral to describe how regular surpluses or shortfalls can reinforce themselves.",
         "points": [
-          "Monthly income − monthly expenses = monthly cash-flow surplus.",
+          "Monthly take-home income − monthly expenses = monthly cash-flow surplus or shortfall.",
           "A surplus creates room to save, repay debt, or invest.",
           "A shortfall signals a need to examine income, obligations, or support."
         ],
@@ -403,7 +403,7 @@ window.COURSE = [
             "= Direction"
           ]
         },
-        "page": 24,
+        "page": "23–24",
         "note": "Positive cash flow is useful, but does not alone measure changes in net worth.",
         "heading": "Upward vs. Downward Spiral",
         "bookReference": "Print edition, pp. 23–24 · Chapter 2 · Upward vs. Downward Spiral"
@@ -423,7 +423,7 @@ window.COURSE = [
             "Net worth|Assets − debt"
           ]
         },
-        "page": 24,
+        "page": "23–24",
         "note": "",
         "heading": "Upward vs. Downward Spiral",
         "bookReference": "Print edition, pp. 23–24 · Chapter 2 · Upward vs. Downward Spiral"
@@ -444,7 +444,7 @@ window.COURSE = [
             "Repeat and review"
           ]
         },
-        "page": 24,
+        "page": "23–24",
         "note": "",
         "heading": "Upward vs. Downward Spiral",
         "bookReference": "Print edition, pp. 23–24 · Chapter 2 · Upward vs. Downward Spiral"
@@ -456,7 +456,7 @@ window.COURSE = [
         "title": "Which direction are you moving?",
         "kind": "cashflow",
         "prompt": "Enter monthly take-home income and monthly cash outflows. Use the same month for both.",
-        "origin": "From the book · Print edition, p. 26 · Chapter 2 · Activity"
+        "origin": "Adapted from the book · Print edition, p. 26 · Chapter 2 · Activity"
       },
       {
         "type": "tool",
@@ -464,7 +464,7 @@ window.COURSE = [
         "prompt": "Try the book’s income-minus-expenses activity, then identify what could change the result.",
         "href": "../activities/money-spiral.html",
         "label": "Open Money Spiral",
-        "origin": "From the book · Print edition, p. 26 · Chapter 2 · Activity"
+        "origin": "Adapted from the book · Print edition, p. 26 · Chapter 2 · Activity"
       },
       {
         "type": "quiz",
@@ -477,7 +477,7 @@ window.COURSE = [
         ],
         "answer": 1,
         "feedback": "The lesson is preparation before discretionary spending. Essential needs and real constraints still matter.",
-        "origin": "From the book · Print edition, p. 26 · Chapter 2 · Activity"
+        "origin": "Adapted from the book · Print edition, p. 26 · Chapter 2 · Activity"
       },
       {
         "type": "calculator",
@@ -520,7 +520,7 @@ window.COURSE = [
     "slides": [
       {
         "title": "You cannot fill a leaky bucket",
-        "body": "More income helps. Keeping more of what you earn also changes how much stability you can build.",
+        "body": "Through extreme frugality and cost optimization, the author brought all regular household spending below $2,500 a month at that point in his journey. The income needed to cover it was take-home income after taxes and payroll deductions.",
         "points": [
           "Audit before making assumptions.",
           "Look for recurring costs as well as small daily habits.",
@@ -640,9 +640,9 @@ window.COURSE = [
             "Price|Compare plans; ask for discounts"
           ]
         },
-        "page": 31,
+        "page": "30–31",
         "note": "",
-        "heading": "Reduce The Cost of Living → Repair When It Is Feasible / Reduce Your Utility Bills / Autopayment Discounts",
+        "heading": "Reduce the Cost of Living → Repair When It Is Feasible / Reduce Your Utility Bills / Autopayment Discounts",
         "bookReference": "Print edition, pp. 30–31 · Chapter 3 · Reduce the Cost of Living → Repair When It Is Feasible / Reduce Your Utility Bills / Autopayment Discounts"
       },
       {
@@ -651,7 +651,8 @@ window.COURSE = [
         "points": [
           "Compare the total price and terms, not the headline discount.",
           "Used goods should still be safe, useful, and fit for purpose.",
-          "A bargain you do not need is still spending."
+          "A bargain you do not need is still spending.",
+          "His annual phone plan supplied 32 GB at the beginning of the year, which he rationed across the whole year—not 32 GB per month."
         ],
         "visual": {
           "kind": "steps",
@@ -662,18 +663,18 @@ window.COURSE = [
             "Buy deliberately"
           ]
         },
-        "page": "31–32",
+        "page": 31,
         "note": "",
-        "heading": "Reduce The Cost of Living → Price Matching / Buy New Only When Necessary",
+        "heading": "Reduce the Cost of Living → Compare Prices and Use Price Matching Where Available / Buy New Only When Necessary",
         "bookReference": "Print edition, p. 31 · Chapter 3 · Reduce the Cost of Living → Compare Prices and Use Price Matching Where Available / Buy New Only When Necessary"
       },
       {
         "title": "No car, no cry? Compare your reality",
         "body": "The author’s transit-based lifestyle worked for his circumstances. Transport must also work for employment, care, weather, and accessibility.",
         "points": [
-          "Include purchase or financing, fuel, insurance, parking, and maintenance.",
-          "Recognize depreciation, time, and alternative uses of money.",
-          "Compare a realistic transit or ride-share alternative."
+          "Over the ownership period: net cash cost = purchase price + financing charges + running costs − eventual resale proceeds.",
+          "Depreciation is not added again when purchase price less resale proceeds is already counted.",
+          "Driving time, inconvenience, and alternatives forgone are separate considerations; transport still needs to fit the household."
         ],
         "visual": {
           "kind": "grid",
@@ -708,7 +709,7 @@ window.COURSE = [
         },
         "page": 33,
         "note": "",
-        "heading": "Reduce The Cost of Living → Ordering Groceries Online / Choosing Where to Buy Groceries",
+        "heading": "Reduce the Cost of Living → Ordering Groceries Online / Choosing Where to Buy Groceries",
         "bookReference": "Print edition, p. 33 · Chapter 3 · Reduce the Cost of Living → Ordering Groceries Online / Choosing Where to Buy Groceries"
       },
       {
@@ -717,7 +718,8 @@ window.COURSE = [
         "points": [
           "Check eligibility and current terms with the program provider.",
           "Ask employers and associations about available benefits.",
-          "Use legitimate referral or welcome offers without unnecessary purchases."
+          "Use legitimate referral or welcome offers without unnecessary purchases.",
+          "The author’s TELUS VIA Rail discount used no reward points; the corporate rewards option accepted the code for the same trip."
         ],
         "visual": {
           "kind": "grid",
@@ -728,10 +730,10 @@ window.COURSE = [
             "Refunds & offers"
           ]
         },
-        "page": "34–35",
+        "page": "33–34",
         "note": "Referral offers may exclude spouses or household members. Disability-related programs have separate eligibility and application requirements; having a disability does not establish eligibility for every program.",
-        "heading": "Get Government/Corporate Benefits And Free Support → Storing Your Recyclables / Referral Bonuses / Newbie Benefits / Disability Benefits / Free Glasses For Children / Corporate Rewards",
-        "bookReference": "Print edition, pp. 33–34 · Chapter 3 · Get Government/Corporate Benefits and Free Support → Storing Your Recyclables / Referral Bonuses / Newbie Benefits / Disability Benefits / Free Glasses for Children / Corporate Rewards"
+        "heading": "Get Government/Corporate Benefits and Free Support → Storing Your Recyclables / Referral Bonuses / Offers for New Customers and Newcomers to Canada / Disability Benefits / Free Glasses for Children / Corporate Rewards",
+        "bookReference": "Print edition, pp. 33–34 · Chapter 3 · Get Government/Corporate Benefits and Free Support → Storing Your Recyclables / Referral Bonuses / Offers for New Customers and Newcomers to Canada / Disability Benefits / Free Glasses for Children / Corporate Rewards"
       },
       {
         "title": "Your task is to ask",
@@ -749,7 +751,7 @@ window.COURSE = [
             "Follow up"
           ]
         },
-        "page": 35,
+        "page": "34–35",
         "note": "",
         "heading": "Your Task Is To Ask",
         "bookReference": "Print edition, pp. 34–35 · Chapter 3 · Your Task Is To Ask"
@@ -769,7 +771,7 @@ window.COURSE = [
             "At filing time|Reconcile actual tax"
           ]
         },
-        "page": 36,
+        "page": 35,
         "note": "Eligibility and documentation matter. Seek qualified help for your own situation.",
         "heading": "Reducing Income Tax Withheld from My Pay",
         "bookReference": "Print edition, p. 35 · Chapter 3 · Reducing Income Tax Withheld from My Pay"
@@ -791,9 +793,9 @@ window.COURSE = [
             "Membership value"
           ]
         },
-        "page": "37–38",
+        "page": "35–36",
         "note": "",
-        "heading": "Get Government/Corporate Benefits And Free Support → Low-Income Benefits / Health Spending Account And Insurance Benefits / Convert a Visit to a Yearly Membership",
+        "heading": "Get Government/Corporate Benefits and Free Support → Low-Income Benefits / Health Spending Account and Insurance Benefits / Convert a Visit to a Yearly Membership",
         "bookReference": "Print edition, pp. 35–36 · Chapter 3 · Get Government/Corporate Benefits and Free Support → Low-Income Benefits / Health Spending Account and Insurance Benefits / Convert a Visit to a Yearly Membership"
       },
       {
@@ -802,7 +804,8 @@ window.COURSE = [
         "points": [
           "Track expiry dates and redemption conditions.",
           "Compare net cost, including fees and minimum spending.",
-          "Avoid buying extra just to earn points."
+          "Avoid buying extra just to earn points.",
+          "One past PC Optimum bonus redemption event let the author redeem $100 worth of points for $110 of groceries; this was a historical offer, not a current promise."
         ],
         "visual": {
           "kind": "cycle",
@@ -813,9 +816,9 @@ window.COURSE = [
             "Use before expiry"
           ]
         },
-        "page": 37,
+        "page": 36,
         "note": "",
-        "heading": "Get Government/Corporate Benefits And Free Support → Hunting For Promotions And Offers / Coupon Books, Coupon Bags, and Reward Cards",
+        "heading": "Get Government/Corporate Benefits and Free Support → Hunting for Promotions and Offers / Coupon Books, Coupon Bags, and Reward Cards",
         "bookReference": "Print edition, p. 36 · Chapter 3 · Get Government/Corporate Benefits and Free Support → Hunting for Promotions and Offers / Coupon Books, Coupon Bags, and Reward Cards"
       },
       {
@@ -835,9 +838,9 @@ window.COURSE = [
             "Patient decisions"
           ]
         },
-        "page": 38,
+        "page": "37–38",
         "note": "The book’s “digital twin” pricing idea is the author’s hypothesis, not a verified description of platform pricing. There is no evidence supplied that frugality causes algorithmic discounts.",
-        "heading": "Change Your Mindset And Other Strategies → Join Like-Minded People Focused On Savings / Spirituality, Self-Confidence, Self-Esteem, And Minimalism / Set Your Own Price Limits",
+        "heading": "Change Your Mindset and Other Strategies → Join Like-Minded People Focused on Savings / Spirituality, Self-Confidence, Self-Esteem, and Minimalism / Set Your Own Price Limits",
         "bookReference": "Print edition, pp. 37–38 · Chapter 3 · Change Your Mindset and Other Strategies → Join Like-Minded People Focused on Savings / Spirituality, Self-Confidence, Self-Esteem, and Minimalism / Set Your Own Price Limits"
       },
       {
@@ -856,7 +859,7 @@ window.COURSE = [
             "$1,825 / 365 days|1825"
           ]
         },
-        "page": 39,
+        "page": "37–38",
         "note": "Illustration assumes a $5 purchase every day for 365 days.",
         "heading": "Think Annually",
         "bookReference": "Print edition, pp. 37–38 · Chapter 3 · Think Annually"
@@ -871,7 +874,7 @@ window.COURSE = [
           "Which of the four pillars could help you reduce it?",
           "What is an easy saving you can realistically keep?"
         ],
-        "origin": "From the book · Print edition, pp. 39–40 · Chapter 3 · Activity",
+        "origin": "Adapted from the book · Print edition, pp. 39–40 · Chapter 3 · Activity",
         "tip": ""
       },
       {
@@ -879,14 +882,14 @@ window.COURSE = [
         "title": "Turn a habit into a yearly number",
         "kind": "annualize",
         "prompt": "Compare a recurring cost with an affordable replacement. Use the same frequency for both.",
-        "origin": "From the book · Print edition, pp. 39–40 · Chapter 3 · Activity"
+        "origin": "Adapted from the book · Print edition, pp. 39–40 · Chapter 3 · Activity"
       },
       {
         "type": "calculator",
         "title": "Measure your new savings",
         "kind": "savings",
         "prompt": "Estimate the monthly changes you identified. Avoid counting the same saving in more than one category.",
-        "origin": "From the book · Print edition, pp. 39–40 · Chapter 3 · Activity"
+        "origin": "Adapted from the book · Print edition, pp. 39–40 · Chapter 3 · Activity"
       },
       {
         "type": "reflection",
@@ -915,7 +918,7 @@ window.COURSE = [
       {
         "type": "checklist",
         "title": "Put the closing checklist to work",
-        "origin": "From the book · Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions",
+        "origin": "Adapted from the book · Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions",
         "prompt": "Tick what you have actually reviewed. Leave unfinished items as your next steps; this is a personal checklist, not a score.",
         "items": [
           "Review a full month of bank and credit-card transactions.",
@@ -944,7 +947,7 @@ window.COURSE = [
           "Action 2: one specific change and a date.",
           "Action 3: one specific change and a date."
         ],
-        "origin": "From the book · Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions",
+        "origin": "Adapted from the book · Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions",
         "tip": ""
       },
       {
@@ -975,7 +978,7 @@ window.COURSE = [
     "stage": "Build resilience",
     "title": "Build an emergency system",
     "summary": "Prepare both accessible savings and a wider system that can absorb a financial shock.",
-    "page": 42,
+    "page": 43,
     "slides": [
       {
         "title": "Prepare a system that can absorb a shock",
@@ -993,7 +996,7 @@ window.COURSE = [
             "Contingent support"
           ]
         },
-        "page": 42,
+        "page": 43,
         "note": "",
         "heading": "Emergency System",
         "bookReference": "Print edition, p. 43 · Chapter 4 · Emergency System"
@@ -1016,7 +1019,7 @@ window.COURSE = [
             "Careful credit use"
           ]
         },
-        "page": 42,
+        "page": 43,
         "note": "",
         "heading": "Emergency System",
         "bookReference": "Print edition, p. 43 · Chapter 4 · Emergency System"
@@ -1036,7 +1039,7 @@ window.COURSE = [
             "Liquid cash|Money available for a new shock"
           ]
         },
-        "page": 43,
+        "page": 44,
         "note": "A prepaid bill is not cash available for an unrelated emergency. Include the next annual renewal and unexpected expenses when assessing remaining cash.",
         "heading": "Reducing Dependency On Emergency Fund",
         "bookReference": "Print edition, p. 44 · Chapter 4 · Reducing Dependency On Emergency Fund"
@@ -1058,7 +1061,7 @@ window.COURSE = [
             "Application"
           ]
         },
-        "page": 43,
+        "page": 44,
         "note": "Paying EI premiums does not, by itself, guarantee eligibility. Possible benefits are part of planning, not guaranteed replacement income.",
         "heading": "Ensuring Alternative Cash Flow",
         "bookReference": "Print edition, p. 44 · Chapter 4 · Ensuring Alternative Cash Flow"
@@ -1079,7 +1082,7 @@ window.COURSE = [
             "6 months|6"
           ]
         },
-        "page": 44,
+        "page": 45,
         "note": "The author discusses three to six months in his case; this is not a universal target.",
         "heading": "A Modest, Highly Liquid Emergency Fund",
         "bookReference": "Print edition, p. 45 · Chapter 4 · A Modest, Highly Liquid Emergency Fund"
@@ -1101,9 +1104,9 @@ window.COURSE = [
             "You"
           ]
         },
-        "page": 44,
+        "page": 45,
         "note": "",
-        "heading": "Social Equity",
+        "heading": "Family and Community Support",
         "bookReference": "Print edition, p. 45 · Chapter 4 · Family and Community Support"
       },
       {
@@ -1123,7 +1126,7 @@ window.COURSE = [
             "Repay in full"
           ]
         },
-        "page": 44,
+        "page": 45,
         "note": "Discipline and confidence in finding a job cannot guarantee replacement income or repayment. No fixed number of interest-free days is promised for every purchase.",
         "heading": "Credit Cards As A Buffer",
         "bookReference": "Print edition, p. 45 · Chapter 4 · Credit Cards As A Buffer"
@@ -1134,7 +1137,8 @@ window.COURSE = [
         "points": [
           "Check whether interest is waived or merely deferred.",
           "Confirm the exact balance and repayment deadline.",
-          "Have a funded repayment plan; avoid relying on uncertain future income."
+          "Have a funded repayment plan; avoid relying on uncertain future income.",
+          "The author made an extra $5 payment to help ensure no small promotional balance remained that could trigger interest from the purchase date."
         ],
         "visual": {
           "kind": "steps",
@@ -1145,10 +1149,10 @@ window.COURSE = [
             "Full repayment"
           ]
         },
-        "page": 44,
+        "page": "45–46",
         "note": "The author’s extra $5 payment was a precaution, not a guarantee. Payment timing, the amount due and all promotional conditions still matter. A strong credit score does not establish repayment capacity or guarantee the availability or terms of a future offer.",
         "heading": "Identify Interest-Free Resources",
-        "bookReference": "Print edition, p. 45 · Chapter 4 · Identify Interest-Free Resources"
+        "bookReference": "Print edition, pp. 45–46 · Chapter 4 · Identify Interest-Free Resources"
       },
       {
         "title": "Rehearse a job-loss month",
@@ -1165,7 +1169,7 @@ window.COURSE = [
             "Conditional later|Eligibility, timing, credit access"
           ]
         },
-        "page": 45,
+        "page": 46,
         "note": "",
         "heading": "Activity",
         "bookReference": "Print edition, p. 46 · Chapter 4 · Activity"
@@ -1177,7 +1181,7 @@ window.COURSE = [
         "title": "Estimate a liquid reserve",
         "kind": "emergency",
         "prompt": "Enter essential monthly expenses still payable and a planning duration. Separately allow for annual renewals and unexpected expenses; prepaid bills are not accessible cash. This partial estimate is not a personal recommendation.",
-        "origin": "From the book · Print edition, p. 46 · Chapter 4 · Activity"
+        "origin": "Adapted from the book · Print edition, p. 46 · Chapter 4 · Activity"
       },
       {
         "type": "reflection",
@@ -1188,7 +1192,7 @@ window.COURSE = [
           "What liquid savings and practical social support are available?",
           "For any credit resource, what are the risks and the repayment plan?"
         ],
-        "origin": "From the book · Print edition, p. 46 · Chapter 4 · Activity",
+        "origin": "Adapted from the book · Print edition, p. 46 · Chapter 4 · Activity",
         "tip": ""
       },
       {
@@ -1252,7 +1256,7 @@ window.COURSE = [
     "stage": "Preserve",
     "title": "Protect what you build",
     "summary": "Recognize wealth-eroding risks and use the Tap vs. Leak lens without losing sight of human value.",
-    "page": 47,
+    "page": 48,
     "slides": [
       {
         "title": "Saving is only part of the job",
@@ -1271,7 +1275,7 @@ window.COURSE = [
             "Speculation"
           ]
         },
-        "page": 47,
+        "page": 48,
         "note": "",
         "heading": "Wealth Preservation",
         "bookReference": "Print edition, p. 48 · Chapter 5 · Wealth Preservation"
@@ -1291,7 +1295,7 @@ window.COURSE = [
             "Depreciation|Asset resale value may fall"
           ]
         },
-        "page": 47,
+        "page": 48,
         "note": "",
         "heading": "Inflation And Asset Depreciation",
         "bookReference": "Print edition, p. 48 · Chapter 5 · Inflation And Asset Depreciation"
@@ -1313,18 +1317,18 @@ window.COURSE = [
             "Get help"
           ]
         },
-        "page": 47,
+        "page": 48,
         "note": "",
         "heading": "Scams, Ponzi Schemes",
         "bookReference": "Print edition, p. 48 · Chapter 5 · Scams, Ponzi Schemes"
       },
       {
-        "title": "Let income grow faster than lifestyle",
-        "body": "A pay rise can improve life while still preserving room to save. Decide on the saving habit before spending expands.",
+        "title": "Lifestyle improvements with room for saving",
+        "body": "The author wanted lifestyle improvements to leave room for savings. His example keeps a 20% savings rate: $10,000 saved from $50,000 of income, or $20,000 from $100,000.",
         "points": [
-          "Set a deliberate allocation for extra income.",
-          "Compare savings in dollars and as a share of income.",
-          "Review recurring commitments before adding new ones."
+          "In that example, both spending and saving may rise with income.",
+          "The savings rate remains 20%; the dollar amount saved doubles.",
+          "The example expresses the author’s preference, not a required savings target."
         ],
         "visual": {
           "kind": "bars",
@@ -1333,7 +1337,7 @@ window.COURSE = [
             "$100k income: save $20k|20000"
           ]
         },
-        "page": 47,
+        "page": 48,
         "note": "Book illustration: both examples retain a 20% savings rate.",
         "heading": "Lifestyle Creep",
         "bookReference": "Print edition, p. 48 · Chapter 5 · Lifestyle Creep"
@@ -1354,7 +1358,7 @@ window.COURSE = [
             "Deliberate growth"
           ]
         },
-        "page": 47,
+        "page": 48,
         "note": "",
         "heading": "Gambling/Speculation/Greed",
         "bookReference": "Print edition, p. 48 · Chapter 5 · Gambling/Speculation/Greed"
@@ -1376,7 +1380,7 @@ window.COURSE = [
             "Quality of life"
           ]
         },
-        "page": 48,
+        "page": 49,
         "note": "",
         "heading": "Location, Location, Location",
         "bookReference": "Print edition, p. 49 · Chapter 5 · Location, Location, Location"
@@ -1397,7 +1401,7 @@ window.COURSE = [
             "Limited liquidity"
           ]
         },
-        "page": 48,
+        "page": 49,
         "note": "This is the author’s perspective, not a universal housing or borrowing rule.",
         "heading": "House As A Wealth Preservation Tool",
         "bookReference": "Print edition, p. 49 · Chapter 5 · House As A Wealth Preservation Tool"
@@ -1417,7 +1421,7 @@ window.COURSE = [
             "Tap|Income or financial benefit"
           ]
         },
-        "page": 48,
+        "page": 49,
         "note": "Counting labels does not measure the financial size of each outcome.",
         "heading": "Tap vs. Leak",
         "bookReference": "Print edition, p. 49 · Chapter 5 · Tap vs. Leak"
@@ -1439,10 +1443,10 @@ window.COURSE = [
             "Social contribution"
           ]
         },
-        "page": 48,
+        "page": 50,
         "note": "",
         "heading": "Tap vs. Leak",
-        "bookReference": "Print edition, p. 49 · Chapter 5 · Tap vs. Leak"
+        "bookReference": "Print edition, p. 50 · Chapter 5 · Tap vs. Leak"
       },
       {
         "title": "Five choices, better questions",
@@ -1450,7 +1454,7 @@ window.COURSE = [
         "points": [
           "Vacation or luxury purchase on credit: what spending and interest costs follow?",
           "Investments and business equipment: what potential income, costs, and risks?",
-          "Rental property: what rent, financing, maintenance, and vacancy risks?"
+          "Rental property: rent compared with all recurring costs, including financing, taxes, insurance, repairs, vacancy, utilities and management; transaction costs considered separately."
         ],
         "visual": {
           "kind": "steps",
@@ -1460,7 +1464,7 @@ window.COURSE = [
             "Examine context"
           ]
         },
-        "page": 50,
+        "page": 51,
         "note": "",
         "heading": "Activity: Tap or Leak?",
         "bookReference": "Print edition, p. 51 · Chapter 5 · Activity: Tap or Leak?"
@@ -1473,7 +1477,7 @@ window.COURSE = [
         "prompt": "Choose Tap, Leak, or Both for five visual scenarios, then explore a better decision. Use the worksheet to compare amounts and record non-financial value.",
         "href": "../activities/tap-vs-leak.html",
         "label": "Open Tap vs. Leak",
-        "origin": "From the book · Print edition, p. 51 · Chapter 5 · Activity: Tap or Leak?"
+        "origin": "Adapted from the book · Print edition, p. 51 · Chapter 5 · Activity: Tap or Leak?"
       },
       {
         "type": "reflection",
@@ -1484,7 +1488,7 @@ window.COURSE = [
           "What personal or social value falls outside the money columns?",
           "What would you need to know before deciding?"
         ],
-        "origin": "From the book · Print edition, p. 51 · Chapter 5 · Activity: Tap or Leak?",
+        "origin": "Adapted from the book · Print edition, p. 51 · Chapter 5 · Activity: Tap or Leak?",
         "tip": ""
       },
       {
@@ -1535,7 +1539,7 @@ window.COURSE = [
     "stage": "Grow",
     "title": "Build a deliberate growth plan",
     "summary": "Connect grants, tax planning, employer contributions, registered accounts, and regular action.",
-    "page": 52,
+    "page": 53,
     "slides": [
       {
         "title": "Start with the system, not a hot tip",
@@ -1554,7 +1558,7 @@ window.COURSE = [
             "Automation"
           ]
         },
-        "page": 52,
+        "page": 53,
         "note": "",
         "heading": "Wealth Growth",
         "bookReference": "Print edition, p. 53 · Chapter 6 · Wealth Growth"
@@ -1577,7 +1581,7 @@ window.COURSE = [
             "Automation"
           ]
         },
-        "page": 52,
+        "page": 53,
         "note": "",
         "heading": "Wealth Growth: investment-planning pillars",
         "bookReference": "Print edition, p. 53 · Chapter 6 · Wealth Growth: investment-planning pillars"
@@ -1597,7 +1601,7 @@ window.COURSE = [
             "Eligible support|Program money under specific rules"
           ]
         },
-        "page": "52–53",
+        "page": "53–54",
         "note": "Matching percentages are not repeatable market returns. Verify current program rules.",
         "heading": "Government Grants I Considered in Registered Accounts",
         "bookReference": "Print edition, pp. 53–54 · Chapter 6 · Government Grants I Considered in Registered Accounts"
@@ -1617,7 +1621,7 @@ window.COURSE = [
             "Illustrative basic grant|500"
           ]
         },
-        "page": 53,
+        "page": 54,
         "note": "Manuscript example, not a verified personal entitlement. Check current CESG limits and eligibility.",
         "heading": "Government Grants I Considered in Registered Accounts",
         "bookReference": "Print edition, p. 54 · Chapter 6 · Government Grants I Considered in Registered Accounts"
@@ -1637,7 +1641,7 @@ window.COURSE = [
             "Possible matching grants|3500"
           ]
         },
-        "page": 53,
+        "page": 54,
         "note": "A conditional book example, not a promised grant or recurring investment return.",
         "heading": "Government Grants I Considered in Registered Accounts",
         "bookReference": "Print edition, p. 54 · Chapter 6 · Government Grants I Considered in Registered Accounts"
@@ -1659,7 +1663,7 @@ window.COURSE = [
             "Timing"
           ]
         },
-        "page": 53,
+        "page": "54–55",
         "note": "",
         "heading": "Tax Deductions and Government Benefits I Considered",
         "bookReference": "Print edition, pp. 54–55 · Chapter 6 · Tax Deductions and Government Benefits I Considered"
@@ -1681,7 +1685,7 @@ window.COURSE = [
             "Review"
           ]
         },
-        "page": "53–54",
+        "page": "54–55",
         "note": "Form T1213 requires eligibility and documentation; it is not automatic tax relief.",
         "heading": "Tax Planning",
         "bookReference": "Print edition, pp. 54–55 · Chapter 6 · Tax Planning"
@@ -1701,7 +1705,7 @@ window.COURSE = [
             "Employer adds|According to its matching terms"
           ]
         },
-        "page": 54,
+        "page": 55,
         "note": "",
         "heading": "My Employer’s RRSP Match",
         "bookReference": "Print edition, p. 55 · Chapter 6 · My Employer’s RRSP Match"
@@ -1724,18 +1728,18 @@ window.COURSE = [
             "First home"
           ]
         },
-        "page": 54,
+        "page": 55,
         "note": "",
         "heading": "My Annual Investment Plan",
         "bookReference": "Print edition, p. 55 · Chapter 6 · My Annual Investment Plan"
       },
       {
-        "title": "Make regular contributions manageable",
-        "body": "The author translates annual targets into weekly deposits and keeps a cash buffer.",
+        "title": "How the author automated contributions",
+        "body": "The author translated annual targets into possible weekly deposits where cash flow allowed. He kept his emergency reserve in an unlimited-transaction chequing account, free of monthly fees while the required minimum balance was maintained.",
         "points": [
           "He divided annual targets into weekly amounts.",
           "Smaller deposits fitted his cash flow.",
-          "He kept a buffer above his emergency funds before automating."
+          "He kept money beyond his emergency reserve in the chequing account before arranging transfers."
         ],
         "visual": {
           "kind": "cycle",
@@ -1746,9 +1750,9 @@ window.COURSE = [
             "Buffer reviewed"
           ]
         },
-        "page": 54,
+        "page": 55,
         "note": "",
-        "heading": "Automate The Investments",
+        "heading": "Automate the Investments",
         "bookReference": "Print edition, p. 55 · Chapter 6 · Automate the Investments"
       },
       {
@@ -1766,7 +1770,7 @@ window.COURSE = [
             "Investments inside|Risk, fees, potential returns"
           ]
         },
-        "page": "55",
+        "page": 56,
         "note": "These introductory summaries are not complete account instructions. Check personal eligibility, contribution room, withdrawal conditions, taxes and possible repayment of government support with current guidance and qualified help.",
         "heading": "Tax-Sheltered Growth",
         "bookReference": "Print edition, p. 56 · Chapter 6 · Tax-Sheltered Growth"
@@ -1788,7 +1792,7 @@ window.COURSE = [
             "Education use"
           ]
         },
-        "page": "55–56",
+        "page": "56–57",
         "note": "The author recalls about $50 initially deposited and more than $1,595 in government support for three children, rather than a verified grant/bond breakdown. It was not a return on that deposit or an amount every family receives. Eligibility and amounts vary; the Canada Learning Bond requires no personal contribution.",
         "heading": "RESP",
         "bookReference": "Print edition, pp. 56–57 · Chapter 6 · RESP"
@@ -1810,7 +1814,7 @@ window.COURSE = [
             "Withdrawal rules"
           ]
         },
-        "page": 56,
+        "page": 57,
         "note": "Do not treat an RDSP as a readily accessible emergency account.",
         "heading": "RDSP",
         "bookReference": "Print edition, p. 57 · Chapter 6 · RDSP"
@@ -1832,7 +1836,7 @@ window.COURSE = [
             "Withdrawal rules"
           ]
         },
-        "page": "57",
+        "page": 58,
         "note": "The book’s couple’s down-payment example uses their own savings, not a government cash gift.",
         "heading": "RRSP",
         "bookReference": "Print edition, p. 58 · Chapter 6 · RRSP"
@@ -1854,7 +1858,7 @@ window.COURSE = [
             "Room returns next year"
           ]
         },
-        "page": 57,
+        "page": 58,
         "note": "",
         "heading": "TFSA",
         "bookReference": "Print edition, p. 58 · Chapter 6 · TFSA"
@@ -1876,7 +1880,7 @@ window.COURSE = [
             "Qualifying purchase"
           ]
         },
-        "page": "57–58",
+        "page": 58,
         "note": "",
         "heading": "FHSA",
         "bookReference": "Print edition, p. 58 · Chapter 6 · FHSA"
@@ -1898,7 +1902,7 @@ window.COURSE = [
             "Documented plan"
           ]
         },
-        "page": 58,
+        "page": 59,
         "note": "",
         "heading": "A Note On Changing Rules",
         "bookReference": "Print edition, p. 59 · Chapter 6 · A Note On Changing Rules"
@@ -1912,7 +1916,7 @@ window.COURSE = [
           "Which parts of my experience with RESPs were new to you?",
           "What questions did the discussion of grant eligibility and deadlines raise for you?"
         ],
-        "origin": "From the book · Print edition, p. 59 · Chapter 6 · Activity",
+        "origin": "Adapted from the book · Print edition, p. 59 · Chapter 6 · Activity",
         "tip": ""
       },
       {
@@ -1928,7 +1932,7 @@ window.COURSE = [
         "prompts": [
           "Would you make an investment plan? How would you approach it, and would you consult a qualified professional to help you understand your options?"
         ],
-        "origin": "From the book · Print edition, p. 59 · Chapter 6 · Activity",
+        "origin": "Adapted from the book · Print edition, p. 59 · Chapter 6 · Activity",
         "tip": ""
       },
       {
@@ -2012,7 +2016,7 @@ window.COURSE = [
     "stage": "Transfer",
     "title": "Give the next generation a head start",
     "summary": "Think beyond inheritance: knowledge, support, opportunities, and a safety net can all carry forward.",
-    "page": 60,
+    "page": 61,
     "slides": [
       {
         "title": "Some advantages cannot be handed down",
@@ -2031,7 +2035,7 @@ window.COURSE = [
             "Assets"
           ]
         },
-        "page": 60,
+        "page": 61,
         "note": "A home or its value might support the next generation; ownership, debts, estate expenses and estate distribution affect what can be passed on.",
         "heading": "Generational Wealth Transfer and Sustainability",
         "bookReference": "Print edition, p. 61 · Chapter 7 · Generational Wealth Transfer and Sustainability"
@@ -2053,7 +2057,7 @@ window.COURSE = [
             "Inheritance"
           ]
         },
-        "page": 60,
+        "page": 61,
         "note": "",
         "heading": "Pillars Of Generational Wealth Transfer",
         "bookReference": "Print edition, p. 61 · Chapter 7 · Pillars Of Generational Wealth Transfer"
@@ -2075,7 +2079,7 @@ window.COURSE = [
             "Later-life support"
           ]
         },
-        "page": "61–62",
+        "page": "62–63",
         "note": "Four-year spacing does not guarantee non-overlapping college costs. Study lengths, start dates and family circumstances vary; family planning involves more than finances.",
         "heading": "Planning A Family For The Future",
         "bookReference": "Print edition, pp. 62–63 · Chapter 7 · Planning A Family For The Future"
@@ -2096,7 +2100,7 @@ window.COURSE = [
             "Build habits"
           ]
         },
-        "page": 62,
+        "page": 63,
         "note": "",
         "heading": "Upbringing And Money Education",
         "bookReference": "Print edition, p. 63 · Chapter 7 · Upbringing And Money Education"
@@ -2118,7 +2122,7 @@ window.COURSE = [
             "Affordable pathways"
           ]
         },
-        "page": 62,
+        "page": 63,
         "note": "",
         "heading": "Upbringing And Money Education",
         "bookReference": "Print edition, p. 63 · Chapter 7 · Upbringing And Money Education"
@@ -2139,7 +2143,7 @@ window.COURSE = [
             "Room to save"
           ]
         },
-        "page": "62–63",
+        "page": "63–64",
         "note": "",
         "heading": "Support During Formative Years",
         "bookReference": "Print edition, pp. 63–64 · Chapter 7 · Support During Formative Years"
@@ -2160,7 +2164,7 @@ window.COURSE = [
             "Clear boundaries"
           ]
         },
-        "page": 63,
+        "page": 64,
         "note": "Parental wealth does not guarantee available support. Willingness and circumstances can change; family help is additional support, not an automatic replacement for accessible savings.",
         "heading": "Family Support During Emergencies / Safety Net",
         "bookReference": "Print edition, p. 64 · Chapter 7 · Family Support During Emergencies / Safety Net"
@@ -2182,7 +2186,7 @@ window.COURSE = [
             "Review arrangements"
           ]
         },
-        "page": 63,
+        "page": 64,
         "note": "Inheritance is a possibility, not a guarantee. Circumstances, ownership, debts, estate expenses and legal arrangements affect what remains. The author is still learning about wills and trusts.",
         "heading": "Inheritance",
         "bookReference": "Print edition, p. 64 · Chapter 7 · Inheritance"
@@ -2204,7 +2208,7 @@ window.COURSE = [
             "Pass forward"
           ]
         },
-        "page": 63,
+        "page": 64,
         "note": "",
         "heading": "Conclusion",
         "bookReference": "Print edition, p. 64 · Chapter 7 · Conclusion"
@@ -2280,7 +2284,7 @@ window.COURSE = [
     "stage": "Give",
     "title": "Use wealth for good",
     "summary": "Turn financial capacity into care, opportunity, and community contribution.",
-    "page": 65,
+    "page": 66,
     "slides": [
       {
         "title": "Wealth is a tool with a purpose",
@@ -2299,7 +2303,7 @@ window.COURSE = [
             "Contribution"
           ]
         },
-        "page": 65,
+        "page": 66,
         "note": "",
         "heading": "What To Do When You Are Wealthy",
         "bookReference": "Print edition, p. 66 · Chapter 8 · What To Do When You Are Wealthy"
@@ -2321,7 +2325,7 @@ window.COURSE = [
             "Review impact"
           ]
         },
-        "page": 65,
+        "page": 66,
         "note": "The $1-per-day example is the author’s experience, not a required target.",
         "heading": "Automate Charity",
         "bookReference": "Print edition, p. 66 · Chapter 8 · Automate Charity"
@@ -2342,7 +2346,7 @@ window.COURSE = [
             "Follow the outcome"
           ]
         },
-        "page": 65,
+        "page": 66,
         "note": "",
         "heading": "Impactful Charity",
         "bookReference": "Print edition, p. 66 · Chapter 8 · Impactful Charity"
@@ -2362,7 +2366,7 @@ window.COURSE = [
             "Values questions|People, communities, environment"
           ]
         },
-        "page": 65,
+        "page": 66,
         "note": "",
         "heading": "Invest Ethically",
         "bookReference": "Print edition, p. 66 · Chapter 8 · Invest Ethically"
@@ -2383,7 +2387,7 @@ window.COURSE = [
             "Sustainable value"
           ]
         },
-        "page": 65,
+        "page": 66,
         "note": "",
         "heading": "Create Jobs",
         "bookReference": "Print edition, p. 66 · Chapter 8 · Create Jobs"
@@ -2408,7 +2412,7 @@ window.COURSE = [
         "page": 66,
         "note": "",
         "heading": "Lift Up Family And Friends",
-        "bookReference": "Print edition, p. 67 · Chapter 8 · Lift Up Family And Friends"
+        "bookReference": "Print edition, p. 66 · Chapter 8 · Lift Up Family And Friends"
       },
       {
         "title": "Create opportunities for children",
@@ -2429,7 +2433,7 @@ window.COURSE = [
         "page": 66,
         "note": "",
         "heading": "Opportunities I Hope to Create for My Children",
-        "bookReference": "Print edition, p. 67 · Chapter 8 · Opportunities I Hope to Create for My Children"
+        "bookReference": "Print edition, p. 66 · Chapter 8 · Opportunities I Hope to Create for My Children"
       },
       {
         "title": "Giving can strengthen connection",
@@ -2448,7 +2452,7 @@ window.COURSE = [
             "Support"
           ]
         },
-        "page": 66,
+        "page": 67,
         "note": "",
         "heading": "Giving Is Receiving",
         "bookReference": "Print edition, p. 67 · Chapter 8 · Giving Is Receiving"
@@ -2470,7 +2474,7 @@ window.COURSE = [
             "Advocacy"
           ]
         },
-        "page": 66,
+        "page": 67,
         "note": "",
         "heading": "Volunteerism And Activism",
         "bookReference": "Print edition, p. 67 · Chapter 8 · Volunteerism And Activism"
@@ -2491,7 +2495,7 @@ window.COURSE = [
             "Community connection"
           ]
         },
-        "page": 66,
+        "page": 67,
         "note": "",
         "heading": "Support Small Businesses",
         "bookReference": "Print edition, p. 67 · Chapter 8 · Support Small Businesses"
@@ -2513,7 +2517,7 @@ window.COURSE = [
             "Review"
           ]
         },
-        "page": 66,
+        "page": 67,
         "note": "",
         "heading": "Conclusion",
         "bookReference": "Print edition, p. 67 · Chapter 8 · Conclusion"
@@ -2589,7 +2593,7 @@ window.COURSE = [
     "stage": "Bring it together",
     "title": "Your story, your milestones",
     "summary": "Learn from the author’s education, career, housing, and mortgage journey—then write your own next chapter.",
-    "page": 68,
+    "page": 69,
     "slides": [
       {
         "title": "A lived journey, not a universal formula",
@@ -2608,7 +2612,7 @@ window.COURSE = [
             "Next chapter"
           ]
         },
-        "page": 68,
+        "page": 69,
         "note": "",
         "heading": "My Financial Story",
         "bookReference": "Print edition, p. 69 · Chapter 9 · My Financial Story"
@@ -2630,7 +2634,7 @@ window.COURSE = [
             "Build capability"
           ]
         },
-        "page": 68,
+        "page": 69,
         "note": "",
         "heading": "My Education",
         "bookReference": "Print edition, p. 69 · Chapter 9 · My Education"
@@ -2652,7 +2656,7 @@ window.COURSE = [
             "Edmonton home"
           ]
         },
-        "page": 68,
+        "page": 69,
         "note": "",
         "heading": "My Career",
         "bookReference": "Print edition, p. 69 · Chapter 9 · My Career"
@@ -2673,7 +2677,7 @@ window.COURSE = [
             "Cash-flow plan"
           ]
         },
-        "page": 68,
+        "page": 69,
         "note": "Halal and conventional products vary. Verify your agreement rather than generalizing from this example.",
         "heading": "My Housing Story",
         "bookReference": "Print edition, p. 69 · Chapter 9 · My Housing Story"
@@ -2695,7 +2699,7 @@ window.COURSE = [
             "Contract flexibility"
           ]
         },
-        "page": "68–69",
+        "page": "69–70",
         "note": "The rent comparison is one measure, not an affordability test. The full mortgage payment, including principal, and all ownership costs must fit the budget.",
         "heading": "My Housing Story",
         "bookReference": "Print edition, pp. 69–70 · Chapter 9 · My Housing Story"
@@ -2715,7 +2719,7 @@ window.COURSE = [
             "Financing & ownership|Costs of borrowing and owning"
           ]
         },
-        "page": "68–69",
+        "page": "69–70",
         "note": "",
         "heading": "My Housing Story",
         "bookReference": "Print edition, pp. 69–70 · Chapter 9 · My Housing Story"
@@ -2737,7 +2741,7 @@ window.COURSE = [
             "Principal / cash flow"
           ]
         },
-        "page": 69,
+        "page": 70,
         "note": "A favorable cost comparison does not by itself settle a rent-versus-buy decision.",
         "heading": "Home Mortgage Milestones",
         "bookReference": "Print edition, p. 70 · Chapter 9 · Home Mortgage Milestones"
@@ -2759,7 +2763,7 @@ window.COURSE = [
             "Later: financing|30"
           ]
         },
-        "page": 69,
+        "page": 70,
         "note": "Conceptual payment shares, not a calculation for a specific loan.",
         "heading": "Home Mortgage Milestones",
         "bookReference": "Print edition, p. 70 · Chapter 9 · Home Mortgage Milestones"
@@ -2781,7 +2785,7 @@ window.COURSE = [
             "Compare time"
           ]
         },
-        "page": 69,
+        "page": 70,
         "note": "Calculator savings are estimates before any unmodelled fees or penalties. Confirm permitted prepayments and preserve cash for other needs.",
         "heading": "Home Mortgage Milestones",
         "bookReference": "Print edition, p. 70 · Chapter 9 · Home Mortgage Milestones"
@@ -2801,7 +2805,7 @@ window.COURSE = [
             "50% loan repaid|Relative to original loan"
           ]
         },
-        "page": 69,
+        "page": 70,
         "note": "",
         "heading": "Home Mortgage Milestones",
         "bookReference": "Print edition, p. 70 · Chapter 9 · Home Mortgage Milestones"
@@ -2823,10 +2827,10 @@ window.COURSE = [
             "Adapt the plan"
           ]
         },
-        "page": "70–71",
+        "page": "70–72",
         "note": "CPP is one retirement-income component; EI is conditional. Neither guarantees all future needs are covered.",
         "heading": "My Take on Dave Ramsey’s Seven Baby Steps",
-        "bookReference": "Print edition, pp. 71–72 · Chapter 9 · My Take on Dave Ramsey’s Seven Baby Steps"
+        "bookReference": "Print edition, pp. 70–72 · Chapter 9 · My Take on Dave Ramsey’s Seven Baby Steps"
       },
       {
         "title": "Bring the full journey into one plan",
@@ -2845,7 +2849,7 @@ window.COURSE = [
             "Review"
           ]
         },
-        "page": "73–74",
+        "page": "74–75",
         "note": "",
         "heading": "Checklist / My Top Three Actions",
         "bookReference": "Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions"
@@ -2858,7 +2862,7 @@ window.COURSE = [
         "prompt": "Compare a baseline with a permitted one-time prepayment, including the book’s $1-in-year-one example. Verify lender terms and any penalties. Compare net savings after charges and how much cash remains accessible.",
         "href": "../calculators/mortgage-prepayment.html",
         "label": "Open Mortgage Calculator",
-        "origin": "From the book · Print edition, p. 72 · Chapter 9 · Activity"
+        "origin": "Adapted from the book · Print edition, p. 72 · Chapter 9 · Activity"
       },
       {
         "type": "reflection",
@@ -2869,7 +2873,7 @@ window.COURSE = [
           "Which mortgage milestone would be meaningful to you?",
           "What penalties or charges are excluded, and what cash would remain for emergencies?"
         ],
-        "origin": "From the book · Print edition, p. 72 · Chapter 9 · Activity",
+        "origin": "Adapted from the book · Print edition, p. 72 · Chapter 9 · Activity",
         "tip": ""
       },
       {
@@ -2893,7 +2897,7 @@ window.COURSE = [
           "Build resilience or preserve: what will you do, and by when?",
           "Grow, transfer, or give: what will you do, and by when?"
         ],
-        "origin": "From the book · Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions",
+        "origin": "Adapted from the book · Print edition, pp. 74–75 · Chapter 9 · Checklist / My Top Three Actions",
         "tip": ""
       },
       {

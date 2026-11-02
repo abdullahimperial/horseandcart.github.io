@@ -22,3 +22,8 @@
 .site-next h2{color:var(--lfm-deep-teal)}
 .site-next a{border-color:#9dc7b8;color:var(--lfm-deep-teal)}
 .site-next a:hover{background:var(--lfm-pale-mint);border-color:#63a895}
+
+
+.site-header a:focus-visible,.site-next a:focus-visible,.site-currency :focus-visible{outline:3px solid #155148;outline-offset:4px}
+.site-footer a:focus-visible{outline-color:#f0d49a}
+

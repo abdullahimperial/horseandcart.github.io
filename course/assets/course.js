@@ -235,7 +235,7 @@ function modulePlayer(id) {
   $('#go-workshop').hidden=pos===m.slides.length;
   if(pos===m.slides.length)workshop();else{
    const s=m.slides[pos];
-   stage.innerHTML=`<article class="slide"><div class="slide-top"><span class="eyebrow">${esc(m.stage)} · Chapter ${id}</span><span class="source">${esc(s.bookReference)}</span></div><div class="slide-grid"><div><h1 tabindex="-1" id="current-heading">${esc(s.title)}</h1><p class="slide-body">${esc(s.body)}</p><ul class="slide-points">${s.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>${visual(s.visual)}</div>${s.note?`<p class="slide-note">${esc(s.note)}</p>`:''}<div class="slide-bottom"><span>${esc(s.heading)}</span><span>${String(pos+1).padStart(2,'0')} / ${String(m.slides.length).padStart(2,'0')}</span></div></article>`;
+   stage.innerHTML=`<article class="slide"><div class="slide-top"><span class="eyebrow">${esc(m.stage)} · Chapter ${id}</span><span class="source">${esc(s.bookReference)}</span></div><div class="slide-grid"><div><h1 tabindex="-1" id="current-heading">${esc(s.title)}</h1><p class="slide-body">${esc(s.body)}</p><p class="course-context">Key points and optional reflection prompts · An adaptation of the book, not a prescribed personal plan.</p><ul class="slide-points">${s.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>${visual(s.visual)}</div>${s.note?`<p class="slide-note">${esc(s.note)}</p>`:''}<div class="slide-bottom"><span>${esc(s.heading)}</span><span>${String(pos+1).padStart(2,'0')} / ${String(m.slides.length).padStart(2,'0')}</span></div></article>`;
   }
   if(focus){$('#current-heading').focus({preventScroll:true});$('.stage').scrollIntoView({behavior:'auto',block:'start'});}
  }
@@ -260,5 +260,6 @@ function modulePlayer(id) {
 if($('#course-home'))home();
 if($('#course-player'))modulePlayer(Number(document.body.dataset.module));
 })();
+
 
 
