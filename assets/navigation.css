@@ -30,3 +30,24 @@
 @media(prefers-reduced-motion:reduce){.app-card{transition:none}}
 
 .nav-page .nav-footer a{color:#285b4c;text-decoration-thickness:1px;text-underline-offset:3px}.nav-page .nav-footer a:hover{color:#173b36}
+
+/* Shared Let’s Fix Money palette: midnight teal, luminous mint, warm gold, and paper. */
+.nav-page{background:#f7f4e9;color:#123b38}
+.nav-top{padding-top:20px;padding-bottom:20px}
+.nav-brand{color:#123b38}
+.nav-return{border-color:#9dc7b8;background:#fffdf8;color:#123b38}
+.nav-return:hover{border-color:#63a895;background:#e8f5ed}
+.nav-page a:focus-visible{outline-color:#f0d49a}
+.nav-intro{position:relative;overflow:hidden;margin:8px 0 22px;padding:clamp(24px,4vw,42px);border:1px solid #356c62;border-radius:22px;background:radial-gradient(ellipse at 72% 20%,#1d5b52 0,#103b3b 45%,#061b22 100%);box-shadow:0 18px 38px #061b221c}
+.nav-intro:after{content:"";position:absolute;width:220px;height:220px;right:-88px;bottom:-140px;border:1px solid #8cebd04a;border-radius:50%;box-shadow:0 0 0 24px #8cebd014,0 0 0 48px #8cebd00b;pointer-events:none}
+.nav-kicker{position:relative;z-index:1;color:#8cebd0}
+.nav-intro h1{position:relative;z-index:1;color:#f4dfaf}
+.nav-intro p{position:relative;z-index:1;color:#d3e7df}
+.nav-section h2,.app-section h2{color:#123b38}
+.nav-card,.stage-link{border-color:#cbded5;background:#fffdf8;color:#123b38}
+.nav-card:hover,.stage-link:hover{border-color:#80bda9;background:#eaf6ef}
+.nav-icon{background:#d9f0e5;color:#155148}
+.nav-card small,.nav-footer{color:#4f6c62}
+.stage-link span{color:#a77b36}
+.stage-note{border:1px solid #cbe1d5;background:#e8f3e9;color:#315c50}
+.nav-page .nav-footer a{color:#155148}
