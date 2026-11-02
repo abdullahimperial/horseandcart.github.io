@@ -1,0 +1,37 @@
+/* Consistent app-style destination tiles for category and activity menus. */
+.destination-launcher{max-width:920px;margin:0 auto 20px}
+.destination-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,190px));justify-content:center;align-items:start;gap:22px 28px}
+.destination-grid .app-card{min-height:180px;padding:8px 10px 14px}
+.destination-grid .app-icon{width:74px;height:74px;flex-basis:74px;border-radius:20px}
+.destination-grid .app-icon svg{display:block;width:34px;height:34px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.destination-grid .app-card strong{font-size:15px;max-width:180px}
+.destination-grid .app-card small{display:block;max-width:190px;color:#52685d;font:13px/1.45 Arial,Helvetica,sans-serif}
+.destination-grid--two{grid-template-columns:repeat(2,minmax(150px,190px))}
+.tools-directory .pc-tool-list .pc-grid{align-items:stretch}
+.tools-directory .destination-tool-card{height:100%;padding:22px 22px 20px}
+.tools-directory .catalog-icon{width:62px;height:62px;display:grid;place-items:center;margin:0 auto 12px;border-radius:18px;color:white;box-shadow:0 7px 15px #173b3624,inset 0 1px 0 #ffffff55}
+.tools-directory .catalog-icon svg{display:block;width:31px;height:31px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tools-directory .catalog-icon--course{background:linear-gradient(145deg,#358477,#155148)}
+.tools-directory .catalog-icon--games{background:linear-gradient(145deg,#e5a145,#a9532e)}
+.tools-directory .catalog-icon--calculators{background:linear-gradient(145deg,#4f9dc4,#256485)}
+.tools-directory .catalog-icon--tools{background:linear-gradient(145deg,#8b79be,#57447e)}
+.tools-directory .destination-tool-card .pc-tag{display:block;width:max-content;max-width:100%;margin:0 auto 7px}
+.tools-directory .destination-tool-card h3{text-align:center;font:700 19px/1.3 Arial,Helvetica,sans-serif;margin:8px 0 10px}
+.tools-directory .destination-tool-card>p{text-align:center;font-size:14px;line-height:1.5}
+.tools-directory .destination-tool-card .pc-link{display:block;width:max-content;max-width:100%;margin:12px auto 0;padding:10px 14px;border:1px solid #bdcec6;border-radius:24px;text-decoration:none;text-align:center}
+.tools-directory .destination-tool-card .pc-link:hover{background:#f0f3ea}
+.tools-directory .destination-tool-card .book-disclosure{text-align:left}
+@media(max-width:650px){
+  .destination-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+  .destination-grid .app-card{min-height:155px;padding:7px 4px 10px;gap:9px}
+  .destination-grid .app-icon{width:62px;height:62px;flex-basis:62px;border-radius:17px}
+  .destination-grid .app-icon svg{width:29px;height:29px}
+  .destination-grid .app-card strong{font-size:13px;max-width:150px}
+  .destination-grid .app-card small{font-size:12px;max-width:155px}
+  .destination-grid--two{grid-template-columns:repeat(2,minmax(130px,170px))}
+}
+@media(max-width:360px){
+  .destination-grid--two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .destination-grid .app-card small{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.destination-grid .app-card{transition:none}}
