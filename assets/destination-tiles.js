@@ -14,5 +14,44 @@ game:'<path d="M6.5 8h11a4 4 0 0 1 3.8 5.2l-1.2 4a2.5 2.5 0 0 1-4.2 1l-2-2.2h-3.
 dice:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 8h.01M16 8h.01M12 12h.01M8 16h.01M16 16h.01"/>'
 };
 const rules=[[/survival budget/i,'budget','tools'],[/saving practice/i,'checklist','course'],[/money snapshot/i,'snapshot','about'],[/recommendations/i,'book','course'],[/investment snowball/i,'chart','tools'],[/statement calendar/i,'calendar','calculators'],[/true cost/i,'calculator','calculators'],[/money spiral/i,'spiral','tools'],[/tap vs/i,'drop','games'],[/mortgage prepayment/i,'home','calculators'],[/financial life/i,'game','games'],[/snakes/i,'dice','games']];
-document.querySelectorAll('.pc-tool-list article[data-goal]').forEach(card=>{const title=card.querySelector('h3')?.textContent||'';const match=rules.find(([pattern])=>pattern.test(title));if(!match)return;const [,name,category]=match;card.classList.add('destination-tool-card');const icon=document.createElement('span');icon.className='catalog-icon catalog-icon--'+category;icon.setAttribute('aria-hidden','true');icon.innerHTML='<svg viewBox="0 0 24 24">'+icons[name]+'</svg>';card.prepend(icon);});
+document.querySelectorAll('.pc-tool-list article[data-goal]').forEach(card=>{
+ const title=card.querySelector('h3')?.textContent.trim()||'';
+ const match=rules.find(([pattern])=>pattern.test(title));
+ const destination=card.querySelector('.pc-link');
+ if(!match||!destination)return;
+ const [,iconName,category]=match;
+ const tag=card.querySelector('.pc-tag')?.textContent.trim()||'';
+ const description=[...card.children].filter(e=>e.tagName==='P').map(e=>e.cloneNode(true));
+ const book=card.querySelector('details.book-disclosure')?.cloneNode(true);
+ const href=destination.getAttribute('href');
+ const action=destination.textContent.trim().replace(/[→›]\s*$/,'')||'Open';
+ card.className='tool-launcher-item';
+ card.replaceChildren();
+ const link=document.createElement('a');
+ link.className='app-card app-card--'+category+' tool-launcher-card';
+ link.href=href;
+ link.setAttribute('aria-label',title+'. '+action);
+ const badge=document.createElement('span');
+ badge.className='app-icon';
+ badge.setAttribute('aria-hidden','true');
+ badge.innerHTML='<svg viewBox="0 0 24 24">'+icons[iconName]+'</svg>';
+ const label=document.createElement('strong');
+ label.textContent=title;
+ const actionLabel=document.createElement('small');
+ actionLabel.textContent=action;
+ link.append(badge,label,actionLabel);
+ card.append(link);
+ const info=document.createElement('details');
+ info.className='tool-card-details';
+ const summary=document.createElement('summary');
+ summary.textContent='Details';
+ info.append(summary);
+ const body=document.createElement('div');
+ body.className='tool-card-details-body';
+ if(tag){const type=document.createElement('span');type.className='pc-tag';type.textContent=tag;body.append(type);}
+ description.forEach(p=>body.append(p));
+ if(book)body.append(book);
+ info.append(body);
+ card.append(info);
+});
 })();
