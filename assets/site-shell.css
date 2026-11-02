@@ -7,3 +7,18 @@
 .site-currency{width:min(1280px,calc(100% - 40px));margin:auto;padding:0 0 12px;display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;font:12px/1.5 Arial,sans-serif;color:#35584b}.site-currency label{font-weight:bold}.site-currency select{max-width:240px;min-height:36px;padding:5px 8px;border:1px solid #a5bbb0;border-radius:6px;background:#fffdf8;color:#173b36;font:12px Arial,sans-serif}.site-currency details{position:relative}.site-currency summary{cursor:pointer;padding:8px 0}.site-currency details p{position:absolute;z-index:30;right:0;top:25px;width:min(390px,80vw);padding:16px;border:1px solid #b8c9c0;border-radius:9px;background:#fffdf8;box-shadow:0 8px 20px #173b3620;font:12px/1.7 Arial,sans-serif;color:#173b36}.currency-page-note{font-weight:bold}.site-currency :focus-visible{outline:3px solid #ae4f2c;outline-offset:3px}@media(max-width:600px){.site-currency{width:calc(100% - 28px)}.site-currency details p{right:auto;left:0;max-width:calc(100vw - 40px)}}@media print{.site-currency{display:none!important}}
 
 .site-currency{position:relative}.site-currency details{position:static}.site-currency details p{left:0;right:auto;top:100%;margin-top:0;max-width:100%}
+
+/* Carry the entry animation’s midnight teal, mint, and gold through shared site chrome. */
+:root{--lfm-midnight:#061b22;--lfm-deep-teal:#123b38;--lfm-teal:#155148;--lfm-mint:#8cebd0;--lfm-pale-mint:#e8f5ed;--lfm-gold:#f0d49a;--lfm-paper:#f7f4e9}
+.site-header{background:var(--lfm-paper);border-bottom-color:#cbded5;color:var(--lfm-deep-teal)}
+.site-header .site-brand{color:var(--lfm-deep-teal)}
+.site-mark{background:var(--lfm-midnight);color:var(--lfm-gold)}
+.site-header .site-links a:hover,.site-header .site-links a[aria-current=page]{background:var(--lfm-pale-mint);color:var(--lfm-deep-teal)}
+.site-header .site-links .site-start,.site-header .site-links .site-start:hover,.site-header .site-links .site-start[aria-current=page]{background:var(--lfm-midnight);color:#f4f5e9}
+.site-header a:focus-visible,.site-footer a:focus-visible,.site-next a:focus-visible{outline-color:var(--lfm-gold)}
+.site-footer{background:var(--lfm-midnight);border-top-color:#275249;color:#d3e7df}
+.site-footer strong,.site-footer a{color:var(--lfm-gold)}
+.site-next{background:var(--lfm-paper);border-color:#cbded5;color:var(--lfm-deep-teal)}
+.site-next h2{color:var(--lfm-deep-teal)}
+.site-next a{border-color:#9dc7b8;color:var(--lfm-deep-teal)}
+.site-next a:hover{background:var(--lfm-pale-mint);border-color:#63a895}
