@@ -1,8 +1,8 @@
 /* Chapter 1 manuscript amounts; an educational game, not financial accounting. */
 (function(root){
 'use strict';
-const RULES=Object.freeze({usedCar:10000,newCar:40000,carFinance:8000,transit:1500,weddingLow:10000,weddingHigh:40000,child:8000,resp:2500,rent:24000,homeValue:450000,mortgages:{5:30000,10:28000,15:26000,20:23000},jobs:{1:20000,2:10000,3:5000,4:0,5:-5000,6:-10000},partners:{1:500,2:2000,3:3000,4:4000,5:10000,6:20000}});
-function fresh(){return {age:18,stage:'education-roll',net:0,ledger:[],educationRoll:null,degree:null,job:0,partner:0,married:false,children:0,resp:false,car:null,housing:null,rolls:[]};}
+const RULES=Object.freeze({usedCar:10000,newCar:40000,carFinance:8000,transit:1500,weddingLow:10000,weddingHigh:40000,child:8000,resp:2500,respLimit:50000,rent:24000,homeValue:450000,mortgages:{5:30000,10:28000,15:26000,20:23000},jobs:{1:20000,2:10000,3:5000,4:0,5:-5000,6:-10000},partners:{1:500,2:2000,3:3000,4:4000,5:10000,6:20000}});
+function fresh(){return {age:18,stage:'education-roll',net:0,ledger:[],educationRoll:null,degree:null,job:0,careerRoll:null,respPerChild:0,partner:0,married:false,children:0,resp:false,car:null,housing:null,rolls:[]};}
 function record(s,amount,text,age=s.age){s.net+=amount;s.ledger.push({age,amount,text,total:s.net});}
 function year(s,age){
  if(age>=23)record(s,s.job,s.job<0?'Career outcome: annual score shortfall':'Career outcome: annual savings',age);
@@ -10,7 +10,10 @@ function year(s,age){
  if(s.car==='transit'&&age>=24)record(s,-RULES.transit,'Public transit',age);
  if(age>=27&&(age<30||s.married))record(s,-s.partner,'Relationship spending',age);
  if(age>=32&&s.children)record(s,-s.children*RULES.child,'Children · '+s.children+' × $8,000',age);
- if(age>=33&&s.resp&&s.children)record(s,-s.children*RULES.resp,'Fictional education-savings score',age);
+ if(age>=33&&s.resp&&s.children){
+  const contribution=Math.min(RULES.resp,Math.max(0,RULES.respLimit-s.respPerChild));
+  if(contribution>0){s.respPerChild+=contribution;record(s,-s.children*contribution,'RESP contributions',age);}
+ }
  if(age>=37&&s.housing==='rent')record(s,-RULES.rent,'Rent',age);
  if(age>=37&&age<=61&&typeof s.housing==='number')record(s,-RULES.mortgages[s.housing],'Mortgage path · year '+(age-36)+' of 25',age);
  if(age===62&&typeof s.housing==='number')record(s,RULES.homeValue,'Book’s home-value addition after 25 years',age);
@@ -21,7 +24,7 @@ function roll(s,r){
  if(!['education-roll','career-roll','partner-roll'].includes(s.stage))throw Error('This stage does not ask for a die roll.');
  s.rolls.push({age:s.age,value:r});
  if(s.stage==='education-roll'){s.educationRoll=r;s.stage=r===4?'degree':'education';}
- else if(s.stage==='career-roll'){s.job=RULES.jobs[r];record(s,s.job,s.job<0?'Career roll: annual score shortfall':'Career roll: annual savings',23);s.age=24;s.stage='transport';}
+ else if(s.stage==='career-roll'){s.careerRoll=r;s.job=RULES.jobs[r];record(s,s.job,s.job<0?'Career outcome: annual score shortfall':'Career outcome: annual savings',23);s.age=24;s.stage='transport';}
  else if(s.stage==='partner-roll'){s.partner=RULES.partners[r];years(s,27,29);s.age=30;s.stage='marriage';}
  else throw Error('This stage does not ask for a die roll.');
  return s;
@@ -64,5 +67,6 @@ function choose(s,action,value){
 }
 root.LifeEngine={RULES,fresh,roll,choose};
 })(typeof window!=='undefined'?window:globalThis);
+
 
 
