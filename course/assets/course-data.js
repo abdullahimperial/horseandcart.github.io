@@ -1,4 +1,4 @@
-/* Let’s Fix Money: synchronized with manuscript version 146, 77-page print edition. */
+/* Let’s Fix Money: synchronized with manuscript version 147, 77-page print edition. */
 window.COURSE = [
   {
     "id": 1,
@@ -250,7 +250,12 @@ window.COURSE = [
       }
     ],
     "action": "Record one decision to revisit after you finish the course.",
-    "resources": [],
+    "resources": [
+      {
+        "label": "Resource Library · Understand",
+        "href": "../resources.html?stage=understand"
+      }
+    ],
     "bookSection": "Let Us Play a Game",
     "bookReference": "Print edition, p. 14 · Chapter 1 · Let Us Play a Game"
   },
@@ -507,7 +512,12 @@ window.COURSE = [
       }
     ],
     "action": "Choose one spending sequence to change, and set a review date.",
-    "resources": [],
+    "resources": [
+      {
+        "label": "Resource Library · Understand",
+        "href": "../resources.html?stage=understand"
+      }
+    ],
     "bookSection": "Horse and Cart Story",
     "bookReference": "Print edition, p. 21 · Chapter 2 · Horse and Cart Story"
   },
@@ -957,6 +967,14 @@ window.COURSE = [
         "href": "../apps/financial-reset/",
         "label": "Open Money Snapshot",
         "origin": "Additional practice"
+      },
+      {
+        "type": "tool",
+        "title": "Survival Budget",
+        "prompt": "Use the fictional household budget to compare sourced low-cost options with editable allowances. Check eligibility and current terms at the linked sources.",
+        "href": "../activities/frugal-budget.html",
+        "label": "Open Survival Budget",
+        "origin": "Related to Chapter 3 · Save Money"
       }
     ],
     "action": "Implement one audited saving and check the actual result next month.",
@@ -968,6 +986,10 @@ window.COURSE = [
       {
         "label": "CRA: reducing tax deductions at source (T1213)",
         "href": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1213.html"
+      },
+      {
+        "label": "Resource Library · Save",
+        "href": "../resources.html?stage=save"
       }
     ],
     "bookSection": "Save Money",
@@ -1239,6 +1261,14 @@ window.COURSE = [
         "href": "../apps/financial-reset/",
         "label": "Explore emergency readiness",
         "origin": "Additional practice"
+      },
+      {
+        "type": "tool",
+        "title": "Credit Card Statement Calendar",
+        "prompt": "Use a fictional purchase date and amount to explore an example statement cycle, assumed 21-day grace period and illustrative interest if the full balance is not paid. Your card agreement and statement control actual dates and charges.",
+        "href": "../activities/statement-calendar.html",
+        "label": "Open Credit Card Statement Calendar",
+        "origin": "Related to Chapter 4 · Credit Cards as a Buffer · Print edition, p. 45"
       }
     ],
     "action": "Strengthen one dependable part of your emergency system this week.",
@@ -1246,6 +1276,10 @@ window.COURSE = [
       {
         "label": "Government of Canada: EI regular benefits",
         "href": "https://www.canada.ca/en/services/benefits/ei/ei-regular-benefit.html"
+      },
+      {
+        "label": "Resource Library · Build resilience",
+        "href": "../resources.html?stage=resilience"
       }
     ],
     "bookSection": "Emergency Fund or System",
@@ -1530,7 +1564,12 @@ window.COURSE = [
       }
     ],
     "action": "Choose one purchase or financial offer to examine more carefully.",
-    "resources": [],
+    "resources": [
+      {
+        "label": "Resource Library · Preserve",
+        "href": "../resources.html?stage=preserve"
+      }
+    ],
     "bookSection": "Wealth Preservation",
     "bookReference": "Print edition, p. 48 · Chapter 5 · Wealth Preservation"
   },
@@ -1979,6 +2018,14 @@ window.COURSE = [
         "href": "../apps/financial-reset/",
         "label": "Explore a growth report",
         "origin": "Additional practice"
+      },
+      {
+        "type": "tool",
+        "title": "Investment Snowball",
+        "prompt": "Explore how a one-time amount changes under different assumed returns. Returns are uncertain; this is an illustration, not a forecast.",
+        "href": "../apps/investment/",
+        "label": "Open Investment Snowball",
+        "origin": "Related to Chapter 6 · Tax-Sheltered Growth · Print edition, p. 56"
       }
     ],
     "action": "Write down one planning question and decide whether you would seek qualified help to explore it.",
@@ -2006,6 +2053,10 @@ window.COURSE = [
       {
         "label": "CRA: child and family benefits calculator",
         "href": "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/child-family-benefits-calculator.html"
+      },
+      {
+        "label": "Resource Library · Grow",
+        "href": "../resources.html?stage=grow"
       }
     ],
     "bookSection": "Wealth Growth",
@@ -2275,7 +2326,12 @@ window.COURSE = [
       }
     ],
     "action": "Start one conversation about money skills or sustainable family support.",
-    "resources": [],
+    "resources": [
+      {
+        "label": "Resource Library · Transfer",
+        "href": "../resources.html?stage=transfer"
+      }
+    ],
     "bookSection": "Generational Wealth Transfer and Sustainability",
     "bookReference": "Print edition, p. 61 · Chapter 7 · Generational Wealth Transfer and Sustainability"
   },
@@ -2583,6 +2639,10 @@ window.COURSE = [
       {
         "label": "CRA: charities listings and registration",
         "href": "https://www.canada.ca/en/revenue-agency/services/charities-giving/charities-listings.html"
+      },
+      {
+        "label": "Resource Library · Give",
+        "href": "../resources.html?stage=give"
       }
     ],
     "bookSection": "What To Do When You Are Wealthy",
@@ -2913,7 +2973,12 @@ window.COURSE = [
       }
     ],
     "action": "Choose a milestone, a first step, and a date to review your progress.",
-    "resources": [],
+    "resources": [
+      {
+        "label": "Resource Library · All resources",
+        "href": "../resources.html"
+      }
+    ],
     "bookSection": "My Financial Story",
     "bookReference": "Print edition, p. 69 · Chapter 9 · My Financial Story"
   }
