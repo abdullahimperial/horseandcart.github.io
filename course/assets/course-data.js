@@ -1263,7 +1263,7 @@ window.COURSE = [
         "title": "Inspect an emergency-system assessment",
         "prompt": "Compare fictional recovery and growth reports. Identify the reserve assumptions, upfront-payment trade-offs and information still needed.",
         "href": "../apps/financial-reset/",
-        "label": "Explore emergency readiness",
+        "label": "Open Money Snapshot for emergency planning",
         "origin": "Additional practice"
       },
       {
@@ -2020,7 +2020,7 @@ window.COURSE = [
         "title": "Explore the growth-readiness checks",
         "prompt": "Generate the fictional growth report. Examine why the app suggests investment planning and which facts it asks you to verify.",
         "href": "../apps/financial-reset/",
-        "label": "Explore a growth report",
+        "label": "Open Money Snapshot for growth planning",
         "origin": "Additional practice"
       },
       {
@@ -2642,7 +2642,7 @@ window.COURSE = [
     "resources": [
       {
         "label": "CRA: charities listings and registration",
-        "href": "https://www.canada.ca/en/revenue-agency/services/charities-giving/charities-listings.html"
+        "href": "https://www.canada.ca/en/revenue-agency/services/charities-giving/list-charities.html"
       },
       {
         "label": "Resource Library · Give",
