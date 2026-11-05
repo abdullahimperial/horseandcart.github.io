@@ -161,6 +161,15 @@ function downloadReport(){
  const text=window.ResetDashboard.withExpanded(()=>$('#report').innerText).replace('Download report ↓\nPrint report\nReview assumptions ↑','')+'\n\nMY TOP THREE ACTIONS\n'+($('#action-notes').value||'[Not entered]')+'\n\nACTION TRACKER\n'+window.ResetPlanUI.text();
  const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`money-snapshot-${lastReport.start}-to-${lastReport.end}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+document.querySelectorAll('.step-strip a').forEach(link=>link.addEventListener('click',event=>{
+ const target=document.querySelector(link.getAttribute('href'));
+ if(target?.hidden){
+  event.preventDefault();
+  const message=target.id==='report'?'Generate an example report, or import and review sample transactions before building your plan.':'Generate an example report or import sample transactions to unlock review and context.';
+  status(message);
+  const notice=document.getElementById('app-status');notice.tabIndex=-1;notice.focus();notice.scrollIntoView({block:'center'});
+ }
+}));
 $('#plan-file').addEventListener('change',e=>window.ResetPlanUI.load(e.target.files[0]));
 $('#card-file').addEventListener('change',e=>load('card',e.target.files[0]));$('#chequing-file').addEventListener('change',e=>load('chequing',e.target.files[0]));$('#import').addEventListener('click',importTransactions);
 $('#search').addEventListener('input',()=>{page=0;renderTransactions();});$('#category-filter').addEventListener('change',()=>{page=0;renderTransactions();});$('#prev-page').addEventListener('click',()=>{page--;renderTransactions();});$('#next-page').addEventListener('click',()=>{page++;renderTransactions();});
