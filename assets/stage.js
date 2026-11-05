@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const stages={
 understand:{name:'Understand',intro:'Notice the choices, costs, and circumstances that shape a financial journey.',modules:[1,2],resources:[['Financial Life','games/financial-life.html','game','games'],['Snakes & Ladders','games/snakes-and-ladders.html','dice','games'],['True Cost of a Purchase','apps/true-cost/','calculator','calculators'],['Money Spiral','activities/money-spiral.html','spiral','tools']]},
-save:{name:'Save',intro:'Explore spending patterns, practical savings, and ways to make more room in a budget.',modules:[3],resources:[['Survival Budget','activities/frugal-budget.html','budget','tools'],['Saving Practice Scorecard','apps/checklist/','checklist','course'],['Tap vs. Leak','activities/tap-vs-leak.html','drop','games'],['Credit Card Statement Calendar','activities/statement-calendar.html','calendar','calculators'],['Money Snapshot','apps/financial-reset/','snapshot','about']]},
+save:{name:'Save',intro:'Explore spending patterns, practical savings, and ways to make more room in a budget.',modules:[3],resources:[['Four Pillars Savings Planner','apps/savings-planner/','pillars','tools'],['Survival Budget','activities/frugal-budget.html','budget','tools'],['Saving Practice Scorecard','apps/checklist/','checklist','course'],['Tap vs. Leak','activities/tap-vs-leak.html','drop','games'],['Credit Card Statement Calendar','activities/statement-calendar.html','calendar','calculators'],['Money Snapshot','apps/financial-reset/','snapshot','about']]},
 resilience:{name:'Build Resilience',intro:'Explore emergency readiness, cash-flow questions, and how a household might prepare for uncertainty.',modules:[4],resources:[['Survival Budget','activities/frugal-budget.html','budget','tools'],['Money Snapshot','apps/financial-reset/','snapshot','about'],['Credit Card Statement Calendar','activities/statement-calendar.html','calendar','calculators']]},
 preserve:{name:'Preserve',intro:'Explore the course lesson on protecting the progress you have made.',modules:[5],resources:[['Tap vs. Leak','activities/tap-vs-leak.html','drop','games'],['Mortgage Prepayment','calculators/mortgage-prepayment.html','home','calculators']]},
 grow:{name:'Grow',intro:'Explore the course lesson and illustrative investment-growth scenario.',modules:[6],resources:[['Money Snapshot','apps/financial-reset/','snapshot','about'],['Investment Snowball','apps/investment/','chart','calculators']]},
@@ -9,6 +9,7 @@ transfer:{name:'Transfer',intro:'Explore the course lesson about giving the next
 give:{name:'Give',intro:'Explore the course lesson about using wealth for good.',modules:[8],resources:[]}
 };
 const icons={
+pillars:'<path d="M3 7h18L12 3 3 7zM3 21h18M5 10v8M10 10v8M15 10v8M20 10v8"/>',
 spiral:'<path d="M12 12c0-2 3-2 3 0 0 3-4 4-6 2-3-3-1-8 3-9 5-1 9 3 9 8 0 6-5 10-11 9-7-1-11-7-10-14"/>',
 book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20M8 7h8M8 11h7"/>',
 game:'<path d="M6.5 8h11a4 4 0 0 1 3.8 5.2l-1.2 4a2.5 2.5 0 0 1-4.2 1l-2-2.2h-3.8l-2 2.2a2.5 2.5 0 0 1-4.2-1l-1.2-4A4 4 0 0 1 6.5 8z"/><path d="M8 11v4M6 13h4M16 12h.01M18 14h.01"/>',

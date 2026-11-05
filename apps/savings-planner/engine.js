@@ -1,0 +1,7 @@
+(function(root){'use strict';
+const monetary=a=>['expense','income'].includes(a.impactType);
+const known=n=>n!==null&&n!==undefined&&n!==''&&Number.isFinite(Number(n))&&Math.abs(Number(n))<=1e12;
+function estimate(a){if(!monetary(a)||a.status==='dropped')return null;if(known(a.estimate))return Number(a.estimate);return a.impactType==='expense'&&known(a.current)&&Number(a.current)>=0&&known(a.target)&&Number(a.target)>=0?Number(a.current)-Number(a.target):null;}
+function summary(actions,confirmed=false){const active=actions.filter(a=>a.status!=='dropped'),priced=active.filter(a=>estimate(a)!==null),actual=active.filter(a=>monetary(a)&&known(a.actual)),groups=new Map();for(const a of priced){const key=a.categoryId||a.category;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(a);}const total=priced.reduce((n,a)=>n+estimate(a),0);return {count:actions.length,priorities:active.filter(a=>a.priority),done:active.filter(a=>a.status==='done').length,known:priced.length,unknown:active.filter(a=>a.impactType!=='nonfinancial'&&estimate(a)===null).length,overlaps:[...groups.values()].filter(g=>g.length>1).map(g=>g[0].category),monthly:confirmed&&priced.length?total:null,annual:confirmed&&priced.length?total*12:null,actualKnown:actual.length,actualMonthly:confirmed&&actual.length?actual.reduce((n,a)=>n+Number(a.actual),0):null};}
+root.SavingsPlannerEngine={estimate,summary};
+})(typeof window!=='undefined'?window:globalThis);

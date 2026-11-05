@@ -963,9 +963,9 @@ window.COURSE = [
       {
         "type": "tool",
         "title": "Apply all four saving pillars",
-        "prompt": "Generate a fictional Money Snapshot report. Review one expense row across all four pillar cells, then choose an action to investigate.",
-        "href": "../apps/financial-reset/",
-        "label": "Open Money Snapshot",
+        "prompt": "Open the Four Pillars Savings Planner. Review a major expense across all four saving methods, choose an action and estimate its monthly impact before printing your plan.",
+        "href": "../apps/savings-planner/",
+        "label": "Open Four Pillars Savings Planner",
         "origin": "Additional practice"
       },
       {
@@ -986,6 +986,10 @@ window.COURSE = [
       {
         "label": "CRA: reducing tax deductions at source (T1213)",
         "href": "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms/t1213.html"
+      },
+      {
+        "label": "Four Pillars Savings Planner",
+        "href": "../apps/savings-planner/"
       },
       {
         "label": "Resource Library · Save",
