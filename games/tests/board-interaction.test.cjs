@@ -19,9 +19,10 @@ async function roll(n){context.Math.random=()=> (n-1)/6+.001;await el('roll').ha
 (async()=>{
  assert.match(el('art').src,/board-book.jpg/);assert.equal((el('grid').innerHTML.match(/data-square=/g)||[]).length,100);
  await roll(4);assert.equal(el('board').dataset.position,16,'Ladder from 5 to 16');
- el('restart').handlers.click();await roll(6);assert.equal(el('board').dataset.position,7);assert.equal(el('roll').disabled,true);assert.match(el('event').innerHTML,/outside the numbered grid/);el('setback-square').value='3';el('apply-setback').onclick();assert.equal(el('board').dataset.position,3);assert.equal(el('roll').disabled,false);
+ el('restart').handlers.click();await roll(6);assert.equal(el('board').dataset.position,2);assert.equal(el('roll').disabled,false);assert.match(el('event').innerHTML,/7 → 2/);
  vm.runInContext('position=17;moveToken()',context);await roll(1);assert.equal(el('board').dataset.position,4,'Snake from 18 to 4');
  vm.runInContext('position=99;moveToken()',context);await roll(2);assert.equal(el('board').dataset.position,99,'Overshoot stays in place');await roll(1);assert.equal(el('board').dataset.position,100);assert.equal(el('roll').disabled,true);assert.match(el('status').textContent,/reached 100/);
  el('restart').handlers.click();assert.equal(el('board').dataset.position,1);assert.equal(el('roll').disabled,false);
- console.log('PASS: default artwork, 100 cells, ladder, snake, square-7 choice, exact finish and restart.');
+ console.log('PASS: default artwork, 100 cells, ladder, snake, automatic square-7 setback, exact finish and restart.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
