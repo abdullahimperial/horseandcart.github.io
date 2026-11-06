@@ -114,7 +114,7 @@ function calculate(kind, values) {
 }
 function resultHTML(result) { return `<strong>Your calculation</strong><div class="result-grid">${result.items.map(([label,value])=>`<div class="result-item"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</div><p style="margin:0">${esc(result.explanation)}</p>`; }
 function workbook(mods) {
- let lines=['PERSONAL FINANCE STORY — MY COURSE WORKBOOK','Based on the book by Abdullah Mohiuddin','Educational activities; personal figures and reflections entered on this device.',''];
+ let lines=['LET’S FIX MONEY — MY COURSE WORKBOOK','Based on the book by Abdullah Mohiuddin','Educational scenario only, not individualized financial, investment, tax, legal, credit or mortgage advice. Outputs depend on the information and assumptions entered; they do not establish suitability, eligibility or guaranteed results. Verify current rules and account terms and obtain qualified advice for decisions. Keep this file private. Terms: https://www.letsfixmoney.com/terms.html · Privacy: https://www.letsfixmoney.com/privacy.html',''];
  for (const m of mods) {
   const n=getNotes(m.id); lines.push(`MODULE ${m.id}: ${m.title}`,m.bookReference, '');
   m.activities.forEach((a,i)=>{

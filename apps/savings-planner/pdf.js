@@ -148,7 +148,8 @@
       this.font(17); c.fillStyle = '#536e67';
       c.fillText('Private working document · Educational planning, not financial advice',
         this.margin, this.height - 48);
-      c.textAlign = 'right';
+      this.font(16); c.fillText('Terms and tool limits: letsfixmoney.com/terms.html · Privacy: letsfixmoney.com/privacy.html', this.margin, this.height - 27);
+      this.font(17); c.textAlign = 'right';
       c.fillText('Page ' + (this.pages.length + 1),
         this.width - this.margin, this.height - 48);
       c.textAlign = 'left';
