@@ -1,6 +1,6 @@
 # Book companion games
 
-These games follow Chapter 1 of the current *Let’s Fix Money* manuscript: Financial Life on pages 16–19 and Snakes & Ladders on pages 20–21. Fixed amounts are fictional teaching assumptions.
+These games follow Chapter 1 of the current *Let’s Fix Money* manuscript: Financial Life on pages 17–20 and Snakes & Ladders on pages 21–22. Fixed amounts are fictional teaching assumptions.
 
 ## Financial Life
 
@@ -13,6 +13,8 @@ These games follow Chapter 1 of the current *Let’s Fix Money* manuscript: Fina
 - Without an RESP, deduct $43,200 per child once at player age 50. RESP users have no extra education deduction. Do not also add an RESP asset to the score.
 - A fictional home costs $450,000. Pay the chosen down payment at 37, mortgage amounts at ages 37–61, and add $450,000 home value once at 62. Renters pay $24,000 annually at ages 37–65.
 - Replay preserves the three dice results. Keep marriage and child count the same to compare money decisions; changing them produces a different family scenario.
+
+The web game shows all six education and relationship outcomes, records the three die results at the finish, and states that paying for education without an RESP is an education cost, not a government penalty. Its choices and calculations match the manuscript; no extra game decisions are added.
 
 ## Snakes & Ladders
 
@@ -27,3 +29,4 @@ All cells, paths and the token use `assets/board-geometry.js`. The current book 
 ## Verification
 
 Run `node games/tests/game.test.cjs` from the repository root. Tests cover 144 matched RESP/non-RESP paths, career and training choices, annual cutoffs, car and mortgage totals, affordability, replay, UI rendering, all 100 cells, fixed routes, exact finish and restart. Browser visual review should also check desktop/mobile layouts and board alignment when browser access is available.
+
