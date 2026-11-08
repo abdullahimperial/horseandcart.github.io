@@ -78,6 +78,7 @@ function categorySuggestion(description,flow,account){
  if(flow==='in'&&account==='chequing'&&/\b(?:payroll|salary|pension|employer pay)\b|direct deposit.*pay|\bpay$/.test(s))return match('Income','Payroll wording or the bank’s PAY deposit code.');
  if(/loan payment|mortgage payment|student loan|installment|instalment|car loan/.test(s))return match('Debt payments','Loan or mortgage-payment wording.');
  if(/cashback reward|cash back reward/.test(s))return match('Other','Cashback reward: review how to categorize this credit.');
+ const sourced=root.ResetMerchants?.match(description);if(sourced)return sourced;
  // Specific merchants take precedence over broad words such as INV or school.
  if(/\bpc\s*express\b|\bh\s*w\s*produce\b|grocery|groceries|superstore|safeway|sobeys|save on foods|no frills|freshco|food basics|loblaws|t\s*t supermarket|produce/.test(s))return match('Groceries','Grocery merchant or food-market wording.');
  if(/\bhome\s*depot\b|\brona\b|\blowes\b|\bhome hardware\b|renovation|building supplies|lumber|plumbing repair|roofing/.test(s))return match('Home renovation','Home-improvement merchant or repair wording; check the purchase.');
@@ -125,7 +126,7 @@ function normalize(parsed,map,account){
    if(!amount){zero++;return;}
    let balance=null;if(map.balance>=0)balance=number(row[map.balance],map.numberStyle);
    const suggestion=categorySuggestion(description,flow,account),category=suggestion.category;
-   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,categoryReason:suggestion.reason,balance,review:'Unreviewed',ambiguous:category==='Other'});
+   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,categoryReason:suggestion.reason,merchantId:suggestion.merchantId||null,categorySource:suggestion.source||null,balance,review:'Unreviewed',ambiguous:category==='Other'});
   }catch(error){invalid.push({row:i+(parsed.rowOffset??2),reason:error.message});}
  });
  if(!transactions.length)throw Error('No transactions imported. '+(invalid.length?invalid.slice(0,3).map(e=>`Row ${e.row}: ${e.reason}`).join('; '):'Only zero-amount rows were found. Check the column mapping and amounts.'));

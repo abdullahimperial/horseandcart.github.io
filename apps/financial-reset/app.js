@@ -10,7 +10,7 @@ function invalidate(){if(lastReport){$('#report-stale').hidden=false;$('#downloa
 function options(headers,selected,optional=true){return (optional?'<option value="-1">Not used</option>':'<option value="-1">Choose a column</option>')+headers.map((h,i)=>`<option value="${i}" ${i===selected?'selected':''}>${esc(h)} (column ${i+1})</option>`).join('');}
 function guess(headers,patterns){return headers.findIndex(h=>patterns.some(re=>re.test(h)));}
 function mapping(account){
- const p=parsed[account],h=p.headers;
+ const p=parsed[account];if(p.accounts){bankMapping(account);return;}const h=p.headers;
  const guesses={date:guess(h,[/transaction.*date/i,/^date$/i,/posting.*date/i]),description:guess(h,[/description/i,/merchant/i,/details/i,/memo/i,/payee/i]),descriptionExtra:guess(h,[/description\s*2/i]),amount:guess(h,[/^amount$/i,/transaction.*amount/i]),debit:guess(h,[/debit/i,/withdrawal/i,/money out/i]),credit:guess(h,[/credit/i,/deposit/i,/money in/i]),balance:guess(h,[/balance/i]),currency:guess(h,[/^currency$/i]),direction:guess(h,[/^type$/i,/debit.*credit/i])};
  const separate=guesses.amount<0&&guesses.debit>=0&&guesses.credit>=0;
  const selectors=[['date','Transaction date'],['description','Description / merchant'],['descriptionExtra','Optional second description'],['amount','Signed or unsigned amount'],['debit','Debit / money out'],['credit','Credit / money in'],['direction','Optional debit/credit type'],['balance','Optional running balance'],['currency','Optional currency column']];
@@ -24,7 +24,27 @@ function mapping(account){
   for(const key of ['debit','credit'])$(`#${account}-${key}`).closest('label').hidden=!separate;
  }
  $(`#${account}-mode`).addEventListener('change',showLayout);showLayout();
- $('#import').disabled=!parsed.card||!parsed.chequing;
+ updateImportReady();
+}
+function updateImportReady(){
+ $('#import').disabled=!['card','chequing'].every(role=>{const p=parsed[role];return p&&(!p.accounts||p.accounts[p.selection]?.role===role&&!p.accounts[p.selection]?.error);});
+}
+function bankMapping(account){
+ const p=parsed[account],compatible=p.accounts.map((a,i)=>({a,i})).filter(x=>x.a.role===account);
+ p.selection=compatible.length===1?compatible[0].i:-1;
+ const host=$(`#${account}-mapping`);
+ host.innerHTML=`<div class="mapping"><p><strong>${esc(names[account])}</strong><br>${esc(p.format)} bank export. Dates and money-in / money-out signs are read automatically.</p>${compatible.length?`<label class="field"><span class="field-label">Account to import</span><select id="${account}-bank-account"><option value="-1">Choose an account</option>${compatible.map(({a,i})=>`<option value="${i}" ${p.selection===i?'selected':''}>${esc(a.label)} · ${esc(a.currency||'currency missing')}</option>`).join('')}</select></label><div id="${account}-bank-info"></div>`:'<p class="feedback error">No matching account in this file. Use a credit-card export in Account 1 and a deposit-account export in Account 2.</p>'}</div>`;
+ function details(){
+  const a=p.accounts[p.selection],info=$(`#${account}-bank-info`);
+  if(info)info.innerHTML=!a?'Choose the account you want to review.':a.error?`<p class="feedback error">${esc(a.error)}</p>`:`<p>${a.records.length} posted non-zero transactions · ${esc(a.currency)}.${a.start&&a.end?` Bank export range: ${esc(a.start)} to ${esc(a.end)}.`:''}</p>${a.balance?`<p>Recorded ${account==='card'?'card':'account'} balance: ${cash(a.balance.amount)} on ${esc(a.balance.date)}.${account==='card'?' Card balances are not counted as emergency cash.':''}</p>`:''}<p>${a.duplicates} repeated transaction IDs omitted · ${a.pending} pending records excluded · ${a.invalid.length} records need correction.</p><p class="calc-help">Review purchases, refunds and transfers after importing. Pending transactions are excluded because they can change before posting.</p>`;
+  updateImportReady();
+ }
+ const selector=$(`#${account}-bank-account`);
+ if(selector)selector.addEventListener('change',()=>{p.selection=Number(selector.value);details();if(transactions.length){$('#analyze').disabled=true;invalidate();status('Account changed. Import the transactions again before rebuilding the report.');}});
+ details();
+}
+function normalizeFile(account){
+ const p=parsed[account];return p?.accounts?window.ResetBankFiles.normalize(p,p.selection,account):E.normalize(p,mapValues(account),account);
 }
 function mapValues(account){
  const vals={};for(const key of ['date','description','descriptionExtra','amount','debit','credit','balance','currency','direction'])vals[key]=Number($(`#${account}-${key}`).value);
@@ -48,8 +68,8 @@ async function load(account,file){
  if(!file)return;
  try{
   if(file.size>5*1024*1024)throw Error('File is larger than 5 MB. Export a shorter window.');
-  const text=await file.text();if(loads[account]!==token)return;
-  parsed[account]=E.parseCSV(text);names[account]=file.name.slice(0,100);mapping(account);status('File parsed locally. Confirm the mappings and amount signs before importing.');
+  const result=await window.ResetBankFiles.read(file);if(loads[account]!==token)return;
+  parsed[account]=result;names[account]=file.name.slice(0,100);mapping(account);status(result.accounts?'Bank file read locally. Check the selected account and import the transactions for review.':'CSV read locally. Confirm the mappings and amount signs before importing.');
  }catch(error){if(loads[account]!==token)return;status(`${account==='card'?'Credit-card':'Chequing'} import: ${error.message}`,true);}
 }
 function defaultDates(){
@@ -59,11 +79,11 @@ function defaultDates(){
 }
 function importTransactions(){
  try{
-  const card=E.normalize(parsed.card,mapValues('card'),'card'),chequing=E.normalize(parsed.chequing,mapValues('chequing'),'chequing');
+  const card=normalizeFile('card'),chequing=normalizeFile('chequing');
   quality={card,chequing};transactions=[...card.transactions,...chequing.transactions].sort((a,b)=>a.date.localeCompare(b.date)||a.account.localeCompare(b.account)||a.row-b.row);page=0;
   const errors=card.invalid.length+chequing.invalid.length;
   $('#review-section').hidden=false;$('#analyze').disabled=errors>0;
-  $('#import-quality').innerHTML=`<div class="quality ${errors?'warning':''}"><strong>${transactions.length} non-zero transactions read locally.</strong><p>${card.transactions.length} card rows · ${chequing.transactions.length} chequing rows · ${card.zero+chequing.zero} zero-amount rows ignored.</p>${errors?`<p><strong>${errors} rows could not be imported. Analysis is blocked until you correct the mapping or CSV and import again.</strong></p><details open><summary>Show row issues</summary><ul>${['card','chequing'].flatMap(a=>quality[a].invalid.slice(0,20).map(e=>`<li>${a==='card'?'Card':'Chequing'} row ${e.row}: ${esc(e.reason)}</li>`)).join('')}</ul>${errors>40?'<p>Only the first 20 issues per file are shown.</p>':''}</details>`:'<p>All non-zero rows parsed. Suggested categories still require review.</p>'}</div>`;
+  $('#import-quality').innerHTML=`<div class="quality ${errors?'warning':''}"><strong>${transactions.length} non-zero transactions read locally.</strong><p>${card.transactions.length} card rows · ${chequing.transactions.length} chequing rows · ${card.zero+chequing.zero} zero-amount rows ignored.</p><p>${(card.duplicates||0)+(chequing.duplicates||0)} identical repeated bank transaction IDs omitted · ${(card.pending||0)+(chequing.pending||0)} pending records excluded.</p>${errors?`<p><strong>${errors} rows could not be imported. Analysis is blocked until you correct the mapping or source file and import again.</strong></p><details open><summary>Show row issues</summary><ul>${['card','chequing'].flatMap(a=>quality[a].invalid.slice(0,20).map(e=>`<li>${a==='card'?'Card':'Chequing'} row ${e.row}: ${esc(e.reason)}</li>`)).join('')}</ul>${errors>40?'<p>Only the first 20 issues per file are shown.</p>':''}</details>`:'<p>All non-zero rows parsed. Suggested categories still require review.</p>'}</div>`;
   defaultDates();renderTransactions();renderReviewChart();renderResiliencePreview();invalidate();status(errors?'Correct the row issues before analyzing.':'Import complete. The suggested dates use the shared transaction range, not proof of full statement coverage. Review the dates, transfers and income before confirming.',errors);$('#review-section').scrollIntoView({block:'start'});
  }catch(error){$('#analyze').disabled=true;status(error.message,true);}
 }
@@ -85,9 +105,9 @@ function renderTransactions(){
  const rows=transactions.filter(t=>(!search||t.description.toLowerCase().includes(search))&&(filter==='all'||filter==='flagged'&&t.review==='Not recognized'||t.category===filter));
  const pages=Math.max(1,Math.ceil(rows.length/20));page=Math.min(page,pages-1);
  $('#review-count').textContent=`${rows.length} of ${transactions.length} transactions shown. “Other” means the rule needs your judgment, not that the charge is suspicious.`;
- $('#transactions').innerHTML=rows.slice(page*20,page*20+20).map(t=>`<tr class="${t.review==='Not recognized'?'flagged':''}"><td>${esc(t.date)}<small>${t.account==='card'?'Credit card':'Chequing'} · CSV row ${t.row}</small></td><td>${esc(t.description)}</td><td>${t.flow==='out'?'−':'+'}${cash(t.amount)}<small>${t.flow==='out'?'Money out':'Money in'}</small></td><td><select aria-label="Category for ${esc(t.description)} on ${t.date}" data-category="${t.id}">${E.categories.map(c=>`<option ${t.category===c?'selected':''} ${['Income','Government benefits & support'].includes(c)&&(t.account!=='chequing'||t.flow!=='in')?'disabled':''}>${esc(c)}</option>`).join('')}</select><small class="category-reason">${esc(t.categoryReason||'Suggested category; review this transaction.')}</small></td><td><select aria-label="Recognition for ${esc(t.description)} on ${t.date}" data-recognition="${t.id}">${['Unreviewed','Recognized','Not recognized'].map(c=>`<option ${t.review===c?'selected':''}>${c}</option>`).join('')}</select></td></tr>`).join('');
+ $('#transactions').innerHTML=rows.slice(page*20,page*20+20).map(t=>`<tr class="${t.review==='Not recognized'?'flagged':''}"><td>${esc(t.date)}<small>${t.account==='card'?'Credit card':'Chequing'} · ${esc(t.sourceFormat||'CSV')} ${t.sourceFormat?'record':'row'} ${t.row}</small></td><td>${esc(t.description)}</td><td>${t.flow==='out'?'−':'+'}${cash(t.amount)}<small>${t.flow==='out'?'Money out':'Money in'}</small></td><td><select aria-label="Category for ${esc(t.description)} on ${t.date}" data-category="${t.id}">${E.categories.map(c=>`<option ${t.category===c?'selected':''} ${['Income','Government benefits & support'].includes(c)&&(t.account!=='chequing'||t.flow!=='in')?'disabled':''}>${esc(c)}</option>`).join('')}</select><small class="category-reason">${esc(t.categoryReason||'Suggested category; review this transaction.')}</small></td><td><select aria-label="Recognition for ${esc(t.description)} on ${t.date}" data-recognition="${t.id}">${['Unreviewed','Recognized','Not recognized'].map(c=>`<option ${t.review===c?'selected':''}>${c}</option>`).join('')}</select></td></tr>`).join('');
  $('#page-info').textContent=`Page ${page+1} of ${pages}`;$('#prev-page').disabled=page===0;$('#next-page').disabled=page>=pages-1;
- $('#transactions').querySelectorAll('[data-category]').forEach(el=>el.addEventListener('change',()=>{const t=transactions.find(t=>t.id===el.dataset.category);t.category=el.value;t.categoryReason='Selected by you.';invalidate();renderTransactions();renderReviewChart();renderResiliencePreview();}));
+ $('#transactions').querySelectorAll('[data-category]').forEach(el=>el.addEventListener('change',()=>{const t=transactions.find(t=>t.id===el.dataset.category);t.category=el.value;t.categoryReason='Selected by you.';t.categorySource=null;invalidate();renderTransactions();renderReviewChart();renderResiliencePreview();}));
  $('#transactions').querySelectorAll('[data-recognition]').forEach(el=>el.addEventListener('change',()=>{transactions.find(t=>t.id===el.dataset.recognition).review=el.value;invalidate();renderTransactions();}));
 }
 function debtRows(){

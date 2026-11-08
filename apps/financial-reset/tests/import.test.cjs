@@ -1,5 +1,5 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
-require('../engine.js');const E=globalThis.ResetEngine;
+require('../engine.js');require('../bank-files.js');const E=globalThis.ResetEngine;
 const mapping={date:0,description:1,descriptionExtra:-1,mode:'separate',debit:2,credit:3,amount:-1,balance:4,currency:-1,direction:-1,positive:'out',numberStyle:'dot'};
 test('headerless five-column exports keep the first purchase, refunds and balances',()=>{
  const p=E.parseCSV('09/05/2024,FICTIONAL SHOP,12.50,,130.00\n08/29/2024,FICTIONAL RETURN,,2.25,117.50\n08/25/2024,FICTIONAL TRANSIT,7.00,,119.75');
@@ -28,7 +28,7 @@ test('default dates use the observed overlap and never fill the rest of a month'
 test('upload after a demo clears both fictional accounts and household assumptions',async()=>{
  const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');const src=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
  const nodes=new Map(),$=selector=>{if(!nodes.has(selector))nodes.set(selector,{value:'demo value',checked:true,disabled:false,hidden:false,innerHTML:'demo report',textContent:''});return nodes.get(selector);};
- const state={parsed:{card:{demo:true},chequing:{demo:true}},names:{},loads:{},transactions:[{demo:true}],quality:{},debts:[{balance:'999'}],page:2,lastReport:{demo:true},demoMode:true,$,E,window:{ResetPlanUI:{reset(){state.planReset=true;}}},debtRows(){},invalidate(){},status(){},mapping(){}};
+ const state={parsed:{card:{demo:true},chequing:{demo:true}},names:{},loads:{},transactions:[{demo:true}],quality:{},debts:[{balance:'999'}],page:2,lastReport:{demo:true},demoMode:true,$,E,window:{ResetBankFiles:globalThis.ResetBankFiles,ResetPlanUI:{reset(){state.planReset=true;}}},debtRows(){},invalidate(){},status(){},mapping(){}};
  vm.createContext(state);vm.runInContext(src.match(/const fieldNames=\[[^;]+;/)[0]+src.slice(src.indexOf('function resetDemoForImport('),src.indexOf('\nfunction defaultDates(')),state);
  await vm.runInContext("load('card',{size:40,name:'fictional.csv',text:async()=> '2024-09-01,FICTIONAL SHOP,10,,90'})",state);
  assert.equal(state.demoMode,false);assert.equal(state.parsed.card.rows.length,1);assert.equal(state.parsed.chequing,undefined);assert.equal(state.planReset,true);assert.equal(state.transactions.length,0);assert.equal(state.debts.length,0);assert.equal(state.lastReport,null);

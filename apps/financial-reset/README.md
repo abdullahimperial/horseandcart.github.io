@@ -4,7 +4,7 @@ A static, browser-local transaction review and book-based action-plan app for *L
 
 ## Privacy and data lifecycle
 
-- CSVs are read with the browser File API. No financial data is uploaded, sent to an AI service, or written to local/session storage. The site-wide currency selector may save only its manual preference on this device; it does not change the CAD-only report or CSV requirements.
+- CSV, OFX, QFX and QBO files are read with the browser File API. No financial data is uploaded, sent to an AI service, or written to local/session storage. The site-wide currency selector may save only its manual preference on this device; it does not change the CAD-only report or CAD requirements.
 - Only session memory holds transactions, context, and notes. Reloading clears the analysis. A user can explicitly download a plain-text report.
 - A Content Security Policy prevents fetch/XHR/WebSocket connections and disallows inline scripts, object embeds, external assets, and form submissions.
 - Descriptions, filenames, and user notes are escaped before HTML rendering. Reports use plain text rather than a spreadsheet-compatible CSV export.
@@ -55,7 +55,7 @@ Annual-payment guidance detects stable near-monthly insurance, subscription and 
 
 `intelligence.js` connects reviewed transaction clues with confirmed profile context: CCB/childcare, medical records, RRSP receipts, rising bills, employer benefits, disability-support questions, province and goal. CCB suggests child-related context; a no-dependent-children answer overrides it. RRSP guidance explains that deductions claimed may affect adjusted family net income and later CCB/GST-HST benefits; it never estimates an optimum deduction or guaranteed refund. Medical prompts prioritize itemized receipts and insurance reconciliation.
 
-`planner.js` and `plan-ui.js` provide prioritized actions, status, review dates, user-estimated impact and notes. A user downloads a validated JSON plan explicitly and loads it alongside the next period's CSVs. The plan holds summary statistics and actions, not raw transactions. No history is saved automatically. Comparisons distinguish monthly-equivalent flow measures from entered balance measures, flag overlapping windows, retain unknowns and do not attribute changes to actions. Recommendations added but never edited can disappear when a context correction removes the signal; meaningful tracked actions are retained for review.
+`planner.js` and `plan-ui.js` provide prioritized actions, status, review dates, user-estimated impact and notes. A user downloads a validated JSON plan explicitly and loads it alongside the next period's bank exports. The plan holds summary statistics and actions, not raw transactions. No history is saved automatically. Comparisons distinguish monthly-equivalent flow measures from entered balance measures, flag overlapping windows, retain unknowns and do not attribute changes to actions. Recommendations added but never edited can disappear when a context correction removes the signal; meaningful tracked actions are retained for review.
 
 The Family demo includes fictional CCB and RRSP contribution transactions plus medical expenses. Context and actions remain educational. Independent professional review and real intended-user validation have not been completed.
 
@@ -88,3 +88,10 @@ Tax descriptions, including COE/Edmonton tax wording, use the Taxes category. Be
 The review page and exported report show 3-, 6- and 12-month scenarios, estimated cash runway, and additional savings needed. A complete-calendar-month window uses its actual monthly average; partial windows scale net spending by 30.4375 days and identify the observed days. Entered essential spending overrides the estimate. Investment movements and card settlements remain outside spending.
 
 Only chequing balances supply recorded cash. The last dated balance is shown with its date; same-day conflicts require a unique chronological order supported by reconciled running balances, otherwise cash stays unknown. Reverse-ordered exports are supported. Negative balances supply no emergency cash. Available savings entered by the user override recorded cash for comparisons. These estimates never silently populate verified reserve/budget fields or establish investment readiness. Unknown and zero-budget cases do not produce infinite runway or false coverage.
+
+
+## OFX, QFX and QBO imports and sourced merchant rules (8 November 2026)
+
+`bank-files.js` adds dependency-free local OFX 1 SGML and OFX 2 XML imports, including QFX and QBO bank downloads. CSV mapping remains unchanged. Bank files auto-read posting dates and signed amounts, require CAD and compatible account types, present a masked account selector, and carry dated ledger balances separately from transaction balances. Pending records and identical repeated FITIDs are disclosed and excluded; invalid rows and conflicting IDs block analysis. Correction streams and conversion fields require a fresh CAD CSV export. Multi-account files do not silently combine accounts.
+
+`merchant-rules.js` adds 53 curated entries from the BSD-3-Clause Name Suggestion Index, with retained NSI and Wikidata identifiers. Longer specific merchant names win over generic retailers, while financial context rules take precedence. Categories remain editable. See [sources, matching notes and format limits](MERCHANT-SOURCES.md) and [the retained licence](LICENSE-merchant-data.txt). No paid SDK, lookup service, account login or remote financial-data processing is used.
