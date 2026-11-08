@@ -140,7 +140,7 @@ function normalize(parsed,index,role){
   else if(r.trnType==='DIV'&&flow==='in'&&role==='chequing')suggestion={category:'Income',reason:'Bank export identifies an incoming dividend.'};
   else if(r.trnType==='PAYMENT'&&flow==='in'&&role==='card')suggestion={category:'Transfer / card payment',reason:'Bank export identifies an incoming credit-card payment.'};
   const category=suggestion.category;
-  return {id:`${role}-${i}`,account:role,row:r.row,date:r.date,description:r.description,merchant:root.ResetEngine.merchant(r.description),amount:Math.abs(r.signed),flow,category,categoryReason:suggestion.reason,merchantId:suggestion.merchantId||null,categorySource:suggestion.source||null,balance:null,statementBalance:i===0?a.balance:null,review:'Unreviewed',ambiguous:category==='Other',sourceFormat:parsed.format,fitid:r.fitid,bankTransactionType:r.trnType,sic:r.sic};
+  return {id:`${role}-${i}`,account:role,row:r.row,date:r.date,description:r.description,merchant:root.ResetEngine.merchant(r.description),amount:Math.abs(r.signed),flow,category,categoryReason:suggestion.reason,merchantId:suggestion.merchantId||null,merchantName:suggestion.merchantName||null,merchantSource:suggestion.source||null,merchantSourceUrl:suggestion.sourceUrl||null,categorySource:suggestion.source||null,balance:null,statementBalance:i===0?a.balance:null,review:'Unreviewed',ambiguous:category==='Other',sourceFormat:parsed.format,fitid:r.fitid,bankTransactionType:r.trnType,sic:r.sic};
  });
  return {transactions,invalid:a.invalid,zero:a.zero,duplicates:a.duplicates,pending:a.pending};
 }

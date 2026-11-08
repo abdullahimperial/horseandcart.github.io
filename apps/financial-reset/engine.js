@@ -68,7 +68,8 @@ function merchant(s){return String(s).toUpperCase().replace(/\b\d{4,}\b/g,'').re
 function isBenefit(description){return /\b(?:canada child benefit|child benefit|ccb|gst(?:[ /-]*hst)? (?:credit|benefit)|hst credit|employment insurance|ei (?:benefit|payment)|income support|social assistance|welfare|disability benefit|aish|odsp|ontario works|old age security|oas|guaranteed income supplement|gis benefit|government grant|student grant|housing benefit|rent subsidy)\b/i.test(description);}
 function categorySuggestion(description,flow,account){
  const s=String(description).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
- const match=(category,reason)=>({category,reason});
+ const identity=root.ResetMerchants?.match(description);
+ const match=(category,reason)=>({category,reason,merchantId:identity?.merchantId||null,merchantName:identity?.merchantName||null,source:identity?.source||null,sourceUrl:identity?.sourceUrl||null});
  if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*(?:payment|pymt|pmt)|online payment.*(?:card|credit)/.test(s))return match('Transfer / card payment','Card-payment wording; check the matching settlement.');
  if(/\bhome\s*depot\s*ccs\b|\bhomedepotccs\b/.test(s))return match('Transfer / card payment','Possible Home Depot card settlement, rather than a new purchase. Check the statement.');
  if(/overdraft.*interest|interest charge|purchase interest|cash advance.*interest|finance charge/.test(s))return match('Financing charges','Interest or financing-charge wording.');
@@ -76,9 +77,10 @@ function categorySuggestion(description,flow,account){
  if(/\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b.{0,30}\b(?:contribution|deposit|transfer|withdrawal)\b|\b(?:contribution|deposit|transfer|withdrawal)\b.{0,30}\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b|\b(?:investment|brokerage) (?:transfer|contribution|deposit|withdrawal|purchase)\b|\b(?:stock|etf|mutual fund|bond) purchase\b|\btd waterhouse\b|\bquestrade\b/.test(s))return match('Investments','Investment account, brokerage or contribution wording.');
  if(flow==='in'&&account==='chequing'&&isBenefit(description))return match('Government benefits & support','Benefit or support-payment wording.');
  if(flow==='in'&&account==='chequing'&&/\b(?:payroll|salary|pension|employer pay)\b|direct deposit.*pay|\bpay$/.test(s))return match('Income','Payroll wording or the bank’s PAY deposit code.');
+ if(flow==='in'&&account==='chequing'&&['studio:uber','studio:lyft','studio:doordash','studio:uber_eats'].includes(identity?.merchantId)&&/\b(?:payout|driver earnings|dasher earnings)\b/.test(s))return match('Income','Ride or delivery platform earnings wording. Confirm the income against the payout record.');
  if(/loan payment|mortgage payment|student loan|installment|instalment|car loan/.test(s))return match('Debt payments','Loan or mortgage-payment wording.');
  if(/cashback reward|cash back reward/.test(s))return match('Other','Cashback reward: review how to categorize this credit.');
- const sourced=root.ResetMerchants?.match(description);if(sourced)return sourced;
+ if(identity)return identity;
  // Specific merchants take precedence over broad words such as INV or school.
  if(/\bpc\s*express\b|\bh\s*w\s*produce\b|grocery|groceries|superstore|safeway|sobeys|save on foods|no frills|freshco|food basics|loblaws|t\s*t supermarket|produce/.test(s))return match('Groceries','Grocery merchant or food-market wording.');
  if(/\bhome\s*depot\b|\brona\b|\blowes\b|\bhome hardware\b|renovation|building supplies|lumber|plumbing repair|roofing/.test(s))return match('Home renovation','Home-improvement merchant or repair wording; check the purchase.');
@@ -126,7 +128,7 @@ function normalize(parsed,map,account){
    if(!amount){zero++;return;}
    let balance=null;if(map.balance>=0)balance=number(row[map.balance],map.numberStyle);
    const suggestion=categorySuggestion(description,flow,account),category=suggestion.category;
-   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,categoryReason:suggestion.reason,merchantId:suggestion.merchantId||null,categorySource:suggestion.source||null,balance,review:'Unreviewed',ambiguous:category==='Other'});
+   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,categoryReason:suggestion.reason,merchantId:suggestion.merchantId||null,merchantName:suggestion.merchantName||null,merchantSource:suggestion.source||null,merchantSourceUrl:suggestion.sourceUrl||null,categorySource:suggestion.source||null,balance,review:'Unreviewed',ambiguous:category==='Other'});
   }catch(error){invalid.push({row:i+(parsed.rowOffset??2),reason:error.message});}
  });
  if(!transactions.length)throw Error('No transactions imported. '+(invalid.length?invalid.slice(0,3).map(e=>`Row ${e.row}: ${e.reason}`).join('; '):'Only zero-amount rows were found. Check the column mapping and amounts.'));

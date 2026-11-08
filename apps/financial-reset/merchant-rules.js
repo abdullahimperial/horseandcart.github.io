@@ -563,15 +563,22 @@ const rules=[
   "source": "data/brands/amenity/cinema.json"
  }
 ];
-const normalize=s=>String(s).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,' ').trim();
-const aliases=rules.flatMap(rule=>rule.aliases.map(alias=>({key:normalize(alias),rule}))).filter(x=>x.key).sort((a,b)=>b.key.length-a.key.length);
+const normalize=s=>String(s).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[’']/g,'').replace(/\+/g,' plus ').replace(/[^a-z0-9]+/g,' ').trim();
+const allRules=[...rules,...(root.ResetMerchantExtras?.rules||[])];
+const aliases=allRules.flatMap(rule=>[
+ ...rule.aliases.map(alias=>({key:normalize(alias),rule,prefix:false})),
+ ...(rule.prefixes||[]).map(alias=>({key:normalize(alias),rule,prefix:true}))
+]).filter(x=>x.key).sort((a,b)=>b.key.length-a.key.length||Number(a.prefix)-Number(b.prefix));
 function match(description){
- const text=' '+normalize(description)+' ';
- const found=aliases.find(x=>text.includes(' '+x.key+' '));
+ const normalized=normalize(description),text=' '+normalized+' ';
+ const has=alias=>text.includes(' '+normalize(alias)+' ');
+ const found=aliases.find(x=>(x.prefix?normalized.startsWith(x.key):has(x.key))&&!(x.rule.negativeAliases||[]).some(has));
  if(!found)return null;
- const r=found.rule;
- return {category:r.category,reason:`Merchant name matches ${r.name} in the Name Suggestion Index. Suggested category; check what you purchased.`,merchantId:r.nsi,merchantName:r.name,source:'Name Suggestion Index'};
+ const r=found.rule,source=r.sourceName||'Name Suggestion Index';
+ const temporary=/\b(?:temp(?:orary)? auth(?:orization|orisation)?(?: hold)?|auth(?:orization|orisation) hold)\b/.test(normalized)&&/^(?:studio:lyft|studio:uber|studio:uber_eats)$/.test(r.id||'');
+ const note=temporary?'This description mentions a temporary authorization. Verify whether it posted; use Exclude for an unposted hold or its reversal.':r.note||'Suggested category; check what you purchased.';
+ return {category:r.category,reason:`Merchant name matches ${r.name} (${source}). ${note}`,merchantId:r.id||r.nsi,merchantName:r.name,source,sourceUrl:r.evidenceUrl||r.sourceUrl||`https://github.com/osmlab/name-suggestion-index/blob/b4e8deb6e95d0508f2bca9337d96f387d995622f/${r.source}`,reviewHint:temporary?'Check posting status':null};
 }
-root.ResetMerchants={match,rules,version:'b4e8deb6e95d0508f2bca9337d96f387d995622f'};
+root.ResetMerchants={match,rules,allRules,version:'20261108-expanded-merchants'};
 })(typeof window!=='undefined'?window:globalThis);
 
