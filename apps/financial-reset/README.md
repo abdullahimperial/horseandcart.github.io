@@ -74,3 +74,9 @@ Report downloads temporarily expand every section and restore its prior state; p
 ## Headerless account-activity imports
 
 Date-leading files retain their first transaction. Five-column headerless exports receive editable suggested mappings; consistent unambiguous slash dates suggest month/day or day/month, while fully ambiguous dates still require a choice. Validation errors reference the original CSV row. The suggested review window is the overlap of observed dates, not a claim of complete statement coverage. Starting file import after a demo clears both demo accounts, household assumptions, debts and demo action records before either uploaded account is analyzed. Regression fixtures are fictional; private bank exports are never included in the repository.
+
+## Merchant suggestions and review chart
+
+Recreation, Shopping and Home renovation have dedicated categories and four-pillar guidance. Specific merchant matches precede general keywords, with separate treatment for food delivery, ride trips, subscriptions and store-card settlements. School wording suggests education; a PAY suffix on an incoming chequing entry suggests income. INV suggests investment after specific merchant checks and remains editable. Matching explanations appear below each category; manual corrections are retained until re-import.
+
+The transaction-review page includes a local SVG spending pie for the selected dates. Category edits and date changes refresh it. Its legend filters the table without changing chart totals. Refunds reduce their categories; only positive net category totals form slices. Income, investments, transfers and excluded rows stay outside the pie. No chart libraries or external services receive transactions.

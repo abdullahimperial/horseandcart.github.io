@@ -1,7 +1,7 @@
 /* Pure, browser-local CSV and financial arithmetic. No network or storage. */
 (function(root){
 'use strict';
-const categories=['Income','Government benefits & support','Investments','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
+const categories=['Income','Government benefits & support','Investments','Recreation','Shopping','Home renovation','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
 function parseCSV(text,delimiter){
  text=String(text).replace(/^\uFEFF/,'');
  if(!delimiter){
@@ -66,29 +66,39 @@ function date(value,format='auto'){
 }
 function merchant(s){return String(s).toUpperCase().replace(/\b\d{4,}\b/g,'').replace(/[^A-Z0-9]/g,' ').replace(/\s+/g,' ').trim();}
 function isBenefit(description){return /\b(?:canada child benefit|child benefit|ccb|gst(?:[ /-]*hst)? (?:credit|benefit)|hst credit|employment insurance|ei (?:benefit|payment)|income support|social assistance|welfare|disability benefit|aish|odsp|ontario works|old age security|oas|guaranteed income supplement|gis benefit|government grant|student grant|housing benefit|rent subsidy)\b/i.test(description);}
-function classify(description,flow,account){
- const s=description.toLowerCase();
- if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*payment|online payment.*(?:card|credit)/.test(s))return 'Transfer / card payment';
- if(/\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b.{0,30}\b(?:contribution|deposit|transfer|withdrawal)\b|\b(?:contribution|deposit|transfer|withdrawal)\b.{0,30}\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b|\b(?:investment|brokerage) (?:transfer|contribution|deposit|withdrawal|purchase)\b|\b(?:stock|etf|mutual fund|bond) purchase\b/.test(s))return 'Investments';
- if(/transfer|e[- ]?transfer|etransfer|xfer|cashback reward|cash back reward/.test(s))return 'Other';
- if(flow==='in'&&account==='chequing'&&isBenefit(description))return 'Government benefits & support';
- if(flow==='in')return account==='chequing'&&/payroll|salary|direct deposit.*pay|pension|child benefit|gst credit|employer pay/.test(s)?'Income':'Other';
- if(/overdraft.*interest|interest charge|purchase interest|cash advance.*interest|finance charge/.test(s))return 'Financing charges';
- if(/overdraft fee|nsf|bank fee|monthly (?:account|service) fee|service charge|late (?:payment )?fee|annual fee|account fee/.test(s))return 'Bank fees';
- if(/loan payment|mortgage payment|student loan|installment|instalment|car loan/.test(s))return 'Debt payments';
- if(/rent\b|property tax|home insurance|condo/.test(s))return 'Housing';
- if(/grocery|groceries|superstore|safeway|sobeys|save on foods|h&w|produce/.test(s))return 'Groceries';
- if(/transit|uber(?! eats)|lyft|parking|gas station|fuel|petro|esso|shell/.test(s))return 'Transport';
- if(/electric|utility|utilities|epcor|enmax|telus|internet|phone plan|koodo/.test(s))return 'Utilities';
- if(/pharmacy|dental|dentist|medical|clinic|therapy/.test(s))return 'Health & care';
- if(/tuition|course fee|college fee|university fee|training fee/.test(s))return 'Education & training';
- if(/childcare|child care|daycare|day care/.test(s))return 'Childcare';
- if(/insurance|life policy/.test(s))return 'Insurance';
- if(/netflix|spotify|disney|prime membership|subscription|gym membership|apple\.com\/bill/.test(s))return 'Subscriptions';
- if(/restaurant|coffee|cafe|tim hortons|starbucks|uber eats|doordash|shopping|amazon|clothing/.test(s))return 'Dining & shopping';
- if(/charity|donation/.test(s))return 'Giving';
- return 'Other';
+function categorySuggestion(description,flow,account){
+ const s=String(description).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ const match=(category,reason)=>({category,reason});
+ if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*(?:payment|pymt|pmt)|online payment.*(?:card|credit)/.test(s))return match('Transfer / card payment','Card-payment wording; check the matching settlement.');
+ if(/\bhome\s*depot\s*ccs\b|\bhomedepotccs\b/.test(s))return match('Transfer / card payment','Possible Home Depot card settlement, rather than a new purchase. Check the statement.');
+ if(/overdraft.*interest|interest charge|purchase interest|cash advance.*interest|finance charge/.test(s))return match('Financing charges','Interest or financing-charge wording.');
+ if(/overdraft fee|\bnsf\b|bank fee|monthly (?:account|service) fee|service charge|late (?:payment )?fee|annual fee|account fee|acct bal rebate|account balance rebate/.test(s))return match('Bank fees','Bank fee or account-fee rebate wording.');
+ if(/\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b.{0,30}\b(?:contribution|deposit|transfer|withdrawal)\b|\b(?:contribution|deposit|transfer|withdrawal)\b.{0,30}\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b|\b(?:investment|brokerage) (?:transfer|contribution|deposit|withdrawal|purchase)\b|\b(?:stock|etf|mutual fund|bond) purchase\b|\btd waterhouse\b|\bquestrade\b/.test(s))return match('Investments','Investment account, brokerage or contribution wording.');
+ if(flow==='in'&&account==='chequing'&&isBenefit(description))return match('Government benefits & support','Benefit or support-payment wording.');
+ if(flow==='in'&&account==='chequing'&&/\b(?:payroll|salary|pension|employer pay)\b|direct deposit.*pay|\bpay$/.test(s))return match('Income','Payroll wording or the bank’s PAY deposit code.');
+ if(/loan payment|mortgage payment|student loan|installment|instalment|car loan/.test(s))return match('Debt payments','Loan or mortgage-payment wording.');
+ if(/cashback reward|cash back reward/.test(s))return match('Other','Cashback reward: review how to categorize this credit.');
+ // Specific merchants take precedence over broad words such as INV or school.
+ if(/\bpc\s*express\b|\bh\s*w\s*produce\b|grocery|groceries|superstore|safeway|sobeys|save on foods|no frills|freshco|food basics|loblaws|t\s*t supermarket|produce/.test(s))return match('Groceries','Grocery merchant or food-market wording.');
+ if(/\bhome\s*depot\b|\brona\b|\blowes\b|\bhome hardware\b|renovation|building supplies|lumber|plumbing repair|roofing/.test(s))return match('Home renovation','Home-improvement merchant or repair wording; check the purchase.');
+ if(/dollar\s*tree|dollarama|\bwalmart\b|\bwal mart\b|\bcostco\b|\bcanadian tire\b|\bamazon\b|\bamzn\b|clothing|shopping/.test(s)&&!/prime membership|subscription/.test(s))return match('Shopping','Retail merchant; move groceries or other purchases to their actual category.');
+ if(/netflix|spotify|disney|prime membership|subscription|\bsubscr\b|chatgpt|dash\s*pass|apple com bill/.test(s))return match('Subscriptions','Subscription, membership pass or recurring-service wording.');
+ if(/uber\s*eats|doordash|skip\s*the\s*dishes|restaurant|coffee|cafe|tim hortons|starbucks|\bpizza|^tst\b/.test(s))return match('Dining & shopping','Restaurant, food-delivery or restaurant-payment wording.');
+ if(/landmark cinemas|cineplex|cinema|movie|theatre|theater|recreation|recreation centre|leisure|bowling|skating|swimming|swim school|swim lesson|gym|fitness|amusement|museum|\bzoo\b|ticketmaster/.test(s))return match('Recreation','Recreation, cinema, fitness or activity wording.');
+ if(/transit|\buber|lyft|parking|gas station|fuel|petro|esso|\bshell\b/.test(s))return match('Transport','Ride, transit, parking or fuel wording.');
+ if(/childcare|child care|daycare|day care|after school care/.test(s))return match('Childcare','Childcare or daycare wording.');
+ if(/tuition|\bschool\b|course fee|college|university|training fee/.test(s))return match('Education & training','School, tuition or education wording.');
+ if(/pharmacy|shoppers drug mart|rexall|dental|dentist|medical|clinic|therapy|healthcare|\bahs cnct\b/.test(s))return match('Health & care','Pharmacy, healthcare or health-service wording.');
+ if(/rent\b|property tax|\bedmtaxes\b|home insurance|condo/.test(s))return match('Housing','Housing or property-tax wording.');
+ if(/electric|utility|utilities|epcor|enmax|telus|internet|phone plan|koodo|fido|shaw|rogers/.test(s))return match('Utilities','Utility, phone or internet-provider wording.');
+ if(/insurance|life policy/.test(s))return match('Insurance','Insurance or policy wording.');
+ if(/charity|donation|\b(?:masjid|mosque|church|temple|gurdwara|markaz)\b/.test(s))return match('Giving','Giving or community-organization wording; check whether this was a donation or a fee.');
+ if(/\binv\b/.test(s)&&!(/\binvoice\b/.test(s)))return match('Investments','INV may mean investment. Confirm that it is not an invoice reference.');
+ if(/transfer|etransfer|e transfer|xfer|cashback reward|cash back reward|moneygram|cash withdra/.test(s))return match('Other','Transfer, cash withdrawal or reward: its purpose needs your review.');
+ return match('Other','No clear merchant or keyword match. Choose the category.');
 }
+function classify(description,flow,account){return categorySuggestion(description,flow,account).category;}
+
 function normalize(parsed,map,account){
  if(map.date<0||map.description<0)throw Error('Choose date and description columns.');
  if(map.mode==='signed'&&map.amount<0)throw Error('Choose an amount column.');
@@ -113,8 +123,8 @@ function normalize(parsed,map,account){
    }
    if(!amount){zero++;return;}
    let balance=null;if(map.balance>=0)balance=number(row[map.balance],map.numberStyle);
-   const category=classify(description,flow,account);
-   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,balance,review:'Unreviewed',ambiguous:category==='Other'});
+   const suggestion=categorySuggestion(description,flow,account),category=suggestion.category;
+   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,categoryReason:suggestion.reason,balance,review:'Unreviewed',ambiguous:category==='Other'});
   }catch(error){invalid.push({row:i+(parsed.rowOffset??2),reason:error.message});}
  });
  if(!transactions.length)throw Error('No transactions imported. '+(invalid.length?invalid.slice(0,3).map(e=>`Row ${e.row}: ${e.reason}`).join('; '):'Only zero-amount rows were found. Check the column mapping and amounts.'));
@@ -156,6 +166,6 @@ function contextNumbers(values){
  if(n.threshold===null||n.threshold<=0||n.threshold>100)throw Error('Choose an expensive-debt screening rate above 0% and at most 100%.');
  return n;
 }
-root.ResetEngine={parseCSV,dateFormatHint,commonDateWindow,number,date,merchant,classify,normalize,summarize,contextNumbers,categories,isBenefit};
+root.ResetEngine={parseCSV,dateFormatHint,commonDateWindow,number,date,merchant,classify,categorySuggestion,normalize,summarize,contextNumbers,categories,isBenefit};
 })(typeof window!=='undefined'?window:globalThis);
 
