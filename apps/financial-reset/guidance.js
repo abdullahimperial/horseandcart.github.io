@@ -2,6 +2,7 @@
 (function(root){'use strict';
 const pillars=['Remove leakages','Reduce living costs','Benefits & free support','Mindset & strategies'];
 const actions={
+'Taxes':['Check the tax bill, payment history and any duplicate payments or penalties.','Plan for installments and irregular tax bills in your monthly budget.','Check eligible credits, rebates and relief programs against official rules and your records.','Keep tax notices and receipts together; set aside money before due dates.'],
 'Recreation':['Check duplicate tickets, unused memberships and charges for cancelled activities.','Compare admission passes, community programs and off-peak prices for activities you enjoy.','Check library passes, community recreation programs and employer recreation discounts.','Set an activity budget that preserves time together and the activities you value.'],
 'Shopping':['Review duplicate purchases, returns, delivery charges and unused items.','Compare total prices, repair options and suitable second-hand purchases.','Check community exchanges, borrowing programs and eligible employee discounts.','Use a waiting period for optional purchases and plan recurring household needs.'],
 'Home renovation':['Review contractor invoices, duplicate materials and unused supplies that can be returned.','Compare equivalent quotes and separate necessary repairs from optional upgrades.','Check current utility rebates and eligible home-accessibility or efficiency programs.','Prioritize maintenance, plan the full project cost and keep a contingency for surprises.'],

@@ -1,7 +1,7 @@
 /* Pure, browser-local CSV and financial arithmetic. No network or storage. */
 (function(root){
 'use strict';
-const categories=['Income','Government benefits & support','Investments','Recreation','Shopping','Home renovation','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
+const categories=['Income','Government benefits & support','Investments','Recreation','Shopping','Home renovation','Taxes','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
 function parseCSV(text,delimiter){
  text=String(text).replace(/^\uFEFF/,'');
  if(!delimiter){
@@ -89,7 +89,8 @@ function categorySuggestion(description,flow,account){
  if(/childcare|child care|daycare|day care|after school care/.test(s))return match('Childcare','Childcare or daycare wording.');
  if(/tuition|\bschool\b|course fee|college|university|training fee/.test(s))return match('Education & training','School, tuition or education wording.');
  if(/pharmacy|shoppers drug mart|rexall|dental|dentist|medical|clinic|therapy|healthcare|\bahs cnct\b/.test(s))return match('Health & care','Pharmacy, healthcare or health-service wording.');
- if(/rent\b|property tax|\bedmtaxes\b|home insurance|condo/.test(s))return match('Housing','Housing or property-tax wording.');
+ if(/\bedm\s*taxes\b|\btax(?:es)?\b/.test(s))return match('Taxes','Tax or municipal-tax wording, including Edmonton property taxes.');
+ if(/rent\b|home insurance|condo/.test(s))return match('Housing','Housing, home-insurance or condo wording.');
  if(/electric|utility|utilities|epcor|enmax|telus|internet|phone plan|koodo|fido|shaw|rogers/.test(s))return match('Utilities','Utility, phone or internet-provider wording.');
  if(/insurance|life policy/.test(s))return match('Insurance','Insurance or policy wording.');
  if(/charity|donation|\b(?:masjid|mosque|church|temple|gurdwara|markaz)\b/.test(s))return match('Giving','Giving or community-organization wording; check whether this was a donation or a fee.');

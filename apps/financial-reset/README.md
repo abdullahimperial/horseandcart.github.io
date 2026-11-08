@@ -80,3 +80,11 @@ Date-leading files retain their first transaction. Five-column headerless export
 Recreation, Shopping and Home renovation have dedicated categories and four-pillar guidance. Specific merchant matches precede general keywords, with separate treatment for food delivery, ride trips, subscriptions and store-card settlements. School wording suggests education; a PAY suffix on an incoming chequing entry suggests income. INV suggests investment after specific merchant checks and remains editable. Matching explanations appear below each category; manual corrections are retained until re-import.
 
 The transaction-review page includes a local SVG spending pie for the selected dates. Category edits and date changes refresh it. Its legend filters the table without changing chart totals. Refunds reduce their categories; only positive net category totals form slices. Income, investments, transfers and excluded rows stay outside the pie. No chart libraries or external services receive transactions.
+
+## Taxes and emergency-cushion scenarios
+
+Tax descriptions, including COE/Edmonton tax wording, use the Taxes category. Benefits retain their separate treatment, and specific merchant matches precede generic tax words.
+
+The review page and exported report show 3-, 6- and 12-month scenarios, estimated cash runway, and additional savings needed. A complete-calendar-month window uses its actual monthly average; partial windows scale net spending by 30.4375 days and identify the observed days. Entered essential spending overrides the estimate. Investment movements and card settlements remain outside spending.
+
+Only chequing balances supply recorded cash. The last dated balance is shown with its date; same-day conflicts require a unique chronological order supported by reconciled running balances, otherwise cash stays unknown. Reverse-ordered exports are supported. Negative balances supply no emergency cash. Available savings entered by the user override recorded cash for comparisons. These estimates never silently populate verified reserve/budget fields or establish investment readiness. Unknown and zero-budget cases do not produce infinite runway or false coverage.

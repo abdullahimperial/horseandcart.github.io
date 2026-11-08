@@ -61,8 +61,8 @@ test('manual transaction corrections refresh the pie and preserve the chosen cat
  const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');const source=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
  const control={dataset:{category:'FICTIONAL ENTRY'},value:'Recreation',addEventListener(name,fn){this.change=fn;}};
  const nodes=new Map(),$=key=>{if(!nodes.has(key))nodes.set(key,{value:'',innerHTML:'',querySelectorAll:selector=>selector==='[data-category]'?[control]:[]});return nodes.get(key);};$('#category-filter').value='all';
- const state={E,$,page:0,transactions:[row('Other',20)],esc:String,cash:String,invalidate(){state.invalidated=true;},renderReviewChart(){state.refreshed=true;}};vm.createContext(state);
+ const state={E,$,page:0,transactions:[row('Other',20)],esc:String,cash:String,invalidate(){state.invalidated=true;},renderReviewChart(){state.refreshed=true;},renderResiliencePreview(){state.resilienceRefreshed=true;}};vm.createContext(state);
  vm.runInContext(source.slice(source.indexOf('function renderTransactions('),source.indexOf('\nfunction debtRows(')),state);vm.runInContext('renderTransactions()',state);control.change();
- assert.equal(state.transactions[0].category,'Recreation');assert.equal(state.transactions[0].categoryReason,'Selected by you.');assert.equal(state.invalidated,true);assert.equal(state.refreshed,true);
+ assert.equal(state.transactions[0].category,'Recreation');assert.equal(state.transactions[0].categoryReason,'Selected by you.');assert.equal(state.invalidated,true);assert.equal(state.refreshed,true);assert.equal(state.resilienceRefreshed,true);
  assert.match(source,/\['start-date','end-date'\].*addEventListener\('input',renderReviewChart\)/);
 });
