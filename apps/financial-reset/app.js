@@ -14,7 +14,9 @@ function mapping(account){
  const guesses={date:guess(h,[/transaction.*date/i,/^date$/i,/posting.*date/i]),description:guess(h,[/description/i,/merchant/i,/details/i,/memo/i,/payee/i]),descriptionExtra:guess(h,[/description\s*2/i]),amount:guess(h,[/^amount$/i,/transaction.*amount/i]),debit:guess(h,[/debit/i,/withdrawal/i,/money out/i]),credit:guess(h,[/credit/i,/deposit/i,/money in/i]),balance:guess(h,[/balance/i]),currency:guess(h,[/^currency$/i]),direction:guess(h,[/^type$/i,/debit.*credit/i])};
  const separate=guesses.amount<0&&guesses.debit>=0&&guesses.credit>=0;
  const selectors=[['date','Transaction date'],['description','Description / merchant'],['descriptionExtra','Optional second description'],['amount','Signed or unsigned amount'],['debit','Debit / money out'],['credit','Credit / money in'],['direction','Optional debit/credit type'],['balance','Optional running balance'],['currency','Optional currency column']];
- $(`#${account}-mapping`).innerHTML=`<div class="mapping"><p><strong>${esc(names[account])}</strong><br>${p.rows.length} rows found. These are suggested mappings—check the sample and amount signs.</p><details><summary>Preview first three rows</summary><div class="sample"><table><thead><tr>${h.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${p.rows.slice(0,3).map(row=>`<tr>${row.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details><div class="calculator-grid"><label class="field"><span class="field-label">Amount layout</span><select id="${account}-mode"><option value="signed" ${!separate?'selected':''}>One amount column</option><option value="separate" ${separate?'selected':''}>Separate debit and credit columns</option></select></label><label class="field"><span class="field-label">Positive amount means</span><select id="${account}-positive"><option value="${account==='card'?'out':'in'}">${account==='card'?'Purchase / money out':'Deposit / money in'}</option><option value="${account==='card'?'in':'out'}">${account==='card'?'Refund / money in':'Withdrawal / money out'}</option></select><small>Used for one amount column without a type column. Negative amounts mean the opposite.</small></label>${selectors.map(([key,label])=>`<label class="field"><span class="field-label">${label}</span><select id="${account}-${key}">${options(h,guesses[key],!['date','description'].includes(key))}</select></label>`).join('')}<label class="field"><span class="field-label">Slash-date interpretation</span><select id="${account}-dateFormat"><option value="auto">ISO / unambiguous dates only</option><option value="mdy">Month / day / year</option><option value="dmy">Day / month / year</option></select></label><label class="field"><span class="field-label">Number format</span><select id="${account}-numberStyle"><option value="dot">1,234.56 (decimal point)</option><option value="comma">1.234,56 (decimal comma)</option></select></label></div></div>`;
+ $(`#${account}-mapping`).innerHTML=`<div class="mapping"><p><strong>${esc(names[account])}</strong><br>${p.rows.length} transaction rows found. ${p.headerless?(p.standardLayout?'No header row found: suggested Date / Description / Debit / Credit / Balance layout. The first transaction is included. ':'No header row found: every row is included. Choose the columns below. '):''}These are suggested mappings—check the sample and amount signs.</p><details><summary>Preview first three rows</summary><div class="sample"><table><thead><tr>${h.map(x=>`<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${p.rows.slice(0,3).map(row=>`<tr>${row.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details><div class="calculator-grid"><label class="field"><span class="field-label">Amount layout</span><select id="${account}-mode"><option value="signed" ${!separate?'selected':''}>One amount column</option><option value="separate" ${separate?'selected':''}>Separate debit and credit columns</option></select></label><label class="field"><span class="field-label">Positive amount means</span><select id="${account}-positive"><option value="${account==='card'?'out':'in'}">${account==='card'?'Purchase / money out':'Deposit / money in'}</option><option value="${account==='card'?'in':'out'}">${account==='card'?'Refund / money in':'Withdrawal / money out'}</option></select><small>Used for one amount column without a type column. Negative amounts mean the opposite.</small></label>${selectors.map(([key,label])=>`<label class="field"><span class="field-label">${label}</span><select id="${account}-${key}">${options(h,guesses[key],!['date','description'].includes(key))}</select></label>`).join('')}<label class="field"><span class="field-label">Slash-date interpretation</span><select id="${account}-dateFormat"><option value="auto">ISO / unambiguous dates only</option><option value="mdy">Month / day / year</option><option value="dmy">Day / month / year</option></select></label><label class="field"><span class="field-label">Number format</span><select id="${account}-numberStyle"><option value="dot">1,234.56 (decimal point)</option><option value="comma">1.234,56 (decimal comma)</option></select></label></div></div>`;
+ const dateHint=E.dateFormatHint(p.rows,guesses.date);$(`#${account}-dateFormat`).value=dateHint;
+ if(dateHint!=='auto'){const hint=document.createElement('p');hint.className='calc-help';hint.textContent=`Dates suggest ${dateHint==='mdy'?'month/day/year':'day/month/year'} based on rows with a day above 12. Check the date setting before importing.`;$(`#${account}-mapping`).appendChild(hint);}
  $(`#${account}-mapping`).querySelectorAll('select').forEach(el=>el.addEventListener('change',()=>{if(transactions.length){$('#analyze').disabled=true;status('Mapping changed. Import the mapped transactions again before rebuilding the report.');invalidate();}}));
  function showLayout(){
   const separate=$(`#${account}-mode`).value==='separate';
@@ -28,8 +30,18 @@ function mapValues(account){
  const vals={};for(const key of ['date','description','descriptionExtra','amount','debit','credit','balance','currency','direction'])vals[key]=Number($(`#${account}-${key}`).value);
  for(const key of ['mode','positive','dateFormat','numberStyle'])vals[key]=$(`#${account}-${key}`).value;return vals;
 }
+function resetDemoForImport(account){
+ demoMode=false;window.ResetPlanUI.reset();transactions=[];quality={};debts=[];page=0;lastReport=null;
+ for(const key of ['card','chequing']){delete parsed[key];delete names[key];loads[key]=(loads[key]||0)+1;$(`#${key}-mapping`).innerHTML='';if(key!==account)$(`#${key}-file`).value='';}
+ for(const key of fieldNames)$('#'+key).value=key==='months'?'3':key==='threshold'?'10':['feesCut','subscriptionCut','livingCut','habitCut','benefitGain'].includes(key)?'0':'';
+ for(const key of ['province','children','employment','goal'])$('#profile-'+key).value='unknown';
+ for(const key of ['familyIncome','rrspRoom'])$('#profile-'+key).value='';
+ $('#stability').value='unknown';$('#debt-status').value='unknown';$('#coverage').checked=false;$('#cad-confirmed').checked=false;
+ $('#plan-file').value='';$('#plan-load-status').textContent='Demo cleared. You can load your own saved plan after importing both account files.';
+ $('#search').value='';$('#category-filter').value='all';$('#review-section').hidden=true;$('#report').hidden=true;$('#report').innerHTML='';$('#analyze').disabled=true;debtRows();
+}
 async function load(account,file){
- demoMode=false;
+ if(file&&demoMode)resetDemoForImport(account);
  const token=(loads[account]||0)+1;loads[account]=token;
  delete parsed[account];$('#import').disabled=true;$(`#${account}-mapping`).innerHTML='';
  if(transactions.length){$('#analyze').disabled=true;invalidate();}
@@ -41,9 +53,8 @@ async function load(account,file){
  }catch(error){if(loads[account]!==token)return;status(`${account==='card'?'Credit-card':'Chequing'} import: ${error.message}`,true);}
 }
 function defaultDates(){
- const card=new Set(transactions.filter(t=>t.account==='card').map(t=>t.date.slice(0,7))),cheque=new Set(transactions.filter(t=>t.account==='chequing').map(t=>t.date.slice(0,7)));
- const common=[...card].filter(m=>cheque.has(m)).sort();const selected=common.at(-1)||transactions.map(t=>t.date.slice(0,7)).sort().at(-1);
- const [year,month]=selected.split('-').map(Number);$('#start-date').value=`${selected}-01`;$('#end-date').value=new Date(Date.UTC(year,month,0)).toISOString().slice(0,10);
+ const window=E.commonDateWindow(transactions);
+ $('#start-date').value=window?.start||'';$('#end-date').value=window?.end||'';
  $('#coverage').checked=false;$('#cad-confirmed').checked=false;
 }
 function importTransactions(){
@@ -53,7 +64,7 @@ function importTransactions(){
   const errors=card.invalid.length+chequing.invalid.length;
   $('#review-section').hidden=false;$('#analyze').disabled=errors>0;
   $('#import-quality').innerHTML=`<div class="quality ${errors?'warning':''}"><strong>${transactions.length} non-zero transactions read locally.</strong><p>${card.transactions.length} card rows · ${chequing.transactions.length} chequing rows · ${card.zero+chequing.zero} zero-amount rows ignored.</p>${errors?`<p><strong>${errors} rows could not be imported. Analysis is blocked until you correct the mapping or CSV and import again.</strong></p><details open><summary>Show row issues</summary><ul>${['card','chequing'].flatMap(a=>quality[a].invalid.slice(0,20).map(e=>`<li>${a==='card'?'Card':'Chequing'} row ${e.row}: ${esc(e.reason)}</li>`)).join('')}</ul>${errors>40?'<p>Only the first 20 issues per file are shown.</p>':''}</details>`:'<p>All non-zero rows parsed. Suggested categories still require review.</p>'}</div>`;
-  defaultDates();renderTransactions();balanceHint();invalidate();status(errors?'Correct the row issues before analyzing.':'Import complete. Review transfers, income, and unfamiliar charges, then confirm the period.',errors);$('#review-section').scrollIntoView({block:'start'});
+  defaultDates();renderTransactions();balanceHint();invalidate();status(errors?'Correct the row issues before analyzing.':'Import complete. The suggested dates use the shared transaction range, not proof of full statement coverage. Review the dates, transfers and income before confirming.',errors);$('#review-section').scrollIntoView({block:'start'});
  }catch(error){$('#analyze').disabled=true;status(error.message,true);}
 }
 function balanceHint(){
@@ -193,4 +204,5 @@ $('#demo').addEventListener('click',()=>{
  status('Fictional report generated automatically: three complete months, illustrative context and reviewed transfer classifications. Explore the findings below.');
 });
 })();
+
 

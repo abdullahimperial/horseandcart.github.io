@@ -11,7 +11,7 @@ A static, browser-local transaction review and book-based action-plan app for *L
 
 ## Supported imports
 
-One credit-card and one chequing CSV, with a header row, up to 5 MB / 10,000 rows each. Comma, semicolon, and tab separators; quoted fields, escaped quotes, BOM, and CRLF are handled. Mappings support combined descriptions, signed amounts, optional debit/credit types, or separate debit/credit columns; decimal point or comma; ISO dates or explicit month/day versus day/month interpretation. Currency is CAD only. Missing currency columns require user confirmation; known non-CAD/missing currency values block analysis. Malformed rows block analysis rather than silently biasing the result. All account/cash coverage remains the user's responsibility.
+One credit-card and one chequing CSV, with a header row or a headerless five-column Date / Description / Debit / Credit / Balance layout, up to 5 MB / 10,000 rows each. Comma, semicolon, and tab separators; quoted fields, escaped quotes, BOM, and CRLF are handled. Mappings support combined descriptions, signed amounts, optional debit/credit types, or separate debit/credit columns; decimal point or comma; ISO dates or explicit month/day versus day/month interpretation. Currency is CAD only. Missing currency columns require user confirmation; known non-CAD/missing currency values block analysis. Malformed rows block analysis rather than silently biasing the result. All account/cash coverage remains the user's responsibility.
 
 ## Accounting model
 
@@ -69,3 +69,8 @@ The default report starts with financial status, three expandable priorities and
 
 Report downloads temporarily expand every section and restore its prior state; print events do the same. Exports contain the detailed analysis, current annual-quote results and action records. Financial assumptions and calculations are unchanged. Use `APP_TEST_URL=http://localhost:8015 python apps/financial-reset/tests/dashboard-browser.py` to verify the compact defaults, next-action progression, details, exports, print state restoration and mobile behavior.
 
+
+
+## Headerless account-activity imports
+
+Date-leading files retain their first transaction. Five-column headerless exports receive editable suggested mappings; consistent unambiguous slash dates suggest month/day or day/month, while fully ambiguous dates still require a choice. Validation errors reference the original CSV row. The suggested review window is the overlap of observed dates, not a claim of complete statement coverage. Starting file import after a demo clears both demo accounts, household assumptions, debts and demo action records before either uploaded account is analyzed. Regression fixtures are fictional; private bank exports are never included in the repository.

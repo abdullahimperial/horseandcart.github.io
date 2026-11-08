@@ -12,18 +12,37 @@ function parseCSV(text,delimiter){
  for(let i=0;i<text.length;i++){
   const c=text[i];
   if(quoted){if(c==='"'){if(text[i+1]==='"'){cell+='"';i++;}else{quoted=false;closed=true;}}else cell+=c;continue;}
-  if(c==='"'){if(cell.trim()||closed)throw Error('Unexpected quote in CSV. Export a plain CSV with a header row.');quoted=true;cell='';}
+  if(c==='"'){if(cell.trim()||closed)throw Error('Unexpected quote in CSV. Export a plain CSV file.');quoted=true;cell='';}
   else if(c===delimiter){row.push(cell);cell='';closed=false;}
   else if(c==='\n'||c==='\r'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(x=>x.trim()))rows.push(row);row=[];cell='';closed=false;}
   else{if(closed&&c.trim())throw Error('Unexpected text after a quoted CSV value.');if(!closed)cell+=c;}
  }
  if(quoted)throw Error('An opening quote has no closing quote. Check the CSV export.');
  row.push(cell);if(row.some(x=>x.trim()))rows.push(row);
- if(rows.length<2)throw Error('A header and at least one transaction row are required.');
- if(rows.length>10001)throw Error('Use at most 10,000 transaction rows per file.');
+ if(!rows.length)throw Error('At least one transaction row is required.');
  if(rows[0].length<2)throw Error('No CSV columns found. Supported separators: comma, semicolon, or tab.');
  if(rows[0].length>64)throw Error('Use a transaction export with at most 64 columns.');
- return {headers:rows[0].map((x,i)=>x.trim()||`Column ${i+1}`),rows:rows.slice(1),delimiter};
+ // A date in the first cell is data, never a column heading. Keep it even
+ // when the amount is malformed, so normal row validation can explain it.
+ const headerless=/^(?:\d{4}[-/]\d{1,2}[-/]\d{1,2}|\d{1,2}[-/]\d{1,2}[-/]\d{4})(?:[ T].*)?$/.test(rows[0][0].trim());
+ const standard=headerless&&rows[0].length===5;
+ const headers=headerless?(standard?['Date','Description','Debit','Credit','Balance']:rows[0].map((x,i)=>`Column ${i+1}`)):rows[0].map((x,i)=>x.trim()||`Column ${i+1}`);
+ const data=headerless?rows:rows.slice(1);
+ if(!data.length)throw Error('At least one transaction row is required.');
+ if(data.length>10000)throw Error('Use at most 10,000 transaction rows per file.');
+ return {headers,rows:data,delimiter,headerless,standardLayout:standard,rowOffset:headerless?1:2};
+}
+function dateFormatHint(rows,column){
+ let mdy=false,dmy=false;
+ for(const row of rows){const m=String(row[column]??'').trim().match(/^(\d{1,2})[-/](\d{1,2})[-/]\d{4}$/);if(!m)continue;const a=+m[1],b=+m[2];if(a>=1&&a<=12&&b>12&&b<=31)mdy=true;if(b>=1&&b<=12&&a>12&&a<=31)dmy=true;}
+ return mdy&&!dmy?'mdy':dmy&&!mdy?'dmy':'auto';
+}
+function commonDateWindow(transactions){
+ const dates=account=>transactions.filter(t=>t.account===account).map(t=>t.date).sort();
+ const card=dates('card'),chequing=dates('chequing');
+ if(!card.length||!chequing.length)return null;
+ const start=card[0]>chequing[0]?card[0]:chequing[0],end=card.at(-1)<chequing.at(-1)?card.at(-1):chequing.at(-1);
+ return start<=end?{start,end}:null;
 }
 function number(value,style='dot'){
  let s=String(value??'').trim();if(!s)return null;
@@ -95,8 +114,8 @@ function normalize(parsed,map,account){
    if(!amount){zero++;return;}
    let balance=null;if(map.balance>=0)balance=number(row[map.balance],map.numberStyle);
    const category=classify(description,flow,account);
-   transactions.push({id:`${account}-${i}`,account,row:i+2,date:dt,description,merchant:merchant(description),amount,flow,category,balance,review:'Unreviewed',ambiguous:category==='Other'});
-  }catch(error){invalid.push({row:i+2,reason:error.message});}
+   transactions.push({id:`${account}-${i}`,account,row:i+(parsed.rowOffset??2),date:dt,description,merchant:merchant(description),amount,flow,category,balance,review:'Unreviewed',ambiguous:category==='Other'});
+  }catch(error){invalid.push({row:i+(parsed.rowOffset??2),reason:error.message});}
  });
  if(!transactions.length)throw Error('No transactions imported. '+(invalid.length?invalid.slice(0,3).map(e=>`Row ${e.row}: ${e.reason}`).join('; '):'Only zero-amount rows were found. Check the column mapping and amounts.'));
  return {transactions,invalid,zero};
@@ -136,5 +155,6 @@ function contextNumbers(values){
  if(n.threshold===null||n.threshold<=0||n.threshold>100)throw Error('Choose an expensive-debt screening rate above 0% and at most 100%.');
  return n;
 }
-root.ResetEngine={parseCSV,number,date,merchant,classify,normalize,summarize,contextNumbers,categories,isBenefit};
+root.ResetEngine={parseCSV,dateFormatHint,commonDateWindow,number,date,merchant,classify,normalize,summarize,contextNumbers,categories,isBenefit};
 })(typeof window!=='undefined'?window:globalThis);
+
