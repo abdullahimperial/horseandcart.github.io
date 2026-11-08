@@ -29,7 +29,7 @@ test('pie uses positive net spending, handles refunds and leaves income and inve
  const transactions=[row('Income',2000,'in'),row('Groceries',120),row('Groceries',20,'in','card'),row('Shopping',50),row('Home renovation',70),row('Recreation',30),row('Other',25),row('Investments',300),row('Transfer / card payment',100),row('Exclude',500),row('Other',40,'in'),row('Housing',900,'out','chequing','BEFORE','2024-08-31')];
  const c=C.build(transactions,'2024-09-01','2024-09-30');assert.equal(c.total,275);assert.equal(c.slices.find(s=>s.category==='Groceries').amount,100);assert.ok(Math.abs(c.slices.reduce((sum,s)=>sum+s.percent,0)-100)<1e-9);
  for(const category of ['Income','Investments','Transfer / card payment','Exclude','Housing'])assert.ok(!c.slices.some(s=>s.category===category));
- assert.ok(!/NaN|Infinity/.test(c.svg));assert.equal((c.svg.match(/<path /g)||[]).length,5);assert.match(c.html,/Show all transactions/);
+ assert.ok(!/NaN|Infinity/.test(c.svg));assert.equal((c.svg.match(/<path /g)||[]).length,5);assert.match(c.html,/Explore all categories/);
 });
 
 test('pie supports one category, empty and refund-heavy periods, and changed categories or dates',()=>{
@@ -46,7 +46,7 @@ test('pie supports one category, empty and refund-heavy periods, and changed cat
 test('chart renderer filters the review table without altering its all-category totals',()=>{
  const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');const source=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
  const buttons=[{dataset:{reviewCategory:'Shopping'},addEventListener(name,fn){this.click=fn;}},{dataset:{reviewCategory:'all'},addEventListener(name,fn){this.click=fn;}}];
- const nodes=new Map(),$=key=>{if(!nodes.has(key))nodes.set(key,{value:'',innerHTML:'',querySelectorAll:()=>buttons});return nodes.get(key);};
+ const nodes=new Map(),$=key=>{if(!nodes.has(key))nodes.set(key,{value:'',innerHTML:'',querySelectorAll:selector=>selector==='[data-review-category]'?buttons:[]});return nodes.get(key);};
  $('#start-date').value='2024-09-01';$('#end-date').value='2024-09-30';$('#search').value='old search';
  const state={$,page:3,transactions:[row('Shopping',50),row('Recreation',25)],window:{ResetReviewChart:C},renderTransactions(){state.rendered=true;}};vm.createContext(state);
  vm.runInContext(source.slice(source.indexOf('function renderReviewChart('),source.indexOf('\nfunction renderTransactions(')),state);vm.runInContext('renderReviewChart()',state);

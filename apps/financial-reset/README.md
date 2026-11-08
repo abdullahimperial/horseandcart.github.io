@@ -102,3 +102,34 @@ Only chequing balances supply recorded cash. The last dated balance is shown wit
 The current pack has 122 entries: 53 NSI names, 57 adapted Merchant Studio entries (CC BY 4.0) and 12 entries backed by official merchant/organization pages. `merchant-extra.js` loads before `merchant-rules.js`. Sourced identities and links now appear in transaction review, including when a financial-context rule controls the category. Explicit ride-platform payout wording can identify incoming earnings.
 
 The matcher separates memberships from orders, preserves retailer departments and meaningful plus signs, avoids ambiguous short aliases, and keeps generic bank/remittance purposes unresolved. Authorization-hold wording is surfaced for review without dropping CSV records. The names are sourced suggestions, not bank-issued identifiers or proof of what was purchased. User categories remain authoritative. The pack and licence notices are bundled locally; no lookup API or new data transmission is introduced. See `MERCHANT-SOURCES.md` for the pinned dataset, attribution, primary evidence and modifications.
+
+
+## Guided exploration (November 2026)
+
+The existing visual theme and local-only import/report engine are retained. Five steps show Import, Review, Your situation, Your snapshot and Action plan. Imported data unlocks review/context; a generated report unlocks snapshot/plan. Steps preserve their fields in memory. Secondary household and debt fields are expandable.
+
+The review and report pies open a category, then a matched merchant, then optional transaction selections. Keyboard controls and equivalent legend buttons are supported. Refunds reduce net cost; income, investments, transfers and excluded rows stay out of spending scenarios. The category list initially shows six entries with the remainder expandable.
+
+New modules:
+
+- `journey.js`: step navigation and report/plan/full-report views.
+- `explore-engine.js`: pure selection, work-time, annual cost, cashback, reduction, emergency and lump-sum growth calculations.
+- `explore-ui.js`: optional analyses, context-specific buttons, temporary pay assumptions and explicit action saving.
+- `explore.css`: responsive explorer and step styles using the existing book theme.
+
+Work-time inputs use gross hourly pay and an entered combined deduction rate. Imported spending already includes charged sales tax. Annualisation requires explicit recurrence. Cashback compares 1%, 2% and 3% as alternatives after entered additional costs, and requires an eligibility check. Annual quotes use the existing price/renewal/upfront-cash comparison. Emergency scenarios hold cash fixed while reducing a confirmed essential budget. Growth is a one-time amount with an explicit hypothetical return, excluding tax, fees and inflation.
+
+Survival Budget, Mortgage Prepayment and Statement Calendar open as separate existing tools; the selected amount/date remain visible in the explorer for reference. No transaction data is put in URLs or transferred to those tools. Four-pillar guidance and Tap vs Leak reflection are available inside the explorer.
+
+### Feature preservation
+
+- CSV/OFX/QFX/QBO import, mapping, currency/coverage gates, merchant attribution, transaction editing and recognition flags remain.
+- Monthly comparisons, income/spending/investment/cash movement, tax and benefit questions, medical/donation record checks and the full four-pillar table remain in the supporting report.
+- Emergency 3/6/12-month visuals, custom duration, entered balances/budget and the wider emergency-system notes remain.
+- Annual-payment comparisons, debt checks, improvement fields, action notes/status/review dates, earlier-plan loading/comparison and downloads remain.
+- Full-report display, text export and print reveal all supporting report sections; the temporary explorer is not part of the report. Save its chosen conclusions to the action plan first.
+- Editing input data marks an old report stale, disables downloads and closes any scenario based on the old data. Generating a demo or clearing the session clears temporary explorer assumptions.
+
+Exploration never changes the main report numbers. An explicit Add to my plan action saves notes and an optional expected monthly change. Positive estimates based on overlapping transaction selections in the same period are rejected; the user must retain one combined estimate or save the second action without an amount. Other overlapping estimates require the user's review. Selection metadata is optional in the existing version-1 plan format, preserving compatibility with earlier plan files. Saved actions survive report rebuilds, and are included in plan JSON and report text.
+
+Validation: `node --test apps/financial-reset/tests/*.test.cjs` (99 checks). Includes pure calculations, selection/refund handling, controller consent flow, plan compatibility/overlap and five-step state transitions. Browser layout and end-to-end interaction verification were unavailable because the managed browser and native input providers failed; controller tests do not substitute for that visual verification.

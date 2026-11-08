@@ -6,7 +6,7 @@ const cash=value=>new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'
 const parsed={},names={},loads={};let transactions=[],quality={},debts=[],page=0,lastReport=null,demoMode=false;
 const fieldNames=['reserve','essentials','months','threshold','confirmedSurplus','feesCut','subscriptionCut','livingCut','habitCut','benefitGain'];
 function status(text,error=false){const el=$('#app-status');el.hidden=false;el.className=`feedback ${error?'error':''}`;el.textContent=text;}
-function invalidate(){if(lastReport){$('#report-stale').hidden=false;$('#download-report').disabled=true;$('#print-report').disabled=true;const save=$('#save-plan');if(save)save.disabled=true;}}
+function invalidate(){window.ResetExplorer?.invalidate();if(lastReport){$('#report-stale').hidden=false;$('#download-report').disabled=true;$('#print-report').disabled=true;const save=$('#save-plan');if(save)save.disabled=true;}}
 function options(headers,selected,optional=true){return (optional?'<option value="-1">Not used</option>':'<option value="-1">Choose a column</option>')+headers.map((h,i)=>`<option value="${i}" ${i===selected?'selected':''}>${esc(h)} (column ${i+1})</option>`).join('');}
 function guess(headers,patterns){return headers.findIndex(h=>patterns.some(re=>re.test(h)));}
 function mapping(account){
@@ -51,7 +51,7 @@ function mapValues(account){
  for(const key of ['mode','positive','dateFormat','numberStyle'])vals[key]=$(`#${account}-${key}`).value;return vals;
 }
 function resetDemoForImport(account){
- demoMode=false;window.ResetPlanUI.reset();transactions=[];quality={};debts=[];page=0;lastReport=null;
+ demoMode=false;window.ResetPlanUI.reset();window.ResetExplorer?.reset();window.ResetJourney?.reset();transactions=[];quality={};debts=[];page=0;lastReport=null;
  for(const key of ['card','chequing']){delete parsed[key];delete names[key];loads[key]=(loads[key]||0)+1;$(`#${key}-mapping`).innerHTML='';if(key!==account)$(`#${key}-file`).value='';}
  for(const key of fieldNames)$('#'+key).value=key==='months'?'3':key==='threshold'?'10':['feesCut','subscriptionCut','livingCut','habitCut','benefitGain'].includes(key)?'0':'';
  for(const key of ['province','children','employment','goal'])$('#profile-'+key).value='unknown';
@@ -84,7 +84,7 @@ function importTransactions(){
   const errors=card.invalid.length+chequing.invalid.length;
   $('#review-section').hidden=false;$('#analyze').disabled=errors>0;
   $('#import-quality').innerHTML=`<div class="quality ${errors?'warning':''}"><strong>${transactions.length} non-zero transactions read locally.</strong><p>${card.transactions.length} card rows · ${chequing.transactions.length} chequing rows · ${card.zero+chequing.zero} zero-amount rows ignored.</p><p>${(card.duplicates||0)+(chequing.duplicates||0)} identical repeated bank transaction IDs omitted · ${(card.pending||0)+(chequing.pending||0)} pending records excluded.</p>${errors?`<p><strong>${errors} rows could not be imported. Analysis is blocked until you correct the mapping or source file and import again.</strong></p><details open><summary>Show row issues</summary><ul>${['card','chequing'].flatMap(a=>quality[a].invalid.slice(0,20).map(e=>`<li>${a==='card'?'Card':'Chequing'} row ${e.row}: ${esc(e.reason)}</li>`)).join('')}</ul>${errors>40?'<p>Only the first 20 issues per file are shown.</p>':''}</details>`:'<p>All non-zero rows parsed. Suggested categories still require review.</p>'}</div>`;
-  defaultDates();renderTransactions();renderReviewChart();renderResiliencePreview();invalidate();status(errors?'Correct the row issues before analyzing.':'Import complete. The suggested dates use the shared transaction range, not proof of full statement coverage. Review the dates, transfers and income before confirming.',errors);$('#review-section').scrollIntoView({block:'start'});
+  defaultDates();renderTransactions();renderReviewChart();renderResiliencePreview();invalidate();window.ResetJourney?.imported();status(errors?'Correct the row issues before analyzing.':'Import complete. The suggested dates use the shared transaction range, not proof of full statement coverage. Review the dates, transfers and income before confirming.',errors);$('#review-section').scrollIntoView({block:'start'});
  }catch(error){$('#analyze').disabled=true;status(error.message,true);}
 }
 function renderResiliencePreview(){
@@ -97,15 +97,17 @@ function renderReviewChart(){
  const host=$('#review-chart');
  try{
   const chart=window.ResetReviewChart.build(transactions,$('#start-date').value,$('#end-date').value);host.innerHTML=chart.html;
-  host.querySelectorAll('[data-review-category]').forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.reviewCategory;$('#category-filter').value=category;$('#search').value='';page=0;renderTransactions();}));
+  host.querySelectorAll('[data-review-category]').forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.reviewCategory;$('#category-filter').value=category;$('#search').value='';page=0;renderTransactions();window.ResetExplorer?.open(category==='all'?{}:{category});}));
+  host.querySelectorAll('[role="button"]').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));}}));
  }catch(error){host.innerHTML='<h3>Spending by category</h3><p>Choose a valid start and end date to show the spending pie.</p>';}
 }
 function renderTransactions(){
  const search=$('#search').value.trim().toLowerCase(),filter=$('#category-filter').value;
- const rows=transactions.filter(t=>(!search||t.description.toLowerCase().includes(search))&&(filter==='all'||filter==='flagged'&&t.review==='Not recognized'||t.category===filter));
+ const rows=transactions.filter(t=>(!search||(t.description+' '+(t.merchantName||t.merchant||'')).toLowerCase().includes(search))&&(filter==='all'||filter==='flagged'&&t.review==='Not recognized'||t.category===filter));
  const pages=Math.max(1,Math.ceil(rows.length/20));page=Math.min(page,pages-1);
  $('#review-count').textContent=`${rows.length} of ${transactions.length} transactions shown. “Other” means the rule needs your judgment, not that the charge is suspicious.`;
- $('#transactions').innerHTML=rows.slice(page*20,page*20+20).map(t=>`<tr class="${t.review==='Not recognized'?'flagged':''}"><td>${esc(t.date)}<small>${t.account==='card'?'Credit card':'Chequing'} · ${esc(t.sourceFormat||'CSV')} ${t.sourceFormat?'record':'row'} ${t.row}</small></td><td>${esc(t.description)}${t.merchantName?`<small>Matched name: ${esc(t.merchantName)}${/^https:\/\//.test(t.merchantSourceUrl||'')?` · <a href="${esc(t.merchantSourceUrl)}" target="_blank" rel="noopener noreferrer">Name source</a>`:''}</small>`:''}</td><td>${t.flow==='out'?'−':'+'}${cash(t.amount)}<small>${t.flow==='out'?'Money out':'Money in'}</small></td><td><select aria-label="Category for ${esc(t.description)} on ${t.date}" data-category="${t.id}">${E.categories.map(c=>`<option ${t.category===c?'selected':''} ${['Income','Government benefits & support'].includes(c)&&(t.account!=='chequing'||t.flow!=='in')?'disabled':''}>${esc(c)}</option>`).join('')}</select><small class="category-reason">${esc(t.categoryReason||'Suggested category; review this transaction.')}</small></td><td><select aria-label="Recognition for ${esc(t.description)} on ${t.date}" data-recognition="${t.id}">${['Unreviewed','Recognized','Not recognized'].map(c=>`<option ${t.review===c?'selected':''}>${c}</option>`).join('')}</select></td></tr>`).join('');
+ $('#transactions').innerHTML=rows.slice(page*20,page*20+20).map(t=>`<tr class="${t.review==='Not recognized'?'flagged':''}"><td>${esc(t.date)}<small>${t.account==='card'?'Credit card':'Chequing'} · ${esc(t.sourceFormat||'CSV')} ${t.sourceFormat?'record':'row'} ${t.row}</small></td><td>${esc(t.description)}<button type="button" class="transaction-explore" data-explore-row="${esc(t.id)}">Explore this cost</button>${t.merchantName?`<small>Matched name: ${esc(t.merchantName)}${/^https:\/\//.test(t.merchantSourceUrl||'')?` · <a href="${esc(t.merchantSourceUrl)}" target="_blank" rel="noopener noreferrer">Name source</a>`:''}</small>`:''}</td><td>${t.flow==='out'?'−':'+'}${cash(t.amount)}<small>${t.flow==='out'?'Money out':'Money in'}</small></td><td><select aria-label="Category for ${esc(t.description)} on ${t.date}" data-category="${t.id}">${E.categories.map(c=>`<option ${t.category===c?'selected':''} ${['Income','Government benefits & support'].includes(c)&&(t.account!=='chequing'||t.flow!=='in')?'disabled':''}>${esc(c)}</option>`).join('')}</select><small class="category-reason">${esc(t.categoryReason||'Suggested category; review this transaction.')}</small></td><td><select aria-label="Recognition for ${esc(t.description)} on ${t.date}" data-recognition="${t.id}">${['Unreviewed','Recognized','Not recognized'].map(c=>`<option ${t.review===c?'selected':''}>${c}</option>`).join('')}</select></td></tr>`).join('');
+ $('#transactions').querySelectorAll('[data-explore-row]').forEach(el=>el.addEventListener('click',()=>{const t=transactions.find(t=>t.id===el.dataset.exploreRow);window.ResetExplorer.open({category:t.category,merchant:window.ResetExploreMath.merchant(t),ids:[t.id]});}));
  $('#page-info').textContent=`Page ${page+1} of ${pages}`;$('#prev-page').disabled=page===0;$('#next-page').disabled=page>=pages-1;
  $('#transactions').querySelectorAll('[data-category]').forEach(el=>el.addEventListener('change',()=>{const t=transactions.find(t=>t.id===el.dataset.category);t.category=el.value;t.categoryReason='Selected by you.';t.categorySource=null;invalidate();renderTransactions();renderReviewChart();renderResiliencePreview();}));
  $('#transactions').querySelectorAll('[data-recognition]').forEach(el=>el.addEventListener('change',()=>{transactions.find(t=>t.id===el.dataset.recognition).review=el.value;invalidate();renderTransactions();}));
@@ -133,7 +135,7 @@ function analyze(){
   if(!s.active.some(t=>t.account==='card')||!s.active.some(t=>t.account==='chequing'))throw Error('The selected window has no transactions for one account. Choose an overlapping period and confirm full coverage.');
   const cuts=(c.feesCut||0)+(c.subscriptionCut||0)+(c.livingCut||0)+(c.habitCut||0);
   if(cuts>Math.max(0,s.monthlyExpenses))throw Error('Proposed monthly expense reductions exceed the observed monthly-equivalent spending. Check for duplicate savings or use a more representative period.');
-  lastReport={s,c,start,end,notes:lastReport?.notes||''};renderReport();status('Your report is ready. Review its assumptions and choose a next action.');$('#report').scrollIntoView({block:'start'});
+  lastReport={s,c,start,end,notes:lastReport?.notes||''};renderReport();window.ResetJourney?.reported();status('Your report is ready. Review its assumptions and choose a next action.');$('#report').scrollIntoView({block:'start'});
  }catch(error){status(error.message,true);$('#app-status').scrollIntoView({block:'center'});}
 }
 function renderReport(){
@@ -193,7 +195,7 @@ function renderReport(){
  function compareAnnual(i){const quote=$(`[data-annual-quote="${i}"]`).value,box=$(`[data-annual-result="${i}"]`);if(quote.trim()===''){box.textContent='Enter a quote to compare.';return;}try{const a=guidance.annual[i],r=window.ResetGuidance.annualComparison(a.monthly,Number(quote),c,$(`[data-annual-essential="${i}"]`).checked);box.textContent=`Annual quote: ${cash(Number(quote))}. ${r.saving>0?'Potential annual saving':r.saving<0?'Annual option costs more':'No price saving'}: ${cash(Math.abs(r.saving))}. Monthly-equivalent difference: ${cash(r.monthlySaving)}. Essential-budget-based reserve target reduction: ${cash(r.targetReduction)}. Set aside ${cash(r.renewalProvision)} per month toward renewal. ${r.reserveAfter===null?'Enter accessible savings to evaluate upfront cash impact.':`If paid entirely from entered emergency savings, remaining cash would be ${cash(r.reserveAfter)}${r.newTarget===null?'':`, compared with an adjusted target of ${cash(r.newTarget)}`}. ${r.reserveAfter<0?'Entered reserve cannot cover this upfront payment.':r.newTarget!==null&&r.reserveAfter<r.newTarget?'This would leave cash below the adjusted reserve target; consider saving separately before switching.':'Check upcoming bills and the next renewal before switching.'}`}`;}catch(e){box.textContent=e.message;}}
  $('#report').querySelectorAll('[data-annual-quote],[data-annual-essential]').forEach(el=>el.addEventListener('input',()=>compareAnnual(Number(el.dataset.annualQuote??el.dataset.annualEssential))));
  window.ResetPlanUI.render(lastReport,guidance.recommendations);
- window.ResetDashboard.organize();
+ window.ResetDashboard.organize(lastReport,transactions);window.ResetExplorer?.mount(lastReport);
  $('#download-report').addEventListener('click',downloadReport);$('#print-report').addEventListener('click',()=>window.print());$('#action-notes').addEventListener('input',()=>{lastReport.notes=$('#action-notes').value;});
 }
 function downloadReport(){
@@ -201,15 +203,6 @@ function downloadReport(){
  const text=window.ResetDashboard.withExpanded(()=>$('#report').innerText).replace('Download report ↓\nPrint report\nReview assumptions ↑','')+'\n\nMY CHOSEN REVIEW ACTIONS\n'+($('#action-notes').value||'[Not entered]')+'\n\nACTION TRACKER\n'+window.ResetPlanUI.text();
  const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`money-snapshot-${lastReport.start}-to-${lastReport.end}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-document.querySelectorAll('.step-strip a').forEach(link=>link.addEventListener('click',event=>{
- const target=document.querySelector(link.getAttribute('href'));
- if(target?.hidden){
-  event.preventDefault();
-  const message=target.id==='report'?'Generate an example report, or import and review sample transactions before building your plan.':'Generate an example report or import sample transactions to unlock review and context.';
-  status(message);
-  const notice=document.getElementById('app-status');notice.tabIndex=-1;notice.focus();notice.scrollIntoView({block:'center'});
- }
-}));
 $('#plan-file').addEventListener('change',e=>window.ResetPlanUI.load(e.target.files[0]));
 $('#card-file').addEventListener('change',e=>load('card',e.target.files[0]));$('#chequing-file').addEventListener('change',e=>load('chequing',e.target.files[0]));$('#import').addEventListener('click',importTransactions);
 $('#search').addEventListener('input',()=>{page=0;renderTransactions();});$('#category-filter').addEventListener('change',()=>{page=0;renderTransactions();});$('#prev-page').addEventListener('click',()=>{page--;renderTransactions();});$('#next-page').addEventListener('click',()=>{page++;renderTransactions();});
@@ -219,10 +212,10 @@ for(const id of ['start-date','end-date'])$('#'+id).addEventListener('input',ren
 for(const id of ['start-date','end-date','reserve','essentials'])$('#'+id).addEventListener('input',renderResiliencePreview);
 const improvements=[['feesCut','Fee reductions (CAD / month)'],['subscriptionCut','Unwanted subscription cuts (CAD / month)'],['livingCut','Living-cost reductions (CAD / month)'],['habitCut','Other habit savings (CAD / month)'],['benefitGain','Verified additional support (CAD / month)']];
 $('#improvement-fields').innerHTML=improvements.map(([id,label])=>`<label class="field" for="${id}"><span class="field-label">${label}</span><input id="${id}" type="number" min="0" step="any" value="0"></label>`).join('');
-$('#review-section').querySelectorAll('input,select').forEach(el=>{if(!['search','category-filter','plan-file'].includes(el.id))el.addEventListener('input',invalidate);});
+document.querySelectorAll('#review-section input,#review-section select,#context-section input,#context-section select').forEach(el=>{if(!['search','category-filter','plan-file'].includes(el.id))el.addEventListener('input',invalidate);});
 $('#clear').addEventListener('click',()=>{location.reload();});
 $('#demo').addEventListener('click',()=>{
- const example=window.ResetDemo.create($('#demo-scenario').value);demoMode=true;window.ResetPlanUI.reset();$('#plan-load-status').textContent='Fictional demo starts a fresh plan.';for(const k of ['province','children','employment','goal'])$('#profile-'+k).value='unknown';for(const k of ['familyIncome','rrspRoom'])$('#profile-'+k).value='';
+ const example=window.ResetDemo.create($('#demo-scenario').value);demoMode=true;window.ResetPlanUI.reset();window.ResetExplorer?.reset();$('#plan-load-status').textContent='Fictional demo starts a fresh plan.';for(const k of ['province','children','employment','goal'])$('#profile-'+k).value='unknown';for(const k of ['familyIncome','rrspRoom'])$('#profile-'+k).value='';
  for(const account of ['card','chequing']){loads[account]=(loads[account]||0)+1;parsed[account]=E.parseCSV(example[account]);names[account]='Fictional '+account+' example.csv';mapping(account);}
  importTransactions();
  for(const t of transactions){if(/SAVINGS TRANSFER/.test(t.description))t.category='Transfer / card payment';t.review=/UNFAMILIAR/.test(t.description)?'Not recognized':'Recognized';}
@@ -234,6 +227,16 @@ $('#demo').addEventListener('click',()=>{
  window.ResetGuidance.annualCandidates(lastReport.s).forEach((a,i)=>{if(fictionalQuotes[a.merchant]!==undefined){const input=$(`[data-annual-quote="${i}"]`);input.value=fictionalQuotes[a.merchant];$(`[data-annual-essential="${i}"]`).checked=a.category==='Insurance'||a.category==='Utilities';input.dispatchEvent(new Event('input'));}});
  status('Fictional report generated automatically: three complete months, illustrative context and reviewed transfer classifications. Explore the findings below.');
 });
+window.ResetSnapshot={status,review(scope){
+ window.ResetJourney.go('review');$('#category-filter').value=scope.category||'all';$('#search').value=scope.merchant||'';page=0;
+ if(scope.ids?.length){const filtered=transactions.filter(t=>(!scope.category||t.category===scope.category)&&(!scope.merchant||(t.description+' '+(t.merchantName||t.merchant||'')).toLowerCase().includes(scope.merchant.toLowerCase())));const index=filtered.findIndex(t=>scope.ids.includes(t.id));page=Math.max(0,Math.floor(index/20));}
+ renderTransactions();$('#transactions').closest('details').open=true;$('#transactions').scrollIntoView({block:'start'});
+}};
+window.ResetExplorer.init(()=>{let context;try{context=readContext();}catch(e){throw Error('Check the values in Your situation before exploring: '+e.message);}
+ return {rows:transactions,start:E.date($('#start-date').value),end:E.date($('#end-date').value),context,report:lastReport,reportCurrent:!!lastReport&&$('#report-stale').hidden&&!$('#analyze').disabled};
+});
+$('#review-explore').addEventListener('click',()=>window.ResetExplorer.open());
+
 })();
 
 
