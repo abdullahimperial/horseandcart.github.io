@@ -1,7 +1,7 @@
 /* Pure, browser-local CSV and financial arithmetic. No network or storage. */
 (function(root){
 'use strict';
-const categories=['Income','Government benefits & support','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
+const categories=['Income','Government benefits & support','Investments','Housing','Groceries','Transport','Utilities','Health & care','Education & training','Childcare','Insurance','Subscriptions','Dining & shopping','Bank fees','Financing charges','Debt payments','Giving','Other','Transfer / card payment','Exclude'];
 function parseCSV(text,delimiter){
  text=String(text).replace(/^\uFEFF/,'');
  if(!delimiter){
@@ -69,7 +69,7 @@ function isBenefit(description){return /\b(?:canada child benefit|child benefit|
 function classify(description,flow,account){
  const s=description.toLowerCase();
  if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*payment|online payment.*(?:card|credit)/.test(s))return 'Transfer / card payment';
- if(flow==='out'&&/\b(?:rrsp|tfsa|resp) contribution\b|investment transfer/.test(s))return 'Transfer / card payment';
+ if(/\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b.{0,30}\b(?:contribution|deposit|transfer|withdrawal)\b|\b(?:contribution|deposit|transfer|withdrawal)\b.{0,30}\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b|\b(?:investment|brokerage) (?:transfer|contribution|deposit|withdrawal|purchase)\b|\b(?:stock|etf|mutual fund|bond) purchase\b/.test(s))return 'Investments';
  if(/transfer|e[- ]?transfer|etransfer|xfer|cashback reward|cash back reward/.test(s))return 'Other';
  if(flow==='in'&&account==='chequing'&&isBenefit(description))return 'Government benefits & support';
  if(flow==='in')return account==='chequing'&&/payroll|salary|direct deposit.*pay|pension|child benefit|gst credit|employer pay/.test(s)?'Income':'Other';
@@ -124,12 +124,13 @@ function period(transactions,start,end){return transactions.filter(t=>t.date>=st
 function summarize(transactions,start,end){
  const days=(new Date(end+'T00:00:00Z')-new Date(start+'T00:00:00Z'))/86400000+1;
  if(!Number.isFinite(days)||days<=0||days>3660)throw Error('Choose a valid date window of up to ten years.');
- const active=period(transactions,start,end);const months=days/30.4375;let income=0,expenses=0,otherCredits=0,refunds=0,chequeIn=0,chequeOut=0,transfers=0,excluded=0;
+ const active=period(transactions,start,end);const months=days/30.4375;let income=0,expenses=0,otherCredits=0,refunds=0,chequeIn=0,chequeOut=0,transfers=0,investmentOut=0,investmentIn=0,excluded=0;
  const totals={};
  active.forEach(t=>{
   if(t.account==='chequing'){if(t.flow==='in')chequeIn+=t.amount;else chequeOut+=t.amount;}
   if(t.category==='Exclude'){excluded++;return;}
   if(t.category==='Transfer / card payment'){transfers+=t.amount;return;}
+  if(t.category==='Investments'){if(t.flow==='out')investmentOut+=t.amount;else investmentIn+=t.amount;return;}
   if(t.flow==='in'&&t.account==='chequing') {
    if(['Income','Government benefits & support'].includes(t.category)){income+=t.amount;return;}
    if(t.category==='Other'){otherCredits+=t.amount;return;}
@@ -138,13 +139,13 @@ function summarize(transactions,start,end){
   const net=t.flow==='out'?t.amount:-t.amount;expenses+=net;totals[t.category]=(totals[t.category]||0)+net;
   if(t.flow==='in')refunds+=t.amount;
  });
- const included=active.filter(t=>!['Exclude','Transfer / card payment'].includes(t.category));
+ const included=active.filter(t=>!['Exclude','Transfer / card payment','Investments'].includes(t.category));
  const groups=new Map(),duplicates=[];
  active.forEach(t=>{const key=[t.account,t.date,t.merchant,t.amount,t.flow].join('|');if(!groups.has(key))groups.set(key,[]);groups.get(key).push(t);});
  for(const group of groups.values())if(group.filter(t=>t.category!=='Exclude').length>1)duplicates.push(group);
  const merchants=new Map();included.filter(t=>t.flow==='out').forEach(t=>{if(!merchants.has(t.merchant))merchants.set(t.merchant,[]);merchants.get(t.merchant).push(t);});
  const recurring=[];for(const [name,items] of merchants){const dates=[...new Set(items.map(t=>t.date))].sort();if(dates.length>1){const gap=(new Date(dates[dates.length-1])-new Date(dates[0]))/86400000;if(gap>=20)recurring.push({name,items,total:items.reduce((s,t)=>s+t.amount,0)});}}
- return {active,income,expenses,otherCredits,refunds,chequeIn,chequeOut,transfers,excluded,totals,duplicates,recurring,days,months,surplus:income-expenses,monthlyIncome:income/months,monthlyExpenses:expenses/months,monthlySurplus:(income-expenses)/months,unknown:included.filter(t=>t.category==='Other'),unrecognized:active.filter(t=>t.review==='Not recognized')};
+ return {active,income,expenses,otherCredits,refunds,chequeIn,chequeOut,transfers,investmentOut,investmentIn,excluded,totals,duplicates,recurring,days,months,surplus:income-expenses,monthlyIncome:income/months,monthlyExpenses:expenses/months,monthlySurplus:(income-expenses)/months,unknown:included.filter(t=>t.category==='Other'),unrecognized:active.filter(t=>t.review==='Not recognized')};
 }
 function contextNumbers(values){
  const n={};for(const key of ['reserve','essentials','months','threshold','confirmedSurplus','feesCut','subscriptionCut','livingCut','habitCut','benefitGain']){

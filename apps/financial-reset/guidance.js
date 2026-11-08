@@ -43,7 +43,7 @@ function annualComparison(monthly,quote,c,essential){
  return {saving,monthlySaving,targetReduction,reserveAfter:c.reserve===null?null:c.reserve-quote,newTarget:c.essentials>0?Math.max(0,c.essentials-(essential?Math.max(0,monthlySaving):0))*c.months:null,renewalProvision:quote/12};
 }
 function build(s,c){
- const matrix=Object.entries(s.totals).filter(([cat,n])=>n!==0&&actions[cat]).sort((a,b)=>b[1]-a[1]).map(([category,amount])=>({category,amount,monthly:amount/s.months,cells:actions[category],evidence:s.active.filter(t=>t.category===category&&!['Exclude','Transfer / card payment'].includes(t.category)).slice(0,4)}));
+ const matrix=Object.entries(s.totals).filter(([cat,n])=>n!==0&&actions[cat]).sort((a,b)=>b[1]-a[1]).map(([category,amount])=>({category,amount,monthly:amount/s.months,cells:actions[category],evidence:s.active.filter(t=>t.category===category&&!['Exclude','Transfer / card payment','Investments'].includes(t.category)).slice(0,4)}));
  const benefits=support(s),annual=annualCandidates(s);
  const recommendations=[];const add=(priority,title,evidence,action,verify,when)=>recommendations.push({priority,title,evidence,action,verify,when});
  add(benefits.found?3:2,benefits.found?'Review the support deposits already visible':'No government benefits or support deposits identified',benefits.found?`${benefits.deposits.length} categorized deposit(s), totaling ${benefits.total.toFixed(2)} CAD: ${benefits.deposits.slice(0,4).map(t=>t.description).join('; ')}.`:'No deposits categorized as government benefits, grants or income support appear in this chequing account during the selected dates.',benefits.found?'Check renewal requirements, payment changes and whether other support programs could address your needs. Budget only for support that is reliable.':'Make a benefits check part of your plan: review CGEB (formerly GST/HST credit), household/child benefits if relevant, provincial income or disability support, housing assistance, education grants and local subsidies. Use the Benefits Finder and check whether tax filing is required.', 'This describes the imported account and period. Unclear bank descriptions, other accounts, quarterly payments and non-cash support can be missed. You can correct a deposit to Government benefits & support in transaction review.','This week');
@@ -63,4 +63,5 @@ function build(s,c){
  return {annual,benefits,matrix,recommendations:recommendations.sort((a,b)=>a.priority-b.priority),ready};
 }
 root.ResetGuidance={build,pillars,spiral,support,annualCandidates,annualComparison};})(typeof window!=='undefined'?window:globalThis);
+
 
