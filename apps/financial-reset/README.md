@@ -132,7 +132,7 @@ Survival Budget, Mortgage Prepayment and Statement Calendar open as separate exi
 
 Exploration never changes the main report numbers. An explicit Add to my plan action saves notes and an optional expected monthly change. Positive estimates based on overlapping transaction selections in the same period are rejected; the user must retain one combined estimate or save the second action without an amount. Other overlapping estimates require the user's review. Selection metadata is optional in the existing version-1 plan format, preserving compatibility with earlier plan files. Saved actions survive report rebuilds, and are included in plan JSON and report text.
 
-Validation: `node --test apps/financial-reset/tests/*.test.cjs` (106 checks). Includes pure calculations, selection/refund handling, controller consent flow, plan compatibility/overlap and five-step state transitions. Browser layout and end-to-end interaction verification were unavailable because the managed browser and native input providers failed; controller tests do not substitute for that visual verification.
+Validation: `node --test apps/financial-reset/tests/*.test.cjs` (108 checks). Includes pure calculations, selection/refund handling, controller consent flow, plan compatibility/overlap and five-step state transitions. Browser layout and end-to-end interaction verification were unavailable because the managed browser and native input providers failed; controller tests do not substitute for that visual verification.
 
 
 ### Income prefill and live work-cost results
@@ -142,3 +142,10 @@ Income prefill reads the entire selected date window, not just the selected spen
 Complete calendar months use their actual month count. Partial windows are scaled to 30.4375 days and labelled. The work panel shows the selected cost as a share of one month's income. Payroll-like deposits prefill monthly take-home work pay; the initial work-hours illustration explicitly assumes 40 paid hours/week and 52 paid weeks/year. Benefits are never converted into work earnings. No tax or deduction percentage is guessed, so gross earnings stay uncalculated until entered. The direct gross-hourly method is retained.
 
 Opening the analysis shows the available results immediately. Edit income and work assumptions expands the prefilled fields. Input edits refresh results without a submit requirement. Use detected income again restores income while retaining the selected cost and work assumptions. User edits persist in session memory across cost selections and are labelled. Scenario changes do not rewrite transaction categories or the report. Explicit action saving is still required.
+
+
+### App boundary and work-time visuals
+
+The Money Snapshot workspace has its own bordered region, app label and bottom boundary. Related tool links, the book reference and course navigation are grouped in a separate companion-website region below it. App controls and their IDs remain inside the workspace; report printing removes the decorative frame.
+
+Work-cost results follow the standalone True Cost visual: a prominent hours figure, day/week equivalents, partial filled time blocks and cost cards. Workday length is editable, initially eight hours. Large durations group multiple workdays into each block, with at most 60 blocks and an explicit scale caption. The earnings bar separates spending from combined payroll deductions only when a deduction rate is supplied; the app does not invent separate tax/CPP/EI amounts. SVG geometry avoids inline styles and respects the existing CSP. The same presentation is used for imported-income and direct-hourly methods. Live input updates and explicit action saving are preserved.

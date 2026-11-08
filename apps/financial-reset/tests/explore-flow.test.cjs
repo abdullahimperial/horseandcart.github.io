@@ -20,7 +20,7 @@ test('explorer opens relevant choices without calculating or adding a plan actio
 });
 test('scenario results are opt-in and action saving requires a separate explicit choice',()=>{
  const f=fixture(),original=JSON.stringify(f.rows);f.click({'data-tool':'work'});assert.match(f.get('#explore-tool').innerHTML,/Gross hourly pay/);assert.equal(f.saved.length,0);
- f.submit({basis:'hourly',amount:'200',hourly:'25',deductions:'20'});assert.match(f.get('#explore-result').innerHTML,/10\.0 working hours/);assert.match(f.get('#explore-result').innerHTML,/\$250\.00/);assert.equal(f.saved.length,0);
+ f.submit({basis:'hourly',amount:'200',hourly:'25',deductions:'20'});assert.match(f.get('#explore-result').innerHTML,/10(?:\.0)? working hours/);assert.match(f.get('#explore-result').innerHTML,/\$250\.00/);assert.equal(f.saved.length,0);
  f.click({'data-save-draft':''});assert.match(f.get('#explore-action').innerHTML,/Add to my plan/);
  f.submit({title:'Review work time',notes:'Ten hours',impact:'',due:''},'explore-action-form');assert.equal(f.saved.length,1);assert.equal(f.saved[0].impact,null);assert.equal(f.saved[0].scope.category,'Utilities');assert.equal(JSON.stringify(f.rows),original);
 });
@@ -60,5 +60,14 @@ test('restoring detected income keeps the user-edited cost and work schedule',()
  f.input('monthlyPay','6000',values);
  const form=f.get('#explore-form');form.values=values;form.elements={};for(const key of ['monthlyIncome','monthlyPay'])Object.defineProperty(form.elements,key,{value:{get value(){return values[key]},set value(v){values[key]=v}}});
  f.click({'data-use-income':''});assert.equal(values.monthlyIncome,'4000.00');assert.equal(values.monthlyPay,'4000.00');assert.equal(values.amount,'500');assert.equal(values.hours,'30');assert.equal(values.weeks,'48');
- assert.match(f.get('#explore-result').innerHTML,/15\.0 working hours/);assert.match(f.get('#explore-result').innerHTML,/detected from/);
+ assert.match(f.get('#explore-result').innerHTML,/15(?:\.0)? working hours/);assert.match(f.get('#explore-result').innerHTML,/detected from/);
+});
+
+test('work results show time blocks, editable day equivalents and a truthful earnings breakdown',()=>{
+ const f=fixture();f.click({'data-tool':'work'});
+ f.submit({basis:'hourly',amount:'200',hourly:'25',deductions:'20',day:'8',hours:'40'});
+ let html=f.get('#explore-result').innerHTML;assert.match(html,/work-time-blocks/);assert.match(html,/1\.3 8-hour workdays/);assert.match(html,/25\.00000/);assert.match(html,/work-earnings-bar/);assert.match(html,/width="320\.00000"/);assert.match(html,/width="80\.00000"/);assert.doesNotMatch(html,/style=/);
+ f.input('day','5',{basis:'hourly',amount:'200',hourly:'25',deductions:'20',day:'8',hours:'40'});html=f.get('#explore-result').innerHTML;assert.match(html,/2 5-hour workdays/);assert.match(html,/Each block = 5 working hours/);
+ const net=fixture([{id:'pay',row:2,account:'chequing',flow:'in',category:'Income',amount:4000,date:'2026-09-15',description:'PAYROLL',merchant:'PAYROLL',review:'Recognized'}]);net.click({'data-tool':'work'});
+ html=net.get('#explore-result').innerHTML;assert.match(html,/work-time-blocks/);assert.match(html,/Estimated take-home per hour/);assert.doesNotMatch(html,/work-earnings-bar/);
 });

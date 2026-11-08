@@ -15,6 +15,13 @@ function selection(rows,start,end,scope={}){
 }
 function groups(rows,key){const m=new Map();for(const t of rows){const k=key==='category'?t.category:merchant(t);if(!m.has(k))m.set(k,{name:k,total:0,count:0});const r=m.get(k);r.total+=t.flow==='out'?t.amount:-t.amount;r.count++;}return [...m.values()].sort((a,b)=>b.total-a.total||a.name.localeCompare(b.name));}
 function work(amount,hourly,deductions){amount=number(amount,'spending');hourly=number(hourly,'gross hourly pay',.01,1e7);deductions=number(deductions,'combined payroll deduction percentage',0,99.9);const netHourly=hourly*(1-deductions/100);return {gross:amount/(1-deductions/100),hours:amount/netHourly,netHourly};}
+function workTime(hours,day=8,week=40){
+ hours=number(hours,'working hours',0,1e20);day=number(day,'hours per workday',.01,24);week=number(week,'paid hours per week',.01,168);
+ const days=hours/day,weeks=hours/week,daysPerBlock=Math.max(1,Math.ceil(days/60)),blockHours=day*daysPerBlock;
+ const count=Math.min(60,Math.ceil(hours/blockHours));
+ const blocks=Array.from({length:count},(_,i)=>Math.max(0,Math.min(blockHours,hours-i*blockHours)));
+ return {hours,day,week,days,weeks,daysPerBlock,blockHours,blocks};
+}
 function incomeBasis(rows,start,end){
  const summary=E.summarize(rows,E.date(start),E.date(end)),basis=root.ResetResilience.monthlyBasis(summary,start,end);
  const deposits=summary.active.filter(t=>t.account==='chequing'&&t.flow==='in'&&['Income','Government benefits & support'].includes(t.category));
@@ -40,5 +47,5 @@ function reduction(monthly,cut,surplus,confirmed){if(!confirmed)throw Error('Con
 function emergency(budget,reserve,cut,essential){budget=number(budget,'essential monthly budget',.01);reserve=number(reserve,'available savings');cut=number(cut,'monthly reduction',0,budget);if(!essential)throw Error('Confirm that the reduction is included in this essential budget.');const after=budget-cut;return {before:reserve/budget,after:after>0?reserve/after:null,budget:after,targets:[3,6,12].map(months=>({months,before:budget*months,after:after*months,gap:Math.max(0,after*months-reserve)}))};}
 function growth(amount,years,rate){amount=number(amount,'amount set aside');years=number(years,'years',1,80);rate=number(rate,'assumed yearly return',-100,100);const end=amount*Math.pow(1+rate/100,years);if(!Number.isFinite(end)||end>1e15)throw Error('Use a smaller amount, rate or duration.');return {end,gain:end-amount,points:Array.from({length:Math.floor(years)+1},(_,year)=>({year,value:amount*Math.pow(1+rate/100,year)}))};}
 function overlaps(a,b){if(!a||!b||a.start!==b.start||a.end!==b.end)return false;return a.ids.some(id=>b.ids.includes(id));}
-root.ResetExploreMath={number,spending,merchant,selection,groups,work,incomeBasis,depositedWork,annual,cashback,reduction,emergency,growth,overlaps};
+root.ResetExploreMath={number,spending,merchant,selection,groups,work,workTime,incomeBasis,depositedWork,annual,cashback,reduction,emergency,growth,overlaps};
 })(typeof window!=='undefined'?window:globalThis);

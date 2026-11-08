@@ -65,3 +65,10 @@ test('all application scripts parse, and explorer modules have no network or per
  const dir=path.join(__dirname,'..');for(const file of fs.readdirSync(dir).filter(f=>f.endsWith('.js')))new vm.Script(fs.readFileSync(path.join(dir,file),'utf8'),{filename:file});
  for(const file of ['explore-engine.js','explore-ui.js','journey.js'])assert.doesNotMatch(fs.readFileSync(path.join(dir,file),'utf8'),/\b(fetch|XMLHttpRequest|localStorage|sessionStorage|indexedDB)\b/);
 });
+
+test('work-time blocks represent partial days and scale large totals without losing time',()=>{
+ const r=M.workTime(12,8,40);assert.equal(r.days,1.5);assert.equal(r.weeks,.3);assert.deepEqual(r.blocks,[8,4]);assert.equal(r.blockHours,8);
+ const custom=M.workTime(12,6,30);assert.equal(custom.days,2);assert.equal(custom.weeks,.4);assert.deepEqual(custom.blocks,[6,6]);
+ for(const hours of [0,.001,8,480,481,1e6,1e17]){const v=M.workTime(hours,8,40);assert.ok(v.blocks.length<=60);assert.ok(Math.abs(v.blocks.reduce((a,b)=>a+b,0)-hours)<=Math.max(1e-8,hours*1e-12));assert.ok(v.blocks.every(b=>b>=0&&b<=v.blockHours));}
+ assert.throws(()=>M.workTime(8,0,40));assert.throws(()=>M.workTime(8,25,40));assert.throws(()=>M.workTime(8,8,0));
+});
