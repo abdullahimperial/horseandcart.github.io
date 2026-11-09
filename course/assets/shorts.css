@@ -1,0 +1,22 @@
+/* Compact, optional video panels. Portrait media never widens the course. */
+.course-short,.course-shorts-intro{margin:24px 0;border:1px solid #b7cfc3;border-radius:18px;background:#f6faf5;color:#173b36;overflow:hidden}
+.course-short>summary,.course-shorts-intro>summary{display:flex;align-items:center;gap:14px;min-height:76px;padding:18px 22px;cursor:pointer;list-style:none}
+.course-short>summary::-webkit-details-marker,.course-shorts-intro>summary::-webkit-details-marker{display:none}
+.course-short>summary:after,.course-shorts-intro>summary:after{content:'+';font-size:26px;line-height:1;margin-left:auto}
+.course-short[open]>summary:after,.course-shorts-intro[open]>summary:after{content:'−'}
+.course-short>summary:hover,.course-shorts-intro>summary:hover{background:#eaf3ea}
+.course-short>summary:focus-visible,.course-shorts-intro>summary:focus-visible,.short-transcript>summary:focus-visible,.short-preview:focus-visible{outline:3px solid #285747;outline-offset:-4px}
+.short-play{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:50%;background:#285747;color:#fffdf8;font-size:17px}
+.short-summary-title,.course-shorts-intro>summary>span>span{display:block;margin-top:5px;color:#506b60;font-size:14px;line-height:1.5}
+.short-duration,.short-count{margin-left:auto;white-space:nowrap;font-size:13px;border:1px solid #b7cfc3;border-radius:18px;padding:5px 10px}
+.short-guide{min-width:0}.short-guide h2{font-size:23px;line-height:1.3;margin:4px 0 12px}.short-guide p{font-size:15px;line-height:1.65}.short-guide a,.shorts-channel a{color:#285747;text-underline-offset:3px}.short-guide a.btn.primary{color:#fffdf8;white-space:normal;text-align:center}
+.short-format{color:#506b60;font-size:13px!important}.short-transcript{border-top:1px solid #c7d8cd;padding-top:12px}.short-transcript>summary{cursor:pointer;line-height:1.6;font-size:14px}.short-transcript p{font-size:14px}.short-video-status{color:#8b3427}
+.shorts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:0 22px 20px}.short-preview{display:flex;align-items:center;gap:13px;min-width:0;border:1px solid #c7d8cd;border-radius:12px;padding:12px;background:#fffdf8;text-decoration:none;color:#173b36}.short-preview:hover{background:#eaf3ea;border-color:#80a88f}.short-preview img{width:68px;height:auto;aspect-ratio:9/16;border-radius:7px;flex-shrink:0;object-fit:cover}.short-preview strong{display:block;font-size:15px;line-height:1.4}.short-preview small{display:block;margin:7px 0;font-size:12px;color:#506b60}.short-preview>span>span{font-size:12px;color:#285747}.shorts-channel{padding:0 22px 20px;margin:0;font-size:14px}
+@media(max-width:1000px){.shorts-grid{grid-template-columns:1fr}.short-preview img{width:56px}.course-short-body{grid-template-columns:1fr}.short-player{max-width:270px}}
+@media(max-width:480px){.course-short>summary,.course-shorts-intro>summary{padding:15px 13px;gap:10px}.course-short-body{padding:0 13px 18px;gap:18px}.short-summary-title{font-size:13px}.short-duration,.short-count{font-size:12px;padding:4px 7px}.shorts-grid{padding:0 13px 18px}.short-play{flex-basis:34px;height:34px}.course-shorts-intro>summary>span>span{font-size:13px}.shorts-channel{padding-left:13px}}
+@media print{.course-short,.course-shorts-intro{display:none}}
+
+/* Link-only playback keeps the lesson light and contacts YouTube only after a click. */
+.course-short>.short-guide{padding:0 22px 24px}
+.short-preview>.short-play{flex:0 0 34px;height:34px;font-size:14px}
+@media(max-width:480px){.course-short>.short-guide{padding:0 13px 18px}}
