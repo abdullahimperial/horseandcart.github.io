@@ -28,3 +28,11 @@ The updated course was exercised in headless Chromium at desktop and mobile size
 
 A malformed class attribute in the linked Money Spiral activity was repaired so its direction and monthly difference display correctly. Empty and negative inputs now show a validation message.
 
+
+## YouTube Shorts integration (draft)
+
+The integration maps the three existing Shorts to Module 2 slides 1, 6 and 7. Each optional panel has a direct YouTube link, descriptive transcript and matching activity. The course overview links to the precise lesson. Video links open in a new tab; no YouTube player, image, script or video is downloaded by the course.
+
+`assets/youtube-links.js` is the only video-ID configuration. IDs must be verified against the official `@letsfixmoneycom` uploads. The three values are intentionally empty because channel retrieval was unavailable. Unverified entries are hidden. **Do not merge or publish this draft until all three IDs are set and the destinations checked.** Add matching direct links to the no-JavaScript content on the overview and Module 2 when IDs are known.
+
+`shorts-roadmap.json` records proposed follow-ups and the exact course placements. Proposed titles are editorial ideas, not available videos. Existing lessons and learner-storage keys remain unchanged.

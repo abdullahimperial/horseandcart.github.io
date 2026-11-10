@@ -1,0 +1,206 @@
+{
+  "status": "editorial ideas, not produced videos",
+  "existing_videos": [
+    {
+      "episode": 1,
+      "id": "horse-and-cart",
+      "module": 2,
+      "slide": 1,
+      "youtube_id": null
+    },
+    {
+      "episode": 2,
+      "id": "true-cost",
+      "module": 2,
+      "slide": 6,
+      "youtube_id": null
+    },
+    {
+      "episode": 3,
+      "id": "financial-spiral",
+      "module": 2,
+      "slide": 7,
+      "youtube_id": null
+    }
+  ],
+  "next_priority": [
+    6,
+    11,
+    14
+  ],
+  "proposed": [
+    {
+      "episode": 4,
+      "title": "Chance is not the same as choice",
+      "module": 1,
+      "slide": 2,
+      "visual": "One dice roll becomes two different decisions.",
+      "activity": "../games/financial-life.html",
+      "status": "planned"
+    },
+    {
+      "episode": 5,
+      "title": "Poverty charges interest",
+      "module": 2,
+      "slide": 3,
+      "visual": "The same bill grows when it must be delayed or financed.",
+      "activity": "../activities/frugal-budget.html",
+      "status": "planned"
+    },
+    {
+      "episode": 6,
+      "title": "One bill. Four saving pillars.",
+      "module": 3,
+      "slide": 2,
+      "visual": "One expense unfolds into the book’s four-column saving table.",
+      "activity": "../apps/savings-planner/",
+      "status": "planned"
+    },
+    {
+      "episode": 7,
+      "title": "It is only $10 a month…",
+      "module": 3,
+      "slide": 16,
+      "visual": "One monthly charge expands across a calendar into $120 a year.",
+      "activity": "module-3.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 8,
+      "title": "Your statement is telling a story",
+      "module": 3,
+      "slide": 3,
+      "visual": "Transactions become categories, a pie chart and one action.",
+      "activity": "../apps/financial-reset/",
+      "status": "planned"
+    },
+    {
+      "episode": 9,
+      "title": "The car price is not the car cost",
+      "module": 3,
+      "slide": 8,
+      "visual": "A car gains layers for insurance, fuel, maintenance and financing.",
+      "activity": "../apps/savings-planner/",
+      "status": "planned"
+    },
+    {
+      "episode": 10,
+      "title": "My task is to ask",
+      "module": 3,
+      "slide": 11,
+      "visual": "A bill opens into questions about benefits and discounts.",
+      "activity": "../apps/checklist/",
+      "status": "planned"
+    },
+    {
+      "episode": 11,
+      "title": "An emergency fund or an emergency system?",
+      "module": 4,
+      "slide": 2,
+      "visual": "A cash reserve becomes five connected supports, keeping liquid savings visibly distinct from prepaid bills and conditional support.",
+      "activity": "../apps/financial-reset/",
+      "status": "planned"
+    },
+    {
+      "episode": 12,
+      "title": "Same savings. Longer runway.",
+      "module": 4,
+      "slide": 3,
+      "visual": "Lower monthly obligations stretch the same reserve further.",
+      "activity": "module-4.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 13,
+      "title": "Two credit-card dates that matter",
+      "module": 4,
+      "slide": 7,
+      "visual": "A calendar highlights the statement closing date and payment due date; show full-payment conditions beside the grace period.",
+      "activity": "../activities/statement-calendar.html",
+      "status": "planned"
+    },
+    {
+      "episode": 14,
+      "title": "Is it a tap or a leak?",
+      "module": 5,
+      "slide": 8,
+      "visual": "One decision adds both incoming and outgoing streams to a bucket; compare amounts, timing and risk.",
+      "activity": "../activities/tap-vs-leak.html",
+      "status": "planned"
+    },
+    {
+      "episode": 15,
+      "title": "A raise without more breathing room",
+      "module": 5,
+      "slide": 4,
+      "visual": "Income rises and lifestyle spending follows it upward.",
+      "activity": "../activities/money-spiral.html",
+      "status": "planned"
+    },
+    {
+      "episode": 16,
+      "title": "A bigger balance can buy less",
+      "module": 5,
+      "slide": 2,
+      "visual": "The balance grows while the same shopping basket costs more.",
+      "activity": "module-5.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 17,
+      "title": "What does my employer add?",
+      "module": 6,
+      "slide": 8,
+      "visual": "A personal contribution gains a separate employer-match stack.",
+      "activity": "module-6.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 18,
+      "title": "Turn an annual plan into a weekly habit",
+      "module": 6,
+      "slide": 10,
+      "visual": "Annual saving targets break into scheduled weekly amounts.",
+      "activity": "module-6.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 19,
+      "title": "The investment snowball",
+      "module": 6,
+      "slide": 11,
+      "visual": "Contributions and assumed investment growth build a snowball; show that growth can fluctuate and is not guaranteed.",
+      "activity": "../apps/investment/",
+      "status": "planned"
+    },
+    {
+      "episode": 20,
+      "title": "Wealth transfer starts before inheritance",
+      "module": 7,
+      "slide": 2,
+      "visual": "The four transfer pillars appear across a child’s lifetime.",
+      "activity": "module-7.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 21,
+      "title": "What can one dollar a day become?",
+      "module": 8,
+      "slide": 2,
+      "visual": "Small daily gifts accumulate into a year of giving.",
+      "activity": "module-8.html#activities",
+      "status": "planned"
+    },
+    {
+      "episode": 22,
+      "title": "Where does my mortgage payment go?",
+      "module": 9,
+      "slide": 6,
+      "visual": "One payment splits into principal and financing costs.",
+      "activity": "../calculators/mortgage-prepayment.html",
+      "status": "planned"
+    }
+  ],
+  "existing_videos_status": "Produced videos; exact YouTube URLs are awaiting verification. Do not publish this integration until all three are supplied.",
+  "youtube_channel": "https://www.youtube.com/@letsfixmoneycom"
+}
