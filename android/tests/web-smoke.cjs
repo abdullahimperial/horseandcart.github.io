@@ -16,7 +16,7 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
  for(const scenario of ['recovery','deficit','growth','family']){
   await page.selectOption('#demo-scenario',scenario);await page.click('#demo');
   await page.waitForSelector('#report:not([hidden])');
-  const text=await page.locator('#report').innerText();assert.ok(text.includes('Spending surplus'),scenario);
+  const text=await page.locator('#report').textContent();assert.ok(text.includes('Spending surplus'),scenario);
  }
  await page.locator('#download-report').click();
  await page.waitForFunction(()=>window.nativeMessages.some(m=>m.type==='save'));
