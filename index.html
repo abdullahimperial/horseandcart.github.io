@@ -17,14 +17,77 @@ li a:hover{background:#294b46;border-color:#91b9a8}li.active a{background:#34463
 footer{flex-wrap:wrap}.site-copyright{flex-basis:100%;margin:4px 0 0;font-size:12px;line-height:1.6}.site-copyright small{font-size:11px}
 </style><link rel="stylesheet" href="assets/legal.css?v=20261105-safeguards"></head><body><main id="lfm-future" aria-label="Let’s Fix Money entry">
 <header><strong>LET’S FIX MONEY</strong><a class="skip" id="lfm-skip" href="explore.html">Skip intro ↗</a></header>
-<div class="scene"><canvas role="img" aria-label="A luminous spiral widens as it rises and joins a constellation. Choose a learning stage below."></canvas></div>
+<div class="scene"><canvas role="img" aria-label="A Personal finance framework banner becomes points of light and forms a luminous spiral that widens as it rises and joins a constellation. Choose a learning stage below."></canvas></div>
 <div class="caption"><h2>Understand</h2><p>One step at a time. More possibilities ahead.</p></div>
 <ol id="explore" aria-label="Choose your learning stage"><li><a href="stage.html?stage=understand" data-label="Understand"><span>01</span>Understand</a></li><li><a href="stage.html?stage=save" data-label="Save"><span>02</span>Save</a></li><li><a href="stage.html?stage=resilience" data-label="Build Resilience"><span>03</span>Build Resilience</a></li><li><a href="stage.html?stage=preserve" data-label="Preserve"><span>04</span>Preserve</a></li><li><a href="stage.html?stage=grow" data-label="Grow"><span>05</span>Grow</a></li><li><a href="stage.html?stage=transfer" data-label="Transfer"><span>06</span>Transfer</a></li><li><a href="stage.html?stage=give" data-label="Give"><span>07</span>Give</a></li></ol>
 <footer><span id="lfm-status">Choose a stage, or skip to explore all destinations.</span><button type="button" id="lfm-replay">Replay</button><a class="skip" href="https://www.youtube.com/@letsfixmoneycom">YouTube ↗</a><p class="site-copyright">© 2026 Abdullah Mohiuddin. All rights reserved.<br><small>Third-party materials, trademarks and linked content belong to their respective owners.</small></p><nav class="site-legal" aria-label="Legal and privacy"><a href="terms.html">Terms of Use</a><a href="privacy.html">Privacy Policy</a><a href="contact.html">Report an issue</a></nav></footer>
 <noscript><p>Choose any stage above, or use Skip to explore the tools.</p></noscript></main>
-<script>(()=>{'use strict';const root=document.getElementById('lfm-future');if(!root)return;const canvas=root.querySelector('canvas'),c=canvas.getContext('2d');if(!c)return;const steps=[...root.querySelectorAll('li')],title=root.querySelector('h2'),skip=root.querySelector('#lfm-skip'),status=root.querySelector('#lfm-status'),reduced=matchMedia('(prefers-reduced-motion: reduce)');let w=0,h=0,raf=0,start=0,p=0,done=false;
-function point(p,t){const r=8+p*Math.min(w*.35,245),a=p*Math.PI*6-Math.PI/2+t*.28;return[w/2+r*Math.cos(a),h*.87-p*h*.67+r*.18*Math.sin(a)];}function line(points,color,width=1,glow=0){c.beginPath();points.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));c.strokeStyle=color;c.lineWidth=width;c.shadowColor=color;c.shadowBlur=glow;c.stroke();c.shadowBlur=0;}function dot(x,y,r,color,glow=0){c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle=color;c.shadowColor=color;c.shadowBlur=glow;c.fill();c.shadowBlur=0;}
-function draw(t){c.clearRect(0,0,w,h);for(let i=0;i<65;i++)dot((i*137.51%997)/997*w,(i*79.13%503)/503*h,i%9?0.55:1.2,'#7caea090');for(let j=0;j<7;j++){const q=j/6,r=8+q*Math.min(w*.35,245),cy=h*.87-q*h*.67;c.beginPath();c.ellipse(w/2,cy,r,r*.18,0,0,Math.PI*2);c.strokeStyle='#6acdb52b';c.stroke();dot(w/2+r*Math.cos(t*2+j),cy+r*.18*Math.sin(t*2+j),1.7,'#8cebd0',5);}const ghost=[],path=[],echo=[];for(let i=0;i<=350;i++){const q=i/350,z=point(q,t);ghost.push(z);if(q<=t){path.push(z);echo.push([z[0]+3,z[1]+2]);}}line(ghost,'#8cc5b745');line(echo,'#72eed48c',1,5);line(path,'#f0d49a',2,15);for(let j=0;j<7;j++){const q=j/6,[x,y]=point(q,t);dot(x,y,q<=t?4:2,q<=t?'#fff2ce':'#789f90',q<=t?14:0);}dot(...point(t,t),5,'#fff7df',22);if(t>.83){const a=Math.min(1,(t-.83)/.17);for(const side of[-1,1]){let prev=point(1,t);for(let j=1;j<=3;j++){const end=[w/2+side*w*(.1+j*.075),h*(.1+j*.065)],q=[prev[0]+(end[0]-prev[0])*a,prev[1]+(end[1]-prev[1])*a];line([prev,q],'#8cebd0aa',1,7);dot(...q,2.5,'#d9f7e2',10);prev=q;}}}}
-function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;const d=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);c.setTransform(d,0,0,d,0,0);draw(p);}function finish(){cancelAnimationFrame(raf);done=true;p=1;draw(1);title.textContent='Let’s Fix Money';status.textContent='Choose a stage to explore →';try{sessionStorage.setItem('lfm-intro-seen','1');}catch{}}
-function tick(now){if(done)return;if(!start)start=now;p=Math.min(1,(now-start)/6000);draw(p);const idx=Math.min(6,Math.floor(p*7));steps.forEach((e,i)=>e.classList.toggle('active',i===idx));title.textContent=steps[idx].querySelector('a').dataset.label;if(p<1)raf=requestAnimationFrame(tick);else finish();}function play(){cancelAnimationFrame(raf);done=false;start=0;if(reduced.matches)finish();else raf=requestAnimationFrame(tick);}root.querySelector('#lfm-replay').addEventListener('click',play);root.addEventListener('keydown',e=>{if(e.key==='Escape')location.href='explore.html';});new ResizeObserver(resize).observe(canvas);reduced.addEventListener('change',()=>{if(reduced.matches)finish();});resize();let seen=false;try{seen=sessionStorage.getItem('lfm-intro-seen')==='1';}catch{}if(seen||reduced.matches)finish();else if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){play();io.disconnect();}},{threshold:.15});io.observe(root);}else play();})();
+<script>(()=>{'use strict';
+const root=document.getElementById('lfm-future');if(!root)return;
+const canvas=root.querySelector('canvas'),c=canvas.getContext('2d');if(!c)return;
+const steps=[...root.querySelectorAll('li')],title=root.querySelector('h2'),caption=root.querySelector('.caption'),status=root.querySelector('#lfm-status'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const HOLD=2.1,MORPH=1.9,SPIRAL=6,TOTAL=HOLD+MORPH+SPIRAL;
+let w=0,h=0,raf=0,start=null,elapsed=0,done=false,particles=[],banner={};
+const clamp=n=>Math.max(0,Math.min(1,n)),ease=n=>{n=clamp(n);return n*n*(3-2*n);};
+function point(p,t){const r=8+p*Math.min(w*.35,245),a=p*Math.PI*6-Math.PI/2+t*.28;return[w/2+r*Math.cos(a),h*.87-p*h*.67+r*.18*Math.sin(a)];}
+function line(points,color,width=1,glow=0){c.beginPath();points.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));c.strokeStyle=color;c.lineWidth=width;c.shadowColor=color;c.shadowBlur=glow;c.stroke();c.shadowBlur=0;}
+function dot(x,y,r,color,glow=0){c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle=color;c.shadowColor=color;c.shadowBlur=glow;c.fill();c.shadowBlur=0;}
+function stars(){for(let i=0;i<65;i++)dot((i*137.51%997)/997*w,(i*79.13%503)/503*h,i%9?0.55:1.2,'#7caea090');}
+function spiral(t){
+ for(let j=0;j<7;j++){const q=j/6,r=8+q*Math.min(w*.35,245),cy=h*.87-q*h*.67;c.beginPath();c.ellipse(w/2,cy,r,r*.18,0,0,Math.PI*2);c.strokeStyle='#6acdb52b';c.lineWidth=1;c.stroke();dot(w/2+r*Math.cos(t*2+j),cy+r*.18*Math.sin(t*2+j),1.7,'#8cebd0',5);}
+ const ghost=[],path=[],echo=[];for(let i=0;i<=350;i++){const q=i/350,z=point(q,t);ghost.push(z);if(q<=t){path.push(z);echo.push([z[0]+3,z[1]+2]);}}
+ line(ghost,'#8cc5b745');line(echo,'#72eed48c',1,5);line(path,'#f0d49a',2,15);
+ for(let j=0;j<7;j++){const q=j/6,[x,y]=point(q,t);dot(x,y,q<=t?4:2,q<=t?'#fff2ce':'#789f90',q<=t?14:0);}dot(...point(t,t),5,'#fff7df',22);
+ if(t>.83){const a=Math.min(1,(t-.83)/.17);for(const side of[-1,1]){let prev=point(1,t);for(let j=1;j<=3;j++){const end=[w/2+side*w*(.1+j*.075),h*(.1+j*.065)],q=[prev[0]+(end[0]-prev[0])*a,prev[1]+(end[1]-prev[1])*a];line([prev,q],'#8cebd0aa',1,7);dot(...q,2.5,'#d9f7e2',10);prev=q;}}}
+}
+function prepareBanner(){
+ const mask=document.createElement('canvas');mask.width=Math.ceil(w);mask.height=Math.ceil(h);const m=mask.getContext('2d',{willReadFrequently:true});
+ const narrow=w<620,lines=narrow?['Personal finance','framework']:['Personal finance framework'];
+ let size=narrow?Math.min(39,w*.09):Math.min(55,w*.061);m.font=`500 ${size}px Arial,Helvetica,sans-serif`;
+ const maxWidth=w*.88;for(const text of lines){const width=m.measureText(text).width;if(width>maxWidth)size*=maxWidth/width;}
+ const gap=size*1.25,cy=h*.46;banner={lines,size,gap,cy,bw:Math.min(w*.97,940),bh:lines.length*gap+54};
+ m.font=`500 ${size}px Arial,Helvetica,sans-serif`;m.fillStyle='#fff';m.textAlign='center';m.textBaseline='middle';
+ lines.forEach((text,i)=>m.fillText(text,w/2,cy+(i-(lines.length-1)/2)*gap));
+ const pixels=m.getImageData(0,0,mask.width,mask.height).data;particles=[];const stride=narrow?2:3;
+ for(let y=0;y<mask.height;y+=stride)for(let x=0;x<mask.width;x+=stride)if(pixels[(y*mask.width+x)*4+3]>80)particles.push({x,y});
+ particles.sort((a,b)=>a.x-b.x||a.y-b.y);
+}
+function drawBanner(alpha,shrink=0){
+ c.save();c.globalAlpha=alpha;const {lines,size,gap,cy,bw,bh}=banner;
+ const x=(w-bw)/2,y=cy-bh/2;
+ const fill=c.createLinearGradient(x,y,x+bw,y+bh);fill.addColorStop(0,'#173f3d');fill.addColorStop(.5,'#123732');fill.addColorStop(1,'#0c2930');
+ c.fillStyle=fill;c.strokeStyle='#e0c28b99';c.lineWidth=1;c.beginPath();
+ const radius=18,ww=bw*(1-shrink*.12),xx=(w-ww)/2;
+ c.moveTo(xx+radius,y);c.lineTo(xx+ww-radius,y);c.quadraticCurveTo(xx+ww,y,xx+ww,y+radius);c.lineTo(xx+ww,y+bh-radius);c.quadraticCurveTo(xx+ww,y+bh,xx+ww-radius,y+bh);c.lineTo(xx+radius,y+bh);c.quadraticCurveTo(xx,y+bh,xx,y+bh-radius);c.lineTo(xx,y+radius);c.quadraticCurveTo(xx,y,xx+radius,y);c.closePath();c.fill();c.stroke();
+ c.font=`500 ${size}px Arial,Helvetica,sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#f4dfaf';c.shadowColor='#edcf8e';c.shadowBlur=10;
+ lines.forEach((text,i)=>c.fillText(text,w/2,cy+(i-(lines.length-1)/2)*gap));c.restore();
+}
+function morph(raw){
+ const u=ease(raw);c.save();c.globalAlpha=ease(raw/.7);spiral(0);c.restore();
+ drawBanner(1-ease(raw/.3),u);
+ const opacity=ease(raw/.15)*(1-ease((raw-.8)/.2));
+ c.save();c.globalAlpha=opacity;c.fillStyle='#f4dfaf';
+ const bend=Math.sin(Math.PI*u),n=Math.max(1,particles.length-1);
+ particles.forEach((p,i)=>{const q=i/n,target=point(q,0),wave=Math.sin(q*Math.PI*6+u*Math.PI)*Math.min(w*.075,60)*bend;
+  const x=p.x+(target[0]-p.x)*u+wave,y=p.y+(target[1]-p.y)*u-Math.sin(q*Math.PI*2+u*Math.PI)*h*.12*bend;
+  c.beginPath();c.arc(x,y,.9+(1-u)*.25,0,Math.PI*2);c.fill();
+ });c.restore();
+}
+function render(seconds){
+ c.clearRect(0,0,w,h);stars();
+ if(seconds<HOLD){drawBanner(ease(seconds/.5));caption.style.opacity='0';steps.forEach(e=>e.classList.remove('active'));}
+ else if(seconds<HOLD+MORPH){morph((seconds-HOLD)/MORPH);caption.style.opacity=String(ease((seconds-HOLD-MORPH+.5)/.5));title.textContent='Understand';}
+ else{const p=clamp((seconds-HOLD-MORPH)/SPIRAL);spiral(p);caption.style.opacity='1';const idx=Math.min(6,Math.floor(p*7));steps.forEach((e,i)=>e.classList.toggle('active',i===idx));title.textContent=p===1?'Let’s Fix Money':steps[idx].querySelector('[data-label]').dataset.label;}
+}
+function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;if(!w||!h)return;const d=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);c.setTransform(d,0,0,d,0,0);prepareBanner();render(elapsed);}
+function finish(){cancelAnimationFrame(raf);done=true;elapsed=TOTAL;render(elapsed);if(status)status.textContent='Choose a stage to explore →';try{sessionStorage.setItem('lfm-intro-seen','framework-v1');}catch{}}
+function tick(now){if(done)return;if(start===null)start=now;elapsed=Math.min(TOTAL,(now-start)/1000);render(elapsed);if(elapsed<TOTAL)raf=requestAnimationFrame(tick);else finish();}
+function play(){cancelAnimationFrame(raf);done=false;start=null;elapsed=0;if(status)status.textContent='Choose a stage, or skip to explore all destinations.';if(reduced.matches)finish();else{render(0);raf=requestAnimationFrame(tick);}}
+root.querySelector('#lfm-replay').addEventListener('click',play);
+root.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.querySelector('#lfm-skip'))location.href='explore.html';});
+new ResizeObserver(resize).observe(canvas);reduced.addEventListener('change',()=>{if(reduced.matches)finish();});resize();
+let seen=false;try{seen=sessionStorage.getItem('lfm-intro-seen')==='framework-v1';}catch{}
+if(seen||reduced.matches)finish();else if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){play();io.disconnect();}},{threshold:.15});io.observe(root);}else play();
+})();
 </script></body></html>
+
