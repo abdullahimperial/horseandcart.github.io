@@ -66,14 +66,28 @@ function date(value,format='auto'){
 }
 function merchant(s){return String(s).toUpperCase().replace(/\b\d{4,}\b/g,'').replace(/[^A-Z0-9]/g,' ').replace(/\s+/g,' ').trim();}
 function isBenefit(description){return /\b(?:canada child benefit|child benefit|ccb|gst(?:[ /-]*hst)? (?:credit|benefit)|hst credit|employment insurance|ei (?:benefit|payment)|income support|social assistance|welfare|disability benefit|aish|odsp|ontario works|old age security|oas|guaranteed income supplement|gis benefit|government grant|student grant|housing benefit|rent subsidy)\b/i.test(description);}
+function isCardPayment(s,flow,account){
+ // A card used to buy something is not the same as paying the card bill.
+ // Leave refunds/rewards and unclear bank payments available for review.
+ if(/\b(?:refund|cashback|cash back|reward|debit card)\b/.test(s)||/\b(?:paid|payment) (?:by|via|with|using) (?:credit card|visa|master ?card|amex|american express)\b/.test(s))return false;
+ const card='(?:credit ?card|visa|master ?card|amex|american express)',payment='(?:payment|pymt|pmt|pymnt|repayment)';
+ if(new RegExp(`\\b${card}\\b.{0,40}\\b${payment}\\b|\\b${payment}\\b.{0,40}\\b${card}\\b`).test(s))return true;
+ if(/\bpayment thank(?:s| you)?\b|\bthank you\b.*\bpayment\b/.test(s))return true;
+ const settlementSide=account==='chequing'&&flow==='out'||account==='card'&&flow==='in';
+ if(settlementSide&&(new RegExp(`\\b(?:transfer|xfer) to (?:my )?${card}\\b`).test(s)||/\bcard (?:bill )?(?:payment|pymt|pmt)\b/.test(s)))return true;
+ // Generic payment wording is only sufficient on the incoming card side.
+ // A chequing bill payment could instead be rent, utilities, or a loan.
+ return account==='card'&&flow==='in'&&/^(?:(?:online(?: banking)?|internet|mobile|automatic|auto ?pay|pre ?authorized|pre ?authorised) )?(?:payment|pymt|pmt)(?: received| from (?:chequing|checking|bank account))?(?: \d+)?$/.test(s);
+}
 function categorySuggestion(description,flow,account){
  const s=String(description).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
  const identity=root.ResetMerchants?.match(description);
  const match=(category,reason)=>({category,reason,merchantId:identity?.merchantId||null,merchantName:identity?.merchantName||null,source:identity?.source||null,sourceUrl:identity?.sourceUrl||null});
- if(/payment thank|thank you.*payment|credit card payment|payment.*credit card|visa payment|mastercard payment|payment.*(?:visa|mastercard)|(?:visa|mastercard).*(?:payment|pymt|pmt)|online payment.*(?:card|credit)/.test(s))return match('Transfer / card payment','Card-payment wording; check the matching settlement.');
- if(/\bhome\s*depot\s*ccs\b|\bhomedepotccs\b/.test(s))return match('Transfer / card payment','Possible Home Depot card settlement, rather than a new purchase. Check the statement.');
+ // Charges must win even when the description also mentions a card payment.
  if(/overdraft.*interest|interest charge|purchase interest|cash advance.*interest|finance charge/.test(s))return match('Financing charges','Interest or financing-charge wording.');
- if(/overdraft fee|\bnsf\b|bank fee|monthly (?:account|service) fee|service charge|late (?:payment )?fee|annual fee|account fee|acct bal rebate|account balance rebate/.test(s))return match('Bank fees','Bank fee or account-fee rebate wording.');
+ if(/overdraft fee|\bnsf\b|bank fee|monthly (?:account|service) fee|service charge|late (?:payment )?fee|(?:card|payment|pymt|pmt) (?:processing )?fee|annual fee|account fee|acct bal rebate|account balance rebate/.test(s))return match('Bank fees','Bank fee or account-fee rebate wording.');
+ if(isCardPayment(s,flow,account))return match('Transfer / card payment','Card repayment: excluded from spending and income so purchases count once. Chequing cash movement is still shown; check the statement.');
+ if(/\bhome\s*depot\s*ccs\b|\bhomedepotccs\b/.test(s))return match('Transfer / card payment','Possible Home Depot card settlement, rather than a new purchase. Check the statement.');
  if(/\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b.{0,30}\b(?:contribution|deposit|transfer|withdrawal)\b|\b(?:contribution|deposit|transfer|withdrawal)\b.{0,30}\b(?:rrsp|tfsa|resp|rdsp|fhsa)\b|\b(?:investment|brokerage) (?:transfer|contribution|deposit|withdrawal|purchase)\b|\b(?:stock|etf|mutual fund|bond) purchase\b|\btd waterhouse\b|\bquestrade\b/.test(s))return match('Investments','Investment account, brokerage or contribution wording.');
  if(flow==='in'&&account==='chequing'&&isBenefit(description))return match('Government benefits & support','Benefit or support-payment wording.');
  if(flow==='in'&&account==='chequing'&&/\b(?:payroll|salary|pension|employer pay)\b|direct deposit.*pay|\bpay$/.test(s))return match('Income','Payroll wording or the bank’s PAY deposit code.');
@@ -172,4 +186,5 @@ function contextNumbers(values){
 }
 root.ResetEngine={parseCSV,dateFormatHint,commonDateWindow,number,date,merchant,classify,categorySuggestion,normalize,summarize,contextNumbers,categories,isBenefit};
 })(typeof window!=='undefined'?window:globalThis);
+
 
