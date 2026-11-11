@@ -1,7 +1,6 @@
 package com.letsfixmoney.snapshot;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -28,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+import androidx.activity.ComponentActivity;
+import androidx.activity.OnBackPressedCallback;
 import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewCompat;
 import androidx.webkit.WebViewFeature;
@@ -38,7 +39,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.json.JSONObject;
 
-public final class MainActivity extends Activity {
+public final class MainActivity extends ComponentActivity {
     private static final String ORIGIN = "https://appassets.androidplatform.net";
     private static final String HOME_PATH = "/assets/site/apps/financial-reset/index.html";
     private static final String HOME_URL = ORIGIN + HOME_PATH;
@@ -48,6 +49,7 @@ public final class MainActivity extends Activity {
     private ValueCallback<Uri[]> fileCallback;
     private byte[] pendingExport;
     private boolean writingExport;
+    private boolean clearHistoryAfterLoad = true;
     private PrintJob printJob;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -63,6 +65,7 @@ public final class MainActivity extends Activity {
         layout.addView(toolbar, new LinearLayout.LayoutParams(-1, -2));
         setActionBar(toolbar);
         webView = new WebView(this);
+        webView.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS);
         layout.addView(webView, new LinearLayout.LayoutParams(-1, 0, 1));
         setContentView(layout);
         // Target 36 is edge-to-edge. Keep controls and file inputs above system bars/IME.
@@ -81,6 +84,7 @@ public final class MainActivity extends Activity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(false);
         settings.setDatabaseEnabled(false);
+        settings.setSaveFormData(false);
         settings.setAllowFileAccess(false);
         settings.setAllowFileAccessFromFileURLs(false);
         settings.setAllowUniversalAccessFromFileURLs(false);
@@ -112,6 +116,7 @@ public final class MainActivity extends Activity {
                 return true;
             }
             @Override public void onPageFinished(WebView view, String url) {
+                if (clearHistoryAfterLoad) { view.clearHistory(); clearHistoryAfterLoad = false; }
                 if (state != null) tellPage("The previous session was cleared. Re-import statements or load a saved plan to continue.");
             }
         });
@@ -131,14 +136,14 @@ public final class MainActivity extends Activity {
         if (!WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
             TextView message = new TextView(this);
             message.setPadding(32, 32, 32, 32);
-            message.setText("Update Android System WebView or Chrome, then reopen Money Snapshot.");
+            message.setText(R.string.update_webview);
             layout.removeView(webView);
             layout.addView(message);
             return;
         }
-        WebViewCompat.addWebMessageListener(webView, "MoneySnapshotAndroid", Collections.singleton(ORIGIN),
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) WebViewCompat.addWebMessageListener(webView, "MoneySnapshotAndroid", Collections.singleton(ORIGIN),
                 (view, message, sourceOrigin, isMainFrame, replyProxy) -> {
-                    if (!isMainFrame || !ORIGIN.equals(sourceOrigin.toString()) || !isHome(Uri.parse(view.getUrl() == null ? "" : view.getUrl()))) return;
+                    if (!isMainFrame || !isTrusted(sourceOrigin) || !isHome(Uri.parse(view.getUrl() == null ? "" : view.getUrl()))) return;
                     String raw = message.getData();
                     if (raw == null || raw.length() > ExportPolicy.MAX_BYTES + 1024) return;
                     try {
@@ -148,12 +153,14 @@ public final class MainActivity extends Activity {
                         else if ("open".equals(request.optString("type"))) openExternal(Uri.parse(request.getString("url")));
                     } catch (Exception ex) { tellPage("That action could not be completed. Try again."); }
                 });
-        if (Build.VERSION.SDK_INT >= 33) getOnBackInvokedDispatcher().registerOnBackInvokedCallback(0, this::confirmExit);
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override public void handleOnBackPressed() { confirmExit(); }
+        });
         webView.loadUrl(HOME_URL);
     }
 
     private static boolean isTrusted(Uri uri) {
-        return "https".equals(uri.getScheme()) && "appassets.androidplatform.net".equals(uri.getHost()) && uri.getPort() == -1 && uri.getUserInfo() == null;
+        return "https".equals(uri.getScheme()) && "appassets.androidplatform.net".equals(uri.getHost()) && (uri.getPort() == -1 || uri.getPort() == 443) && uri.getUserInfo() == null;
     }
     private static boolean isHome(Uri uri) { return isTrusted(uri) && HOME_PATH.equals(uri.getPath()); }
     private void openExternal(Uri uri) {
@@ -221,7 +228,7 @@ public final class MainActivity extends Activity {
     }
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 1: new AlertDialog.Builder(this).setTitle(R.string.reset_title).setMessage(R.string.reset_message).setNegativeButton("Cancel", null).setPositiveButton("Clear session", (d, w) -> webView.loadUrl(HOME_URL)).show(); return true;
+            case 1: new AlertDialog.Builder(this).setTitle(R.string.reset_title).setMessage(R.string.reset_message).setNegativeButton("Cancel", null).setPositiveButton("Clear session", (d, w) -> { clearHistoryAfterLoad = true; webView.loadUrl(HOME_URL); }).show(); return true;
             case 2: openExternal(Uri.parse("https://www.letsfixmoney.com/")); return true;
             case 3: new AlertDialog.Builder(this).setTitle(R.string.privacy).setMessage("Statements and analysis stay on this device in memory. No analytics, account login or network access is included. Android's file picker can access cloud providers you have installed; choose local storage if you want local-only files. Saved reports and plans are written only to the destination you select. Closing or clearing this session removes unsaved analysis.").setPositiveButton("Close", null).show(); return true;
             case 4: new AlertDialog.Builder(this).setTitle(R.string.about).setMessage(R.string.about_message).setPositiveButton("Close", null).show(); return true;
@@ -232,7 +239,6 @@ public final class MainActivity extends Activity {
         if (webView != null && webView.canGoBack()) { webView.goBack(); return; }
         new AlertDialog.Builder(this).setTitle(R.string.leave_title).setMessage(R.string.leave_message).setNegativeButton("Keep working", null).setPositiveButton("Close", (d,w) -> finish()).show();
     }
-    @Override public void onBackPressed() { confirmExit(); }
     @Override protected void onDestroy() {
         if (fileCallback != null) { fileCallback.onReceiveValue(null); fileCallback = null; }
         if (pendingExport != null) java.util.Arrays.fill(pendingExport, (byte)0);
