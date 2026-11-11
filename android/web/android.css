@@ -1,0 +1,20 @@
+/* Native toolbar and safe areas are provided by MainActivity. */
+html { -webkit-tap-highlight-color: transparent; }
+body { background: #f6f7f2; padding-bottom: 24px; }
+.wrap { width: min(100% - 24px, 1100px); margin: 0 auto; }
+.site-notice { margin: 0; padding: 8px 12px; font-size: .75rem; line-height: 1.45; }
+.snapshot-workspace { margin-top: 12px; }
+.activity-card, .app-section { border-radius: 16px; }
+input, select, textarea { font-size: 16px; }
+button, .btn, select, input[type=file] { min-height: 44px; }
+.step-strip { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; }
+.step-strip button { flex: 0 0 auto; }
+#android-status { background: #e4f0e9; color: #163f39; padding: 12px; margin: 0; font-size: .9rem; }
+@media (max-width: 600px) {
+  .calculator-grid, .import-grid { grid-template-columns: minmax(0, 1fr); }
+  .section-heading { flex-wrap: wrap; gap: 12px; }
+  .demo-controls { width: 100%; }
+  .demo-controls select, .demo-controls button { width: 100%; }
+  .snapshot-workspace h1 { font-size: 1.8rem; }
+}
+@media print { #android-status { display: none; } }

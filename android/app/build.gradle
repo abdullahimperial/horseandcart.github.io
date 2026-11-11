@@ -1,0 +1,43 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.letsfixmoney.snapshot'
+    compileSdk 36
+    buildFeatures { buildConfig true }
+    defaultConfig {
+        applicationId 'com.letsfixmoney.snapshot'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+    buildTypes {
+        debug { applicationIdSuffix '.debug'; versionNameSuffix '-preview' }
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/assets')
+    lint { abortOnError true }
+}
+
+// The website is the source of truth. Never maintain a second calculation engine.
+def bundleWeb = tasks.register('bundleWeb', Exec) {
+    workingDir rootProject.projectDir.parentFile
+    commandLine 'python3', 'android/scripts/bundle_web.py', '--output', layout.buildDirectory.dir('generated/assets/site').get().asFile.absolutePath
+    inputs.dir rootProject.file('../apps/financial-reset')
+    inputs.dir rootProject.file('../assets')
+    inputs.file rootProject.file('../course/assets/course.css')
+    inputs.dir rootProject.file('web')
+    inputs.file rootProject.file('scripts/bundle_web.py')
+    outputs.dir layout.buildDirectory.dir('generated/assets/site')
+}
+tasks.named('preBuild').configure { dependsOn bundleWeb }
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.14.0'
+    testImplementation 'junit:junit:4.13.2'
+}

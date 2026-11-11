@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Money Snapshot</string>
+    <string name="app_subtitle">Let’s Fix Money · Offline analysis</string>
+    <string name="reload">New session</string>
+    <string name="website">Book and course</string>
+    <string name="privacy">Privacy</string>
+    <string name="about">About</string>
+    <string name="about_message">Money Snapshot 1.0.0\n\nReview CSV, OFX, QFX and QBO statements on this device. No bank login, account registration or AI service is connected. Transactions stay in memory until you clear or close the session. Only files you choose to save are exported.\n\nUse fictional data for this preview. Results are educational estimates. Check all categories and statement coverage.</string>
+    <string name="leave_title">Close this session?</string>
+    <string name="leave_message">Unsaved analysis and notes will be cleared. Save your report or action plan first if you want to keep them.</string>
+    <string name="reset_title">Start a new session?</string>
+    <string name="reset_message">This clears the current analysis and unsaved notes. Your original statement files are unchanged.</string>
+</resources>
