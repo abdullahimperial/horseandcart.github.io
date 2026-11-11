@@ -41,8 +41,6 @@ jobs:
       - name: Verify offline bundle
         run: python3 -m unittest discover -s android/tests -p 'test_*.py'
       - name: Test bundled Android content in a mobile browser
-        id: browser
-        continue-on-error: true
         run: |
           python3 android/scripts/bundle_web.py
           npm install --prefix "${RUNNER_TEMP}/snapshot-browser" --ignore-scripts playwright@1.56.1
@@ -72,6 +70,3 @@ jobs:
             android/app/build/reports/
             android/app/build/test-results/
           retention-days: 14
-      - name: Require browser smoke test
-        if: steps.browser.outcome != 'success'
-        run: exit 1
