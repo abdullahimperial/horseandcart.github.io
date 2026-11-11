@@ -1,30 +1,35 @@
 # Let’s Fix Money course
 
-A static, accessible slide course based on Abdullah Mohiuddin's supplied 77-page print edition of *Let’s Fix Money: From Struggling with Affordability to Building Generational Wealth*.
+A standalone, interactive course based on Abdullah Mohiuddin’s *Let’s Fix Money*. Nine modules contain 102 lessons, 55 activities and nine action plans. The course follows Understand, Save, Build Resilience, Preserve, Grow, Transfer and Give, then closes with the author’s journey.
 
 ## Development
 
-Serve the repository root with `python3 -m http.server 8000 --bind 127.0.0.1` and open `course/index.html` in a browser. There is no build step or package dependency. Course pages load three local shared assets:
+The course is static HTML, CSS and JavaScript, with no build step or package dependencies. Serve the repository root with a static server and open `course/index.html`.
 
-- `assets/course-data.js`: nine chapter-based modules, 102 slides, 52 workshop activities plus nine next-action plans. Page references identify the manuscript source. Book activities and additional practice are labeled separately.
-- `assets/course.js`: slide navigation, conceptual SVG illustrations, calculators, quizzes, local notes, workbook export, and print views.
-- `assets/course.css`: responsive presentation, keyboard focus, reduced-motion handling, and print styles.
+- `assets/course-data.js`: original lesson text, activities, quizzes and optional book chapter/section connections.
+- `assets/course.js`: navigation, inline activities, local workbook, export, print and progress.
+- `assets/course.css`: base course layout and original conceptual illustrations.
+- `assets/learning-data.js`: learning outcomes, fictional household story and lesson-to-activity mapping. Activity indices refer to the original activity list; each activity is mapped exactly once.
+- `assets/learning-math.js`: pure arithmetic used by visual experiments and tests.
+- `assets/learning-lab.js`: interactive SVG experiments and manually stepped explanations.
+- `assets/learning-lab.css`: responsive visual teaching layout, focus states and reduced-motion support.
 
-The course provides readable lesson content when JavaScript is disabled. Most book subheadings have a dedicated slide; closely related saving strategies are grouped and named in the contents list. The final module covers the author's personal story, housing principles, mortgage milestones, and closing checklist.
+Each lesson follows Notice → Predict → Experiment → Apply. Seventeen focused experiment types cover topics such as the horse and cart, cash-flow direction, four saving pillars, prepaid bills, income interruptions and grants versus investment returns. Other lessons provide a point-by-point visual explanation. All activities remain available together in the workbook. Full lesson summaries remain readable without JavaScript.
+
+The fictional Noor household connects the stages, with explicit scenario changes and a clear distinction from the author’s experience. Book connections use chapter and section names rather than edition-dependent page numbers. Existing module and lesson URLs remain valid.
 
 ## Learner data
 
-No learner data is sent to a service. Notes and slide positions live in browser local storage. Old `pf-course-module-N` completion records and earlier reflection/action notes are preserved. Completion is self-reported. Clearing browser data removes saved work; learners can download a plain-text workbook. When storage is blocked, learning still works, with a visible warning and session-only state.
+Notes, answers, experiment settings and progress are stored locally in the browser. No account or server submission is required. Existing storage keys and completion records are preserved. Clearing browser data removes saved work; learners can download a plain-text workbook. When storage is blocked, the existing session-only fallback and warning remain available. Experiment settings are separate from personal workbook answers.
 
 ## Calculation scope
 
-All defaults are labeled editable examples, not recommendations. Dollar amounts use CAD. Arithmetic exercises cover cash flow, annualized habits, simplified gross income/working time, a liquid reserve estimate, savings changes, weekly allocation, and sustainable giving. They do not calculate personal tax liability, account eligibility, grants, contribution room, investment returns, or an optimal allocation. Existing games and the mortgage calculator open separately so the workbook remains available.
+Visual examples are labelled fictional CAD amounts, not offers or personalized recommendations. They illustrate cash flow, comparable twelve-month billing, a simplified gross-income calculation, reserve timing, contribution schedules and sustainable choices. Existing workbook currency controls remain available.
 
-Diagrams are original conceptual illustrations, not reproductions of image-only game boards. Grant support is kept separate from investment returns; prepaid obligations and credit are kept separate from liquid savings. Account rules link to official sources for verification.
+Card repayments are excluded from spending when purchases were already recorded; interest and fees remain spending. Principal repayments still require cash. Prepaid bills reduce future obligations but are not accessible emergency cash, and renewals still need funding. Conditional support is separate from market returns. A negative stress-test balance means an unfunded gap, not access to borrowing. Account rules and eligibility still require verification through linked official sources.
 
-## Validation completed
+## Validation
 
-The updated course was exercised in headless Chromium at desktop and mobile sizes: all 102 slides, nine workshops, quiz feedback, calculator defaults and invalid inputs, persisted notes, completion records, resume navigation, downloads, printing, no-JavaScript reading, and blocked-storage fallback. Independent arithmetic checks covered each calculator type and key boundaries. Local page, asset, and activity-tool links returned HTTP 200. The existing Money Spiral and mortgage prepayment tools were also exercised. External eligibility and tax rules are linked for learners to verify; no individual financial entitlement is calculated.
+Run `node --test course/tests/learning.test.cjs` from the repository root. Tests cover arithmetic and boundary cases, all pillar combinations, activity mappings, quiz answers, dependency order, no-JavaScript summaries and reduced-motion styles.
 
-A malformed class attribute in the linked Money Spiral activity was repaired so its direction and monthly difference display correctly. Empty and negative inputs now show a validation message.
-
+Browser checks for the interactive revision covered all 102 lessons and nine workbooks, duplicate IDs, quiz feedback, saved answers after reload, cash-flow changes using the keyboard, and mobile layouts at 320 and 390 pixels. Existing tool links resolve against repository paths; those tools are not modified by this revision.
