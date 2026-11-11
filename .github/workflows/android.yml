@@ -28,6 +28,9 @@ jobs:
         with:
           python-version: '3.12'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
+          log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
@@ -37,6 +40,11 @@ jobs:
         run: node --test apps/financial-reset/tests/*.test.cjs android/tests/*.test.cjs
       - name: Verify offline bundle
         run: python3 -m unittest discover -s android/tests -p 'test_*.py'
+      - name: Test bundled Android content in a mobile browser
+        run: |
+          python3 android/scripts/bundle_web.py
+          npm install --prefix "${RUNNER_TEMP}/snapshot-browser" --ignore-scripts playwright@1.56.1
+          PLAYWRIGHT_MODULE="${RUNNER_TEMP}/snapshot-browser/node_modules/playwright" CHROMIUM_EXECUTABLE="$(command -v google-chrome)" node android/tests/web-smoke.cjs
       - name: Build and check Android application
         run: gradle -p android --no-daemon testDebugUnitTest lintDebug assembleDebug assembleRelease
       - name: Upload installable preview APK
