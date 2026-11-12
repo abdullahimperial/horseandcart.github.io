@@ -8,8 +8,8 @@
   const afterDueInput = $('days-after-due');
   const weekdayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const money = amount => new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:2}).format(amount);
-  const dateFmt = new Intl.DateTimeFormat('en-CA',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
-  const monthFmt = new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'long'});
+  let dateFmt = new Intl.DateTimeFormat(window.LFM?.lang==='ur'?'ur-PK':'en-CA',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  let monthFmt = new Intl.DateTimeFormat(window.LFM?.lang==='ur'?'ur-PK':'en-CA',{year:'numeric',month:'long'});
   const localDate = (year,month,day) => new Date(year,month,day,12,0,0,0);
   const parseInputDate = value => {
     const parts = value.split('-').map(Number);
@@ -103,6 +103,7 @@
     $('interest-note').textContent='Illustration only: '+money(price)+' × '+apr.toFixed(2)+'% ÷ 365 × '+days+' days. Assumes no payment toward this purchase before '+format(payoff)+'.';
     paintCalendar(cycle.start,cycle.close,purchase);
   }
+  window.addEventListener('lfmlanguagechange',()=>{const locale=window.LFM?.lang==='ur'?'ur-PK':'en-CA';dateFmt=new Intl.DateTimeFormat(locale,{weekday:'short',year:'numeric',month:'short',day:'numeric'});monthFmt=new Intl.DateTimeFormat(locale,{year:'numeric',month:'long'});update();});
   fillClosingDays();
   const today=new Date();
   purchaseInput.value=inputDate(localDate(today.getFullYear(),today.getMonth(),today.getDate()));

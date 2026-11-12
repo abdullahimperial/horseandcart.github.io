@@ -1,5 +1,10 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#061b22"><meta name="description" content="Explore the seven stages of Let’s Fix Money: Understand, Save, Build Resilience, Preserve, Grow, Transfer and Give."><title>Let’s Fix Money — Your journey starts here</title>
+<html lang="en"><head><meta charset="utf-8">
+<!-- Shared language preference: English is the default. -->
+<link rel="stylesheet" href="assets/i18n/i18n.css?v=20261112-ur1">
+<script src="assets/i18n/ur.js?v=20261112-ur1"></script>
+<script src="assets/i18n/i18n.js?v=20261112-ur1"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#061b22"><meta name="description" content="Explore the seven stages of Let’s Fix Money: Understand, Save, Build Resilience, Preserve, Grow, Transfer and Give."><title>Let’s Fix Money — Your journey starts here</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#061b22;color:#f4f5e9;font-family:Arial,Helvetica,sans-serif}
 #lfm-future{min-height:100vh;min-height:100svh;background:radial-gradient(ellipse at 50% 38%,#133f3b,#061b22 48%,#050e18);padding:clamp(18px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between}
@@ -42,11 +47,11 @@ function spiral(t){
 }
 function prepareBanner(){
  const mask=document.createElement('canvas');mask.width=Math.ceil(w);mask.height=Math.ceil(h);const m=mask.getContext('2d',{willReadFrequently:true});
- const narrow=w<620,lines=narrow?['Personal finance','framework']:['Personal finance framework'];
- let size=narrow?Math.min(39,w*.09):Math.min(55,w*.061);m.font=`500 ${size}px Arial,Helvetica,sans-serif`;
+ const narrow=w<620,urdu=window.LFM?.lang==='ur',lines=urdu?(narrow?['ذاتی مالیات کا','لائحۂ عمل']:['ذاتی مالیات کا لائحۂ عمل']):(narrow?['Personal finance','framework']:['Personal finance framework']);
+ let size=narrow?Math.min(39,w*.09):Math.min(55,w*.061);m.font=`500 ${size}px ${urdu?'LFMUrdu':'Arial,Helvetica,sans-serif'}`;m.direction=urdu?'rtl':'ltr';
  const maxWidth=w*.88;for(const text of lines){const width=m.measureText(text).width;if(width>maxWidth)size*=maxWidth/width;}
  const gap=size*1.25,cy=h*.46;banner={lines,size,gap,cy,bw:Math.min(w*.97,940),bh:lines.length*gap+54};
- m.font=`500 ${size}px Arial,Helvetica,sans-serif`;m.fillStyle='#fff';m.textAlign='center';m.textBaseline='middle';
+ m.font=`500 ${size}px ${urdu?'LFMUrdu':'Arial,Helvetica,sans-serif'}`;m.direction=urdu?'rtl':'ltr';m.fillStyle='#fff';m.textAlign='center';m.textBaseline='middle';
  lines.forEach((text,i)=>m.fillText(text,w/2,cy+(i-(lines.length-1)/2)*gap));
  const pixels=m.getImageData(0,0,mask.width,mask.height).data;particles=[];const stride=narrow?2:3;
  for(let y=0;y<mask.height;y+=stride)for(let x=0;x<mask.width;x+=stride)if(pixels[(y*mask.width+x)*4+3]>80)particles.push({x,y});
@@ -59,7 +64,7 @@ function drawBanner(alpha,shrink=0){
  c.fillStyle=fill;c.strokeStyle='#e0c28b99';c.lineWidth=1;c.beginPath();
  const radius=18,ww=bw*(1-shrink*.12),xx=(w-ww)/2;
  c.moveTo(xx+radius,y);c.lineTo(xx+ww-radius,y);c.quadraticCurveTo(xx+ww,y,xx+ww,y+radius);c.lineTo(xx+ww,y+bh-radius);c.quadraticCurveTo(xx+ww,y+bh,xx+ww-radius,y+bh);c.lineTo(xx+radius,y+bh);c.quadraticCurveTo(xx,y+bh,xx,y+bh-radius);c.lineTo(xx,y+radius);c.quadraticCurveTo(xx,y,xx+radius,y);c.closePath();c.fill();c.stroke();
- c.font=`500 ${size}px Arial,Helvetica,sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillStyle='#f4dfaf';c.shadowColor='#edcf8e';c.shadowBlur=10;
+ c.font=`500 ${size}px ${window.LFM?.lang==='ur'?'LFMUrdu':'Arial,Helvetica,sans-serif'}`;c.direction=window.LFM?.lang==='ur'?'rtl':'ltr';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#f4dfaf';c.shadowColor='#edcf8e';c.shadowBlur=10;
  lines.forEach((text,i)=>c.fillText(text,w/2,cy+(i-(lines.length-1)/2)*gap));c.restore();
 }
 function morph(raw){
@@ -85,6 +90,7 @@ function tick(now){if(done)return;if(start===null)start=now;elapsed=Math.min(TOT
 function play(){cancelAnimationFrame(raf);done=false;start=null;elapsed=0;if(status)status.textContent='Choose a stage, or skip to explore all destinations.';if(reduced.matches)finish();else{render(0);raf=requestAnimationFrame(tick);}}
 root.querySelector('#lfm-replay').addEventListener('click',play);
 root.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.querySelector('#lfm-skip'))location.href='explore.html';});
+window.addEventListener('lfmlanguagechange',()=>{document.fonts.load('500 40px LFMUrdu').then(resize);resize();});document.fonts.load('500 40px LFMUrdu').then(resize);
 new ResizeObserver(resize).observe(canvas);reduced.addEventListener('change',()=>{if(reduced.matches)finish();});resize();
 let seen=false;try{seen=sessionStorage.getItem('lfm-intro-seen')==='framework-v1';}catch{}
 if(seen||reduced.matches)finish();else if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){play();io.disconnect();}},{threshold:.15});io.observe(root);}else play();

@@ -3,6 +3,8 @@
 
   // Browser fonts support Unicode input. Pages are compressed immediately so
   // exporting a long plan does not retain many full-size canvas bitmaps.
+  const T=value=>root.LFM?.t(value)??String(value);
+  const rtl=()=>root.LFM?.lang==='ur';
   const enc = new TextEncoder();
   const finite = value => value !== null && value !== undefined &&
     value !== '' && Number.isFinite(Number(value));
@@ -114,7 +116,7 @@
 
   class Paper {
     constructor(title, subtitle, landscape = false) {
-      this.title = title; this.subtitle = subtitle; this.landscape = landscape;
+      this.title = T(title); this.subtitle = T(subtitle); this.rtl = rtl(); this.landscape = landscape;
       this.canvas = document.createElement('canvas');
       this.canvas.width = landscape ? 1754 : 1240;
       this.canvas.height = landscape ? 1240 : 1754;
@@ -125,8 +127,8 @@
       this.page();
     }
     font(size = 25, bold = false) {
-      this.ctx.font = (bold ? 'bold ' : '') + size + 'px Arial, sans-serif';
-      this.ctx.textBaseline = 'top';
+      this.ctx.font = (bold ? 'bold ' : '') + size + (this.rtl ? 'px LFMUrdu, serif' : 'px Arial, sans-serif');
+      this.ctx.textBaseline = 'top'; this.ctx.direction = this.rtl ? 'rtl' : 'ltr'; this.ctx.textAlign = this.rtl ? 'right' : 'left';
     }
     page() {
       if (this.started) this.commit();
@@ -134,10 +136,10 @@
       const c = this.ctx;
       c.fillStyle = '#ffffff'; c.fillRect(0, 0, this.width, this.height);
       this.font(23, true); c.fillStyle = '#173b36';
-      c.fillText('LET’S FIX MONEY', this.margin, 38);
-      this.font(32, true); c.fillText(this.title, this.margin, 77);
+      c.fillText(T('LET’S FIX MONEY'), this.rtl ? this.width-this.margin : this.margin, 38);
+      this.font(32, true); c.fillText(this.title, this.rtl ? this.width-this.margin : this.margin, 77);
       this.font(18); c.fillStyle = '#536e67';
-      c.fillText(this.subtitle, this.margin, 119);
+      c.fillText(this.subtitle, this.rtl ? this.width-this.margin : this.margin, 119);
       c.strokeStyle = '#c6d5ce'; c.lineWidth = 1;
       c.beginPath(); c.moveTo(this.margin, 151);
       c.lineTo(this.width - this.margin, 151); c.stroke();
@@ -146,28 +148,28 @@
     commit() {
       const c = this.ctx;
       this.font(17); c.fillStyle = '#536e67';
-      c.fillText('Private working document · Educational planning, not financial advice',
-        this.margin, this.height - 48);
-      this.font(16); c.fillText('Terms and tool limits: letsfixmoney.com/terms.html · Privacy: letsfixmoney.com/privacy.html', this.margin, this.height - 27);
-      this.font(17); c.textAlign = 'right';
-      c.fillText('Page ' + (this.pages.length + 1),
-        this.width - this.margin, this.height - 48);
-      c.textAlign = 'left';
+      c.fillText(T('Private working document · Educational planning, not financial advice'),
+        this.rtl ? this.width-this.margin : this.margin, this.height - 48);
+      this.font(16); c.fillText(T('Terms and tool limits: letsfixmoney.com/terms.html · Privacy: letsfixmoney.com/privacy.html'), this.rtl ? this.width-this.margin : this.margin, this.height - 27);
+      this.font(17); c.textAlign = this.rtl ? 'left' : 'right';
+      c.fillText(T('Page ' + (this.pages.length + 1)),
+        this.rtl ? this.margin : this.width - this.margin, this.height - 48);
+      c.textAlign = this.rtl ? 'right' : 'left';
       this.pages.push({bytes: jpegBytes(this.canvas), width: this.width, height: this.height});
     }
     ensure(height) {
       if (this.y + height > this.height - 85 && this.y > 177) this.page();
     }
     write(value, options = {}) {
-      const size = options.size || 25, lineHeight = options.lineHeight || size * 1.38;
+      const size = options.size || 25, lineHeight = options.lineHeight || size * (this.rtl ? 1.75 : 1.38);
       const width = options.width || this.width - this.margin * 2;
       this.font(size, options.bold);
-      const lines = wrap(this.ctx, value, width);
+      const lines = wrap(this.ctx, options.translate===false?value:T(value), width);
       for (const line of lines) {
         this.ensure(lineHeight);
         this.font(size, options.bold);
         this.ctx.fillStyle = options.color || '#213c38';
-        this.ctx.fillText(line, options.x || this.margin, this.y);
+        this.ctx.fillText(line, options.x || (this.rtl ? this.width-this.margin : this.margin), this.y);
         this.y += lineHeight;
       }
       this.y += options.gap === undefined ? 10 : options.gap;
@@ -189,12 +191,11 @@
 
   function actionBlock(paper, action, number, currency) {
     paper.ensure(235);
-    paper.write(number + '. ' + (action.title || 'My action'), {size: 28, bold: true, gap: 8});
+    paper.write(number + '. ' + (action.title || T('My action')), {size: 28, bold: true, gap: 8, translate:false});
     paper.write([action.category, action.pillar].filter(Boolean).join(' · '),
       {size: 20, color: '#536e67'});
-    paper.write('First step: ' + (action.step || 'Not entered'));
-    paper.write('Owner: ' + (action.owner || 'Not entered') +
-      '   Due: ' + (action.due || 'Not set') + '   Review: ' + (action.review || 'Not set'), {size: 21});
+    paper.write(T('First step:') + ' ' + (action.step || T('Not entered')), {translate:false});
+    paper.write(T('Owner:')+' '+(action.owner||T('Not entered'))+'   '+T('Due:')+' '+(action.due||T('Not set'))+'   '+T('Review:')+' '+(action.review||T('Not set')), {size:21,translate:false});
     const impact = {expense: 'Expense reduction', income: 'Additional income / support (verify)',
       nonfinancial: 'Non-monetary action', unknown: 'Not specified'}[action.impactType] || 'Not specified';
     paper.write('Status: ' + (action.status || 'To do') + ' · Impact type: ' + impact, {size: 21});
@@ -206,11 +207,12 @@
     else paper.write('Estimated monthly improvement: ' + cash(estimate(action), currency) +
       ' · Recorded actual: ' + cash(monetary(action) ? action.actual : null, currency, 'Not recorded'), {size: 21});
     if (action.caution) paper.write('Verify: ' + action.caution, {size: 20, color: '#6e4b28'});
-    if (action.notes) paper.write('Notes: ' + action.notes, {size: 21});
+    if (action.notes) paper.write(T('Notes:')+' '+action.notes, {size:21,translate:false});
     paper.y += 16;
   }
 
   async function downloadPlan(model) {
+    if (rtl() && document.fonts?.load) await Promise.all([document.fonts.load('25px LFMUrdu'),document.fonts.load('bold 25px LFMUrdu')]);
     if (document.fonts?.ready) await document.fonts.ready;
     const currency = model.currency || 'CAD', date = text(model.date || dated());
     const actions = Array.isArray(model.actions) ? model.actions : [];
@@ -246,6 +248,7 @@
   }
 
   async function downloadWorksheet(categories, pillars, currency = 'CAD') {
+    if (rtl() && document.fonts?.load) await Promise.all([document.fonts.load('25px LFMUrdu'),document.fonts.load('bold 25px LFMUrdu')]);
     if (document.fonts?.ready) await document.fonts.ready;
     const paper = new Paper('Four Pillars Savings Worksheet',
       dated() + ' · Currency: ' + currency + ' · Blank workshop copy', true);
@@ -259,10 +262,10 @@
       const c = paper.ctx, headerY = paper.y;
       c.fillStyle = '#edf3ed'; c.fillRect(paper.margin, headerY, tableWidth, 61);
       paper.font(20, true); c.fillStyle = '#173b36';
-      c.fillText('Expense category', paper.margin + 12, headerY + 15);
+      c.fillText(T('Expense category'), paper.rtl ? paper.width-paper.margin-12 : paper.margin + 12, headerY + 15);
       names.forEach((name, index) => {
-        wrap(c, name, cellWidth - 22).slice(0, 2).forEach((line, n) =>
-          c.fillText(line, paper.margin + categoryWidth + index * cellWidth + 11,
+        wrap(c, T(name), cellWidth - 22).slice(0, 2).forEach((line, n) =>
+          c.fillText(line, paper.rtl ? paper.margin+(4-index)*cellWidth-11 : paper.margin + categoryWidth + index * cellWidth + 11,
             headerY + 9 + n * 24));
       });
       paper.y += 61;
@@ -271,16 +274,16 @@
         c.strokeStyle = '#b8c9c0'; c.lineWidth = 1;
         c.strokeRect(paper.margin, y, tableWidth, rowHeight);
         paper.font(22, true); c.fillStyle = '#173b36';
-        wrap(c, category.name || category.title, categoryWidth - 24).slice(0, 4)
-          .forEach((line, n) => c.fillText(line, paper.margin + 12, y + 15 + n * 28));
+        wrap(c, T(category.name || category.title), categoryWidth - 24).slice(0, 4)
+          .forEach((line, n) => c.fillText(line, paper.rtl ? paper.width-paper.margin-12 : paper.margin + 12, y + 15 + n * 28));
         for (let col = 0; col < 4; col++) {
-          const x = paper.margin + categoryWidth + col * cellWidth;
-          c.beginPath(); c.moveTo(x, y); c.lineTo(x, y + rowHeight); c.stroke();
+          const x = paper.rtl ? paper.margin+(3-col)*cellWidth : paper.margin + categoryWidth + col * cellWidth;
+          c.beginPath(); c.moveTo(paper.rtl?x+cellWidth:x, y); c.lineTo(paper.rtl?x+cellWidth:x, y + rowHeight); c.stroke();
           const entry = category.cells?.[col]?.[0];
           const hint = Array.isArray(entry) ? entry[0] : entry?.title || '';
           paper.font(18); c.fillStyle = '#536e67';
-          wrap(c, hint, cellWidth - 24).slice(0, 3).forEach((line, n) =>
-            c.fillText(line, x + 12, y + 13 + n * 24));
+          wrap(c, T(hint), cellWidth - 24).slice(0, 3).forEach((line, n) =>
+            c.fillText(line, paper.rtl ? x+cellWidth-12 : x + 12, y + 13 + n * 24));
           c.strokeStyle = '#d7e0dc';
           for (const lineY of [108, 139, 162]) {
             c.beginPath(); c.moveTo(x + 12, y + lineY);

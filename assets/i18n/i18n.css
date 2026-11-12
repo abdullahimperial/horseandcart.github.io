@@ -1,0 +1,41 @@
+@font-face{font-family:LFMUrdu;src:url('./NotoNaskhArabic-Regular.woff') format('woff');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:LFMUrdu;src:url('./NotoNaskhArabic-Bold.woff') format('woff');font-weight:600 900;font-style:normal;font-display:swap}
+.site-language{position:relative;z-index:70;display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#061b22!important;color:#f4dfaf!important;border:0!important;border-bottom:1px solid #31554b!important;box-sizing:border-box;font:14px/1.4 Arial,Helvetica,sans-serif!important}
+.site-language-inner{width:min(1280px,calc(100% - 32px));min-height:50px;margin:0 auto;display:flex;align-items:center;justify-content:flex-end;gap:14px}
+.site-language-label{color:#c4d8d0;font-size:12px}.site-language-label [lang=ur]{font-family:LFMUrdu,serif;font-size:16px;margin-inline-start:3px}
+.site-language-options{display:flex;align-items:center;gap:4px;padding:3px 0}
+.site-language a{display:inline-flex!important;align-items:center;justify-content:center;min-width:76px;min-height:40px;border:1px solid transparent;border-radius:7px;padding:6px 14px!important;color:#f4f5e9!important;background:transparent!important;text-decoration:none!important;font:14px/1.4 Arial,Helvetica,sans-serif!important;letter-spacing:normal!important;box-sizing:border-box}
+.site-language a[lang=ur]{font-family:LFMUrdu,serif!important;font-size:20px!important;padding-block:2px!important}
+.site-language a[aria-current=true]{color:#061b22!important;background:#f0d49a!important;border-color:#f0d49a;font-weight:700!important}
+.site-language a:hover{border-color:#8cebd0}.site-language a:focus-visible{outline:3px solid #8cebd0!important;outline-offset:2px}
+.language-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+html[lang=ur] body{font-family:LFMUrdu,"DejaVu Sans",Arial,serif;font-size:18px;line-height:1.85}
+html[lang=ur] :is(h1,h2,h3,h4,h5,p,li,td,th,button,label,select,option,summary,small,span,strong,a,figcaption,legend,output,blockquote,div){font-family:LFMUrdu,"DejaVu Sans",Arial,serif!important;letter-spacing:normal!important;text-transform:none!important}
+html[lang=ur] :is(p,li,td,th,label,summary,figcaption,blockquote){line-height:1.85}
+html[lang=ur] :is(h1,h2,h3,h4,h5){line-height:1.55!important;letter-spacing:normal!important}
+html[lang=ur] :is(button,input,textarea,select){font-family:LFMUrdu,"DejaVu Sans",Arial,serif;line-height:1.6}
+html[lang=ur] :is(button,label,summary,select,.site-links a,.btn,.button){font-size:max(16px,1em)}
+html[lang=ur] :is(small,.hint,.muted,.note,.eyebrow,.nav-kicker,.site-notice,.site-brand small,.site-currency,.site-copyright small,.lab-head p,.lab-foot){font-size:15px;line-height:1.85}
+html[lang=ur] :is(p,li,td,th,h1,h2,h3,h4,figcaption){overflow-wrap:break-word}
+html[lang=ur] :is(.site-header,.site-footer,.site-next,.site-currency){font-family:LFMUrdu,"DejaVu Sans",Arial,serif!important;line-height:1.8}
+html[lang=ur] .site-brand strong{font-size:21px}
+html[lang=ur] .site-header .site-links a{font-size:17px;line-height:1.65}
+html[lang=ur] .site-menu-toggle{font-size:18px}
+html[lang=ur] :is(input[type=number],input[type=range],input[type=date],input[type=email],input[type=url],input[inputmode=decimal],input[inputmode=numeric],.equation-box,.lab-svg,.reserve-chart,.calendar-dots,canvas,.board,.board-frame){direction:ltr;unicode-bidi:isolate}
+html[lang=ur] :is(input[type=number],input[type=date],input[type=email],input[type=url],input[inputmode=decimal],input[inputmode=numeric]){font-family:Arial,Helvetica,sans-serif;text-align:right}
+html[lang=ur] :is(input[type=text],input[type=search],textarea){direction:rtl;text-align:start}
+html[lang=ur] :is(.site-currency details p){right:0;left:auto;text-align:start}
+html[lang=ur] :is(.site-skip,.skip-link){right:20px;left:auto}
+html[lang=ur] :is(ol,ul){padding-inline-start:1.6em}
+html[lang=ur] :is(.diagram-labels,.site-links,.site-legal,.site-footer nav,#explore){padding-inline-start:0}
+html[lang=ur] :is(.site-footer p,.site-next p,.lesson-body p,.module-summary,.lead){text-align:start}
+html[lang=ur] .site-language :is(span,a,div){font-family:Arial,Helvetica,sans-serif!important}
+html[lang=ur] .site-language [lang=ur]{font-family:LFMUrdu,serif!important}
+html[lang=ur] #lfm-future{min-height:calc(100svh - 50px)}
+html[lang=ur] #lfm-future header strong{font-size:clamp(18px,2.4vw,25px);letter-spacing:normal}
+html[lang=ur] #lfm-future li a{font-size:20px;line-height:1.6}
+html[lang=ur] #lfm-future .caption p{font-size:19px}
+html[lang=ur] #lfm-future footer{font-size:17px}
+html[lang=ur] .lab-svg text{font-family:LFMUrdu,"DejaVu Sans",Arial,serif!important}
+@media(max-width:600px){.site-language-inner{width:calc(100% - 24px)}html[lang=ur] body{font-size:17px}html[lang=ur] .site-header .site-brand{min-width:0}html[lang=ur] .site-brand small{max-width:230px}html[lang=ur] #lfm-future li a{font-size:18px}html[lang=ur] .site-header .site-links a{padding:9px 7px;white-space:normal}html[lang=ur] :is(.site-next h2,.section-title){font-size:25px}}
+@media print{.site-language{display:none!important}html[lang=ur] body{font-family:LFMUrdu,serif!important}}

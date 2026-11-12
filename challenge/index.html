@@ -1,7 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
- <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta charset="utf-8">
+<!-- Shared language preference: English is the default. -->
+<link rel="stylesheet" href="../assets/i18n/i18n.css?v=20261112-ur1">
+<script src="../assets/i18n/ur.js?v=20261112-ur1"></script>
+<script src="../assets/i18n/i18n.js?v=20261112-ur1"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
  <title>The Money Bucket Challenge | Let’s Fix Money</title>
  <meta name="description" content="Fix one bill. Calculate your estimated yearly saving, download your result card, and pass the Money Bucket Challenge on.">
  <meta name="theme-color" content="#173b36">
@@ -80,12 +85,12 @@
   $('result-footnote').textContent='30-day charges are annualized over 365 days; actual payment dates can differ. Extra switching, repair or setup costs are excluded.';
   $('result-panel').classList.toggle('has-saving',values.monthly>0);shareEnabled(values.monthly>0);
  }
- function caption(r){return (r.example?'Current Koodo comparison, before tax':'My '+r.bill.toLowerCase()+' estimate')+': '+money(r.annual)+' annualized saving. '+money(r.old)+' '+periodText(r.oldPeriod)+' to '+money(r.next)+' '+periodText(r.newPeriod)+'. 30-day costs annualized over 365 days; extra fees excluded.'+(r.example?' Listed offers checked 9 November 2026; annual offer for new activations.':'')+'\n\nFix one bill. Pass it on.\nhttps://www.letsfixmoney.com/challenge/\n#MoneyBucketChallenge #LetsFixMoney';}
+ function caption(r){if(window.LFM?.lang==='ur'){const t=value=>window.LFM.t(value);return (r.example?'کوڈو کے موجودہ منصوبوں کا موازنہ، ٹیکس کے بغیر':'میرے '+t(r.bill)+' کے خرچ کا تخمینہ')+': سالانہ حساب سے '+money(r.annual)+' کی بچت۔ پہلے '+money(r.old)+' '+t(periodText(r.oldPeriod))+'، اب '+money(r.next)+' '+t(periodText(r.newPeriod))+'۔ 30 دن کے خرچ کو 365 دن کے حساب سے سالانہ بنایا گیا ہے؛ اضافی فیس شامل نہیں۔'+(r.example?' درج پیشکشیں 9 نومبر 2026 کو دیکھی گئی تھیں؛ سالانہ پیشکش صرف نئے کنکشن کے لیے ہے۔':'')+'\n\nایک بل کم کریں۔ یہ خیال آگے پہنچائیں۔\nhttps://www.letsfixmoney.com/challenge/?lang=ur\n#MoneyBucketChallenge #LetsFixMoney';}return (r.example?'Current Koodo comparison, before tax':'My '+r.bill.toLowerCase()+' estimate')+': '+money(r.annual)+' annualized saving. '+money(r.old)+' '+periodText(r.oldPeriod)+' to '+money(r.next)+' '+periodText(r.newPeriod)+'. 30-day costs annualized over 365 days; extra fees excluded.'+(r.example?' Listed offers checked 9 November 2026; annual offer for new activations.':'')+'\n\nFix one bill. Pass it on.\nhttps://www.letsfixmoney.com/challenge/\n#MoneyBucketChallenge #LetsFixMoney';}
  function rounded(ctx,x,y,w,h,r,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();ctx.fill();}
  function paintCard(r){
   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;const c=canvas.getContext('2d');if(!c)throw new Error('Canvas not available');
   c.fillStyle='#0c292b';c.fillRect(0,0,1080,1350);
-  function text(s,y,size,color='#f8edd4',weight='bold',max=920){c.textAlign='center';c.fillStyle=color;c.font=weight+' '+size+'px Arial';while(c.measureText(s).width>max&&size>16){size--;c.font=weight+' '+size+'px Arial';}c.fillText(s,540,y);}
+  function text(s,y,size,color='#f8edd4',weight='bold',max=920){s=window.LFM?.t(s)??s;const family=window.LFM?.lang==='ur'?'LFMUrdu':'Arial';c.direction=window.LFM?.lang==='ur'?'rtl':'ltr';c.textAlign='center';c.fillStyle=color;c.font=weight+' '+size+'px '+family;while(c.measureText(s).width>max&&size>16){size--;c.font=weight+' '+size+'px '+family;}c.fillText(s,540,y);}
   text('LET’S FIX MONEY',95,28,'#ecd39c');text('MONEY BUCKET CHALLENGE',158,28,'#a4c8bc');
   text('ONE BILL. ONE FIX.',265,64);text(r.example?'KOODO COMPARISON · BEFORE TAX':'MY ESTIMATED SAVING',340,26,'#a4c8bc');
   text(money(r.annual),510,130,'#8be4bc');text('estimated annualized saving',575,36,'#d3e3da','normal');
@@ -96,8 +101,8 @@
  form.addEventListener('submit',e=>{e.preventDefault();calculate(false);});
  [before,after,bill,oldPeriod,newPeriod].forEach(el=>el.addEventListener('input',invalidate));
  $('try-example').addEventListener('click',()=>{before.value='50';after.value='318';oldPeriod.value='30days';newPeriod.value='year';bill.value='Phones';calculate(true);});
- $('copy-caption').addEventListener('click',async()=>{if(!result||result.monthly<=0)return;const value=caption(result);try{if(!navigator.clipboard)throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(value);$('share-status').textContent='Caption copied. Paste it into your own post when ready.';}catch(e){const box=$('caption-fallback');box.value=value;box.hidden=false;box.focus();box.select();$('share-status').textContent='Select and copy the caption below.';}});
- $('download-card').addEventListener('click',()=>{if(!result||result.monthly<=0)return;try{const canvas=paintCard(result);canvas.toBlob(blob=>{if(!blob){$('share-status').textContent='Could not create the image. You can still copy the caption.';return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='My_Money_Bucket_Challenge.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);$('share-status').textContent='Your result card is ready. Check your downloads or save-image prompt.';},'image/png');}catch(e){$('share-status').textContent='Image download is unavailable here. Use Copy my challenge caption instead.';}});
+ $('copy-caption').addEventListener('click',async()=>{if(!result||result.monthly<=0)return;const value=window.LFM?.t(caption(result))??caption(result);try{if(!navigator.clipboard)throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(value);$('share-status').textContent='Caption copied. Paste it into your own post when ready.';}catch(e){const box=$('caption-fallback');box.value=value;box.hidden=false;box.focus();box.select();$('share-status').textContent='Select and copy the caption below.';}});
+ $('download-card').addEventListener('click',async()=>{if(!result||result.monthly<=0)return;try{if(window.LFM?.lang==='ur')await document.fonts.load('bold 40px LFMUrdu');const canvas=paintCard(result);canvas.toBlob(blob=>{if(!blob){$('share-status').textContent='Could not create the image. You can still copy the caption.';return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='My_Money_Bucket_Challenge.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);$('share-status').textContent='Your result card is ready. Check your downloads or save-image prompt.';},'image/png');}catch(e){$('share-status').textContent='Image download is unavailable here. Use Copy my challenge caption instead.';}});
 })();
 </script>
 </body></html>

@@ -116,12 +116,13 @@ function calculate(kind, values) {
 }
 function resultHTML(result) { return `<strong>Your calculation</strong><div class="result-grid">${result.items.map(([label,value])=>`<div class="result-item"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</div><p style="margin:0">${esc(result.explanation)}</p>`; }
 function workbook(mods) {
+ const T=value=>window.LFM?.t(value)??String(value), user=value=>({user:value});
  let lines=['LET’S FIX MONEY — MY COURSE WORKBOOK','Based on the book by Abdullah Mohiuddin','Educational scenario only, not individualized financial, investment, tax, legal, credit or mortgage advice. Outputs depend on the information and assumptions entered; they do not establish suitability, eligibility or guaranteed results. Verify current rules and account terms and obtain qualified advice for decisions. Keep this file private. Terms: https://www.letsfixmoney.com/terms.html · Privacy: https://www.letsfixmoney.com/privacy.html',''];
  for (const m of mods) {
   const n=getNotes(m.id); lines.push(`MODULE ${m.id}: ${m.title}`,m.bookReference, '');
   m.activities.forEach((a,i)=>{
    lines.push(a.title,`(${a.origin})`);
-   if(a.type==='reflection')a.prompts.forEach((p,j)=>lines.push(p,n.fields[`a${i}-r${j}`]||'[Not answered]'));
+   if(a.type==='reflection')a.prompts.forEach((p,j)=>lines.push(p,n.fields[`a${i}-r${j}`]?user(n.fields[`a${i}-r${j}`]):'[Not answered]'));
    if(a.type==='checklist')a.items.forEach((item,j)=>lines.push(`${n.fields[`a${i}-tick${j}`]==='yes'?'[x]':'[ ]'} ${item}`));
    if(a.type==='tool')lines.push(a.prompt, a.href);
    if(a.type==='quiz') {const q=n.quizzes[i];lines.push(a.prompt,`My answer: ${Number.isInteger(q?.selected)?a.options[q.selected]||'[Not answered]':'[Not answered]'}`,q?.checked?`Feedback: ${a.feedback}`:'[Not checked]');}
@@ -133,10 +134,10 @@ function workbook(mods) {
    lines.push('');
   });
   if(Object.keys(n.experiments).length){lines.push('VISUAL EXPERIMENT SETTINGS (fictional teaching examples, not personal results)');for(const [key,value] of Object.entries(n.experiments)){const slideIndex=Number(key.replace('lab-',''));lines.push(m.slides[slideIndex]?.title||key,JSON.stringify(value));}lines.push('');}
-  if(n.fields['legacy-reflection'])lines.push('Reflection retained from the earlier course:',n.fields['legacy-reflection'],'');
-  lines.push('MY NEXT ACTION',n.fields.action||'[Not entered]','Review date',n.fields['review-date']||'[Not entered]',`Completion: ${read(`pf-course-module-${m.id}`)==='complete'?'Marked complete':'Not marked complete'}`,'','—'.repeat(48),'');
+  if(n.fields['legacy-reflection'])lines.push('Reflection retained from the earlier course:',user(n.fields['legacy-reflection']),'');
+  lines.push('MY NEXT ACTION',n.fields.action?user(n.fields.action):'[Not entered]','Review date',n.fields['review-date']||'[Not entered]',`Completion: ${read(`pf-course-module-${m.id}`)==='complete'?'Marked complete':'Not marked complete'}`,'','—'.repeat(48),'');
  }
- return lines.join('\n');
+ return lines.map(line=>typeof line==='object'?line.user:T(line)).join('\n');
 }
 function download(mods) {
  const blob=new Blob([workbook(mods)],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=mods.length===1?`lets-fix-money-module-${mods[0].id}-workbook.txt`:'lets-fix-money-course-workbook.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Workbook downloaded. Keep it somewhere private.');

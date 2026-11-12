@@ -38,7 +38,7 @@ $('roll').addEventListener('click',async()=>{if(busy||position===100)return;busy
 }
  if(position===100){note+=' You reached 100!';$('event').className='event-card win';$('event').innerHTML='<strong>🏁 You made it!</strong><p>Reflect on the climbs and setbacks. Restart to play again.</p><p>Your result reflects this game’s simplified rules and assumptions. It is not a forecast of your income, investment returns, property value or future net worth. Use it to discuss choices and trade-offs rather than to select a real financial strategy.</p>';}
  $('status').textContent=note;const li=document.createElement('li');li.textContent=note;$('history').prepend(li);while($('history').children.length>8)$('history').lastChild.remove();busy=false;$('roll').disabled=position===100;});
-$('restart').addEventListener('click',()=>{epoch++;busy=false;position=1;dice(1);$('die').classList.remove('rolling');$('roll').disabled=false;$('history').innerHTML='';$('status').textContent='You’re on square 1. Ready to begin?';$('event').className='event-card';$('event').innerHTML='<strong>A fresh start</strong><p>Every roll is a chance to move forward.</p>';moveToken();});dice(1);theme();
+$('restart').addEventListener('click',()=>{epoch++;busy=false;position=1;dice(1);$('die').classList.remove('rolling');$('roll').disabled=false;$('history').innerHTML='';$('status').textContent='You’re on square 1. Ready to begin?';$('event').className='event-card';$('event').innerHTML='<strong>A fresh start</strong><p>Every roll is a chance to move forward.</p>';moveToken();});dice(1);if(window.LFM?.lang==='ur')$('theme').value='vector';theme();window.addEventListener('lfmlanguagechange',()=>{if(window.LFM?.lang==='ur'&&$('theme').value==='book'){$('theme').value='vector';theme();}});
 
 
 
