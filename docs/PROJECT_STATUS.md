@@ -6,7 +6,7 @@ Updated: 14 November 2026 (Edmonton). Repository: `abdullahimperial/horseandcart
 
 Make the repository sufficient to resume development without ChatGPT history. The owner’s instruction is in `AGENTS.md`; README, development/architecture guides, this checkpoint, source register and changelog provide the handover.
 
-Baseline inspected: `0116c3f84e30b10c8273e80eca2ee1e9f9470854`, the English/Urdu update. Find the commit carrying this checkpoint with `git log -1 -- docs/PROJECT_STATUS.md`; fetch current main before continuing.
+Baseline inspected: `0116c3f84e30b10c8273e80eca2ee1e9f9470854`, the English/Urdu update. Workflow and build repairs are committed and verified at `41ff28a3f12cf7bf007d4e615602269e3f5faccd`. This follow-up only records verification; find its commit with `git log -1 -- docs/PROJECT_STATUS.md`. Fetch current main before continuing.
 
 ## Implemented scope
 
@@ -33,12 +33,14 @@ The fixtures now match the browser markup/environment while retaining escaping, 
 | Current local baseline | `python3 scripts/check.py`: 162 JavaScript tests and six Python bundle tests passed |
 | Current offline bundle | 34 shared files plus native adapters, including Urdu assets |
 | Local browser smoke | Blocked: Chromium startup fails with `socket() failed: Operation not permitted`; not a browser pass |
-| Current remote checks/build/deployment | Pending push; record resulting run links and conclusions here |
+| Repository CI | [Checks 43635278509](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43635278509): success at `41ff28a3` |
+| Android CI | [Android 43635278506](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43635278506): success at `41ff28a3`; mobile browser including offline Urdu, native unit tests, lint, debug/release compilation and artifact uploads passed |
+| Website deployment | [Pages 43635278129](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43635278129): success at `41ff28a3`; no new live visual inspection in this task |
 | Physical Android testing | Not performed in this task |
 
 ## Next steps and known limitations
 
-1. Inspect **Repository checks**, **Android Money Snapshot** and **pages build and deployment** for the exact new commit, then record results here.
+1. This workflow task is complete. Begin the next requested change from current main and the instructions in `AGENTS.md`; retain the verification links above as evidence for `41ff28a3`, not for future code changes.
 2. Before device distribution, test Android 8.0+ in airplane mode; imports/cancellation, both languages, export/print, keyboard/rotation and external-link return. Debug keys may change between CI runners.
 3. No Gradle wrapper is committed. Installed Gradle 8.13 is the documented build path; a verified wrapper can be added separately.
 4. `tests/site-browser.py` has older six-link navigation assumptions and scans generated HTML; update it before treating it as a current whole-site acceptance gate.

@@ -9,7 +9,7 @@ Meaningful changes belong here; Git commits hold the full diff and `docs/PROJECT
 - Add `python3 scripts/check.py` and the **Repository checks** workflow for source JavaScript and Android-bundle tests. Ignore local outputs and signing material.
 - Repair Urdu-related test regressions: merchant assertions include untranslatable RTL-isolated names; the board fixture models window/language events. Existing financial/game assertions remain.
 - Include Urdu runtime, styles, fonts and licence in the offline Android bundle. Add byte-equality coverage and browser checks preserving categories across language changes.
-- Local verification: 162 JavaScript and six Python bundle tests passed. Chromium is blocked by the local environment; remote build/browser/deployment results are recorded in the project checkpoint.
+- Local verification: 162 JavaScript and six Python bundle tests passed. Local Chromium is blocked; GitHub verified the mobile browser flow including offline Urdu, native unit tests, lint and debug/release APK compilation at `41ff28a3`. Repository checks and Pages deployment also succeeded. Run links are in the project checkpoint; physical-device testing remains pending.
 
 ## Earlier milestones
 
