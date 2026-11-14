@@ -1,0 +1,17 @@
+# Local tools and generated outputs; tracked application assets remain source.
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.apk
+*.aab
+*.log
+playwright-report/
+test-results/

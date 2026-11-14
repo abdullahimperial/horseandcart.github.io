@@ -43,7 +43,8 @@ test('manual categories remain authoritative, and the source link is escaped in 
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const state={E,$,transactions:[t],page:0,esc,cash:n=>String(n),invalidate(){},renderReviewChart(){},renderResiliencePreview(){}};vm.createContext(state);
  vm.runInContext(src.slice(src.indexOf('function renderTransactions('),src.indexOf('function debtRows(')),state);state.renderTransactions();
- assert.match($('#transactions').innerHTML,/Matched name: PC Express/);assert.match($('#transactions').innerHTML,/Name source/);assert.match($('#transactions').innerHTML,/Selected by you/);assert.equal(t.category,'Shopping');
+ // Merchant identity is isolated from RTL labels and must never be translated.
+ assert.match($('#transactions').innerHTML,/Matched name: <bdi translate="no">PC Express<\/bdi>/);assert.match($('#transactions').innerHTML,/Name source/);assert.match($('#transactions').innerHTML,/Selected by you/);assert.equal(t.category,'Shopping');
  t.merchantSourceUrl='javascript:alert(1)';state.renderTransactions();assert.ok(!$('#transactions').innerHTML.includes('javascript:'));
  t.merchantName='<img src=x onerror=alert(1)>';state.renderTransactions();assert.ok(!$('#transactions').innerHTML.includes('<img'));
 });

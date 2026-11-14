@@ -10,7 +10,7 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
   const url=new URL(route.request().url());
   const target=path.resolve(root,'.'+decodeURIComponent(url.pathname.replace(/^\/assets\/site/,'')));
   if(url.hostname!=='appassets.androidplatform.net'||!target.startsWith(root+'/')||!fs.existsSync(target)){missing.push(url.href);return route.abort();}
-  const ext=path.extname(target);await route.fulfill({path:target,contentType:({'.js':'application/javascript','.css':'text/css','.html':'text/html','.json':'application/json'})[ext]||'text/plain'});
+  const ext=path.extname(target);await route.fulfill({path:target,contentType:({'.js':'application/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.woff':'font/woff'})[ext]||'text/plain'});
  });
  await page.goto('https://appassets.androidplatform.net/assets/site/apps/financial-reset/index.html');
  for(const scenario of ['recovery','deficit','growth','family']){
@@ -44,11 +44,22 @@ const fs=require('fs'),path=require('path'),assert=require('node:assert/strict')
   assert.equal(await page.getByLabel(new RegExp('^Category for '+description+' on ')).inputValue(),'Transfer / card payment');
  }
  assert.ok((await page.locator('#import-quality').innerText()).includes('5 non-zero transactions'));
+ // Check the offline Urdu assets and preserve raw categories while labels change.
+ await page.evaluate(()=>window.LFM.setLanguage('ur'));
+ await page.waitForFunction(()=>document.documentElement.dir==='rtl');
+ await page.evaluate(()=>document.fonts.ready);
+ assert.equal(await page.locator('#transactions > tr').count(),5);
+ for(const description of ['PAYMENT RECEIVED','CREDIT CARD PMT']){
+  assert.equal(await page.locator('#transactions tr').filter({hasText:description}).locator('select[data-category]').inputValue(),'Transfer / card payment');
+ }
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
+ await page.evaluate(()=>window.LFM.setLanguage('en'));
+ await page.waitForFunction(()=>document.documentElement.dir==='ltr');
  const summary=await page.evaluate(()=>window.ResetReviewChart.build([
   ...window.ResetEngine.normalize(window.ResetEngine.parseCSV('Date,Description,Amount\n2026-09-01,FARM BOY,100\n2026-09-10,PAYMENT RECEIVED,-100'),{date:0,description:1,amount:2,mode:'signed',positive:'out'},'card').transactions,
   ...window.ResetEngine.normalize(window.ResetEngine.parseCSV('Date,Description,Amount\n2026-09-01,PAYROLL,1000\n2026-09-09,CREDIT CARD PMT,-100'),{date:0,description:1,amount:2,mode:'signed',positive:'in'},'chequing').transactions
  ],'2026-09-01','2026-09-30').total);
  assert.equal(summary,100);assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);
- console.log(JSON.stringify({demos:4,nativeExports:2,nativePrint:true,importedRows:5,spendingWithRepayment:summary,errors,missing,screenshot:path.resolve(__dirname,'../app/build/android-preview.png')}));
+ console.log(JSON.stringify({demos:4,nativeExports:2,nativePrint:true,importedRows:5,urduOffline:true,spendingWithRepayment:summary,errors,missing,screenshot:path.resolve(__dirname,'../app/build/android-preview.png')}));
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1);});

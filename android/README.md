@@ -1,6 +1,8 @@
 # Money Snapshot for Android
 
-Installable, offline Android edition of the existing Let’s Fix Money app. All Android-specific code lives in this folder. The only supporting file outside it is `.github/workflows/android.yml`, which builds the APK.
+Installable, offline Android edition of the existing Let’s Fix Money app. Native code and adapters live here; `.github/workflows/android.yml` builds the APK from the shared website source.
+
+Read the repository-wide [instructions](../AGENTS.md), [current checkpoint](../docs/PROJECT_STATUS.md) and [development guide](../docs/DEVELOPMENT.md). From the root, `python3 scripts/check.py` runs the shared baseline; `.github/workflows/checks.yml` automates it.
 
 ## Included
 
@@ -9,6 +11,7 @@ Installable, offline Android edition of the existing Let’s Fix Money app. All 
 - The shared credit-card repayment fix: purchases count once, settlements are excluded from spending/income, and fees/interest remain expenses.
 - Native Save As for text reports and JSON plans; native print / Save as PDF.
 - Native app toolbar, launcher icon, safe-area/keyboard spacing and exit/reset confirmation.
+- English/Urdu switching with the shared runtime, RTL styles and both Urdu fonts bundled offline; raw transaction/category values remain unchanged.
 - Course, book and other external links open in the user’s browser, keeping external pages outside the app’s trusted content.
 
 This is a preview of the existing educational tool. It does not add bank connections, user accounts, cloud synchronization or an OpenAI API integration.

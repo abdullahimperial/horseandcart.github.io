@@ -14,6 +14,11 @@ class Element{
 const els=new Map(),el=id=>{if(!els.has(id))els.set(id,new Element());return els.get(id);};el('theme').value='book';
 const document={getElementById:el,querySelectorAll:()=>[],createElement:()=>new Element()};
 const context=vm.createContext({document,console,Math:Object.create(Math),setTimeout:f=>{f();return 1;},matchMedia:()=>({matches:true}),URL,Blob});
+// The runtime listens for language changes; model that browser event boundary.
+const languageEvents={};
+context.window=context;
+context.LFM={lang:'en'};
+context.addEventListener=(name,handler)=>{languageEvents[name]=handler;};
 for(const f of ['board-geometry.js','snakes.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../assets',f),'utf8'),context);
 async function roll(n){context.Math.random=()=> (n-1)/6+.001;await el('roll').handlers.click();}
 (async()=>{
@@ -23,6 +28,9 @@ async function roll(n){context.Math.random=()=> (n-1)/6+.001;await el('roll').ha
  vm.runInContext('position=17;moveToken()',context);await roll(1);assert.equal(el('board').dataset.position,4,'Snake from 18 to 4');
  vm.runInContext('position=99;moveToken()',context);await roll(2);assert.equal(el('board').dataset.position,99,'Overshoot stays in place');await roll(1);assert.equal(el('board').dataset.position,100);assert.equal(el('roll').disabled,true);assert.match(el('status').textContent,/reached 100/);
  el('restart').handlers.click();assert.equal(el('board').dataset.position,1);assert.equal(el('roll').disabled,false);
+ context.window.LFM.lang='ur';languageEvents.lfmlanguagechange();
+ assert.equal(el('theme').value,'vector','Urdu switches to the translatable vector board');
+ assert.equal(el('board').dataset.position,1,'Changing language preserves game position');
  console.log('PASS: default artwork, 100 cells, ladder, snake, automatic square-7 setback, exact finish and restart.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
 

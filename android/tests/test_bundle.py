@@ -30,6 +30,13 @@ class OfflineBundleTests(unittest.TestCase):
                 self.assertNotIn('tests', file.parts)
         self.assertTrue((self.output/'apps/financial-reset/LICENSE-merchant-data.txt').exists())
 
+    def test_urdu_runtime_fonts_and_licence_are_bundled_without_changes(self):
+        for name in ['ur.js', 'i18n.js', 'i18n.css', 'NotoNaskhArabic-Regular.woff',
+                     'NotoNaskhArabic-Bold.woff', 'FONT-LICENSE.txt']:
+            path = Path('assets/i18n')/name
+            self.assertIn(str(path), self.manifest)
+            self.assertEqual((ROOT/path).read_bytes(), (self.output/path).read_bytes())
+
     def test_bridge_loads_before_app_and_sandbox_stays_enabled(self):
         html = (self.output/'apps/financial-reset/index.html').read_text()
         self.assertLess(html.index('android-bridge.js'), html.index('app.js?'))

@@ -17,6 +17,10 @@ SUPPORT = [
     'assets/currency.js', 'assets/experience.js', 'assets/experience.css',
     'assets/site-shell.css', 'assets/site-notice.css', 'assets/legal.css',
     'course/assets/course.css',
+    # Shared localization must work without a network, including its font licence.
+    'assets/i18n/ur.js', 'assets/i18n/i18n.js', 'assets/i18n/i18n.css',
+    'assets/i18n/NotoNaskhArabic-Regular.woff',
+    'assets/i18n/NotoNaskhArabic-Bold.woff', 'assets/i18n/FONT-LICENSE.txt',
 ]
 
 def bundle(output: Path):

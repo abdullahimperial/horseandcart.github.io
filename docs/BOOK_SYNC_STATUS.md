@@ -1,5 +1,7 @@
 # Book and website synchronization checkpoint
 
+> Historical record. Read [PROJECT_STATUS.md](PROJECT_STATUS.md) and [AGENTS.md](../AGENTS.md) for current instructions, verification and next steps. Source versions and game behavior below may predate later commits. Old publication instructions are historical, not a standing request to republish.
+
 User authorized syncing the website with the edited book. References must include print-edition page AND chapter/section/subsection for Kindle readers. No paid credits or purchases are authorized. Preserve the manuscript and game artwork.
 
 Source: Word version 18 (libfile_bf1cb6c68a0c8191b0da6987cd09462f), print PDF version 17 with 77 pages (libfile_68d30c86931081918ec57c5a30352408). Kindle EPUB version 2 (libfile_87ad252264e08191afcb3c58c1b6e715) has variable pagination.
