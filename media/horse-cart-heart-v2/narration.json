@@ -1,0 +1,25 @@
+{
+  "title": "Put the horse first",
+  "model": "hexgrad/Kokoro-82M",
+  "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "voice": "af_heart",
+  "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "voice_sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+  "sample_rate": 24000,
+  "speed": 1.0,
+  "gap_seconds": 0.14,
+  "lines": [
+    "Working hard, but still going nowhere?",
+    "Two brothers had one horse and one cart.",
+    "One put the horse behind the cart. Pushing was a struggle.",
+    "His brother moved the horse to the front.",
+    "Same horse. Same cart. A much easier journey.",
+    "Money can work the same way.",
+    "Buy first, and tomorrow's income pays for yesterday's purchase.",
+    "Where you can, change the order. Earn, save, then buy.",
+    "Imagine making car payments into savings before buying your next car.",
+    "Then keep saving for its replacement.",
+    "Your payments build savings, instead of repaying a loan with interest.",
+    "Put the horse first. Let's fix money."
+  ]
+}

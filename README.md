@@ -69,3 +69,7 @@ Course notes can be saved locally. Imported financial records stay in memory unt
 ## Finish every work session
 
 Update relevant component documentation, `CHANGELOG.md` and `docs/PROJECT_STATUS.md` with what changed, why, checks actually run, limitations and the next concrete step. Commit and push authorized changes, then verify the remote commit and applicable workflows. Checkpoint substantial work before a long build or interruption. Necessary decisions and unfinished-work notes must not exist only in chat.
+
+## Narrated short
+
+[Horse and cart production](media/horse-cart-heart-v2/README.md) records the script, Kokoro Heart model, audio-first timing and rebuild workflow on branch `media/horse-cart-heart-v2`.

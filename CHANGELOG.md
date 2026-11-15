@@ -2,6 +2,12 @@
 
 Meaningful changes belong here; Git commits hold the full diff and `docs/PROJECT_STATUS.md` holds the current handover.
 
+## 2026-11-15 — Horse and cart narration
+
+- Add a 101-word narration, pinned Kokoro Heart generation, sentence timing and continuous-animation renderer on the media work branch.
+- Generate speech before setting visual timing; final voice/video verification is pending.
+- Owner explicitly approved public repository uploads and GitHub Actions for this build. Website and Android runtime files are unchanged.
+
 ## 2026-11-14 — Repository-based continuation
 
 - Record the owner’s standing requirement: repository instructions, decisions, verification and unfinished-work context must support continuation without chat history.
