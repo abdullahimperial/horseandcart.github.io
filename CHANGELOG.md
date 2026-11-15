@@ -2,11 +2,13 @@
 
 Meaningful changes belong here; Git commits hold the full diff and `docs/PROJECT_STATUS.md` holds the current handover.
 
-## 2026-11-15 — Horse and cart narration
+## 2026-11-15 — Completed narrated horse-and-cart short
 
-- Add a 101-word narration, pinned Kokoro Heart generation, sentence timing and continuous-animation renderer on the media work branch.
-- Generate speech before setting visual timing; final voice/video verification is pending.
-- Owner explicitly approved public repository uploads and GitHub Actions for this build. Website and Android runtime files are unchanged.
+- Add the 101-word narration, pinned Kokoro Heart synthesis, source animation, caption renderer and rebuild documentation on the media work branch.
+- Generate narration first; measured sentence boundaries drive the 42.905-second vertical video. Speech is not stretched or cut off.
+- Save final MP4, MP3, WAV and SRT. Record timing, hashes, model provenance and successful Actions run 43737278861.
+- All twelve recorded lines match their timing; full export decode and visual contact-sheet checks passed. Unchanged website baseline passed 162 JavaScript and six Python tests.
+- Owner explicitly approved public repository production files and GitHub Actions. No website/Android runtime changes or new deployment.
 
 ## 2026-11-14 — Repository-based continuation
 

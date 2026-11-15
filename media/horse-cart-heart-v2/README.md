@@ -1,25 +1,31 @@
-# Horse and cart — voice-first short
+# Horse and cart — Kokoro Heart narrated short
 
-Requested 15 November 2026: write short narration, generate and save Kokoro Heart audio, then create a video timed to that recording. The metaphor follows Chapter 2 of Let's Fix Money: rearrange the horse and cart; earn and save before buying when practical.
+Completed 15 November 2026. The owner approved publishing these production files and using GitHub Actions. The final vertical video is 42.905 seconds, 720×1280 at 30 fps, with Kokoro `af_heart` narration and matching captions.
 
-`narration.json` is the complete script and pinned model configuration. `synthesize.py` records each spoken line at a natural fixed speed, measures sample-accurate start/end times, and writes WAV, MP3, text and `timing.json`. Video timing must be derived from those measured boundaries; do not cut or speed up speech to fit existing pictures.
+## Rebuild
 
-Use Python 3.12, FFmpeg and espeak-ng. Install CPU Torch 2.8.0, then `pip install -r requirements.txt`, then run `python synthesize.py`. The branch-scoped GitHub workflow performs this build with read-only repository permission. Kokoro weights use Apache-2.0; source: https://huggingface.co/hexgrad/Kokoro-82M. The approved `af_heart` voice and model SHA-256 values match the earlier Heart generation setup.
+1. Use Python 3.12, FFmpeg, espeak-ng and DejaVu Sans fonts. Install CPU Torch 2.8.0 followed by `pip install -r requirements.txt -r requirements-render.txt` from this directory.
+2. Run `python synthesize.py`. This produces the WAV, MP3, narration text, individual lines and measured `output/timing.json`.
+3. Run `python render.py`. It reads measured voice boundaries, retimes the continuous animation, adds captions and the car-saving indicator, and exports `output/Horse_and_Cart_Kokoro_Heart.mp4` and an SRT. It never speeds up or clips speech.
 
-## Current checkpoint — generation underway
+The branch-scoped `.github/workflows/horse-cart-heart-v2.yml` performs the speech build. Successful run: https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43737278861 at commit `e29fdaf6135a75f5ad1c6d485cd6e5e35a5aadff`. Download its audio artifact into `output/` to render locally without regenerating speech. Actions artifacts expire; source and pinned model settings remain rebuildable.
 
-The owner explicitly approved publishing the prepared narration/build files to the public repository and using GitHub Actions on 15 November 2026. Branch: `media/horse-cart-heart-v2`. The narration contains 101 words in twelve lines. Audio generation is pending; silent-preview timing is not a completed recording.
+## Files and provenance
 
-The renderer creates a 720×1280, 30 fps continuous animation from measured speech. `preview-timing.json` is estimated and used only with `--preview`. The animation source will be added in the next checkpoint; the first workflow only needs text narration and build code.
+- `narration.json`: 101-word script, approved Heart voice and pinned model/voice hashes.
+- `synthesize.py`: actual Kokoro speech generation at natural speed 1.0 and sample-accurate sentence measurement.
+- `animation-source.mp4`: central animated scene from the owner's original 49-second short, cropped to remove old headings and captions, compressed to 696×358. No soundtrack.
+- `render.py`: deterministic retiming, text overlays and export. Uses the same twelve-line order and source-scene mapping.
+- `measured-timing.json`: exact final recording timings from the successful build.
+- `verification.json`: checks, output hashes and build provenance.
+- `preview-timing.json`: estimated timing for `python render.py --preview` only. The old silent preview is not the completed video.
 
-## Complete the build
+The money metaphor follows Chapter 2 of Let's Fix Money: moving the horse in front makes the same effort easier; earning and saving before discretionary purchases when practical can reduce financing costs.
 
-1. Confirm current main and reconcile sources; create branch `media/horse-cart-heart-v2` from current main without changing the website.
-2. Commit these files and the branch-scoped workflow in `.github/workflows/horse-cart-heart-v2.yml`, with the required repository checkpoint and changelog updates. It has only read access and uploads the speech output as an Actions artifact.
-3. Check the exact commit's workflow and download its complete audio artifact. Inspect `timing.json`, listen to the voice and confirm all twelve lines exist.
-4. Put that artifact in this component's `output/` folder and run `python render.py`. This requires NumPy, Pillow, FFmpeg and DejaVu Sans fonts in addition to the synthesis dependencies. The final video uses measured speech duration, holds the scene through each sentence and never changes the audio rate. The renderer fails if input WAV duration differs from the measured timeline by more than 50 ms.
-5. Inspect frames and listen to the complete result; verify decode, duration, captions and audio clipping. Save the MP3, WAV, narration text, captions and final MP4. Persist the measured manifest and build evidence in the component and project checkpoint.
+Model: https://huggingface.co/hexgrad/Kokoro-82M (Apache-2.0 weights). Voice generation does not clone a person's voice and uses no paid speech API.
 
-For the clearly labelled silent draft, use `python render.py --preview`. That is a review artifact, not a completed narrated video. The initial silent preview is 46.23 seconds; actual timing remains unknown until synthesis.
+## Verification
 
-All generated output is separate from the website and Android app.
+All twelve recorded line durations match their timeline boundaries within 1 ms. The final speech ends at 41.915 seconds, leaving 0.99 seconds of tail. Final MP4 audio/video duration differs by 5 ms. WAV peak is -2.0 dBFS; full media decoding passed. A rendered contact sheet was visually inspected. The unchanged website baseline also passed 162 JavaScript and six Python bundle tests. No website deployment or Android release was requested.
+
+Final MP4, MP3, WAV and SRT were delivered separately. Work is complete; future edits should update the script, regenerate speech, then rebuild the video from the new measured timing.

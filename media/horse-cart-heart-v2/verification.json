@@ -1,0 +1,44 @@
+{
+  "status": "complete",
+  "duration_seconds": 42.905,
+  "video_resolution": [
+    720,
+    1280
+  ],
+  "fps": 30,
+  "voice": "Kokoro af_heart",
+  "speech_lines": 12,
+  "speech_time_stretch": false,
+  "last_speech_end": 41.915,
+  "narration_tail_seconds": 0.99,
+  "audio_peak_dbfs": -2.0,
+  "full_decode": "passed",
+  "visual_contact_sheet": "inspected",
+  "sentence_timing": "all 12 WAV durations match start/end cues within 1 millisecond",
+  "caption_frame_rounding_seconds_max": 0.03333333333333333,
+  "speech_build_commit": "e29fdaf6135a75f5ad1c6d485cd6e5e35a5aadff",
+  "speech_build_url": "https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43737278861",
+  "animation_sha256": "49ed325f6829730634049d25b2c9ce3462e556dfa8fcbb89fa96dd79484008fd",
+  "render_dependencies": {
+    "numpy": "2.3.5",
+    "Pillow": "13.0.0"
+  },
+  "outputs": {
+    "Horse_and_Cart_Kokoro_Heart.mp4": {
+      "bytes": 3112107,
+      "sha256": "e7e1b8cf80faf345c48c15d2823602ceb8eee81a3473ee8271be45aac822f2f3"
+    },
+    "Horse_and_Cart_Kokoro_Heart.mp3": {
+      "bytes": 859724,
+      "sha256": "a73b44e2a56e0b6c551810ce01dd935c6ee81bfbb236bcc1bf3aca51eae5bd00"
+    },
+    "Horse_and_Cart_Kokoro_Heart.wav": {
+      "bytes": 2059518,
+      "sha256": "e84a201ebe7d0ddd080a8e31e912a1abbe9f80eb10c69e9f61540a14f7061543"
+    },
+    "Horse_and_Cart_Captions.srt": {
+      "bytes": 990,
+      "sha256": "3cc0072018530c75393aece408f171a2d7f898868dbfa6633038c405b367c396"
+    }
+  }
+}

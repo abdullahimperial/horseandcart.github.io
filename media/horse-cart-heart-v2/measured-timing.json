@@ -1,0 +1,92 @@
+{
+  "engine": "Kokoro-82M",
+  "voice": "af_heart",
+  "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "sample_rate": 24000,
+  "speed": 1.0,
+  "duration": 42.905,
+  "cues": [
+    {
+      "index": 0,
+      "text": "Working hard, but still going nowhere?",
+      "start": 0.3,
+      "end": 2.925
+    },
+    {
+      "index": 1,
+      "text": "Two brothers had one horse and one cart.",
+      "start": 3.065,
+      "end": 5.84
+    },
+    {
+      "index": 2,
+      "text": "One put the horse behind the cart. Pushing was a struggle.",
+      "start": 5.98,
+      "end": 9.73
+    },
+    {
+      "index": 3,
+      "text": "His brother moved the horse to the front.",
+      "start": 9.87,
+      "end": 12.395
+    },
+    {
+      "index": 4,
+      "text": "Same horse. Same cart. A much easier journey.",
+      "start": 12.535,
+      "end": 16.285
+    },
+    {
+      "index": 5,
+      "text": "Money can work the same way.",
+      "start": 16.425,
+      "end": 18.625
+    },
+    {
+      "index": 6,
+      "text": "Buy first, and tomorrow's income pays for yesterday's purchase.",
+      "start": 18.765,
+      "end": 23.065
+    },
+    {
+      "index": 7,
+      "text": "Where you can, change the order. Earn, save, then buy.",
+      "start": 23.205,
+      "end": 26.905
+    },
+    {
+      "index": 8,
+      "text": "Imagine making car payments into savings before buying your next car.",
+      "start": 27.045,
+      "end": 31.845
+    },
+    {
+      "index": 9,
+      "text": "Then keep saving for its replacement.",
+      "start": 31.985,
+      "end": 34.46
+    },
+    {
+      "index": 10,
+      "text": "Your payments build savings, instead of repaying a loan with interest.",
+      "start": 34.6,
+      "end": 39.0
+    },
+    {
+      "index": 11,
+      "text": "Put the horse first. Let's fix money.",
+      "start": 39.14,
+      "end": 41.915
+    }
+  ],
+  "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "voice_sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+  "dependencies": {
+    "kokoro": "0.9.4",
+    "misaki": "0.9.4",
+    "torch": "2.8.0+cpu",
+    "numpy": "2.2.6",
+    "soundfile": "0.13.1",
+    "spacy": "3.8.7"
+  }
+}
