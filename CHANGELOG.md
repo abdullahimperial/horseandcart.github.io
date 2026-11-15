@@ -2,6 +2,12 @@
 
 Meaningful changes belong here; Git commits hold the full diff and `docs/PROJECT_STATUS.md` holds the current handover.
 
+## 2026-11-15 — Introduction Heart voiceover
+
+- Add an eight-phrase voiceover for the original 28-second introduction, synchronized to its existing on-screen messages.
+- Preserve original video packets and lower the synthesized effects under Heart narration.
+- Include generation, mixing and original visual source. Audio generation and final verification are pending.
+
 ## 2026-11-15 — Completed narrated horse-and-cart short
 
 - Add the 101-word narration, pinned Kokoro Heart synthesis, source animation, caption renderer and rebuild documentation on the media work branch.

@@ -1,0 +1,40 @@
+name: Generate introduction Heart voiceover
+on:
+  workflow_dispatch:
+  push:
+    branches: [media/narrated-videos]
+    paths:
+      - 'media/introduction-heart/narration.json'
+      - 'media/introduction-heart/synthesize.py'
+      - 'media/introduction-heart/requirements.txt'
+      - '.github/workflows/introduction-heart.yml'
+permissions:
+  contents: read
+jobs:
+  narration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      HF_HUB_DISABLE_XET: '1'
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Kokoro
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r media/introduction-heart/requirements.txt
+      - name: Generate voice and verify scene windows
+        run: python media/introduction-heart/synthesize.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Introduction-Heart-Audio
+          path: media/introduction-heart/output/
+          if-no-files-found: error
+          retention-days: 30

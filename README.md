@@ -73,3 +73,5 @@ Update relevant component documentation, `CHANGELOG.md` and `docs/PROJECT_STATUS
 ## Narrated short
 
 [Horse and cart production](media/horse-cart-heart-v2/README.md) records the script, Kokoro Heart model, audio-first timing and rebuild workflow on branch `media/horse-cart-heart-v2`.
+
+[Introduction voiceover](media/introduction-heart/README.md) adds Kokoro Heart to the original 28-second vertical teaser, keeping its video frames and lowering sound design under the speech.
