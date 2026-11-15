@@ -8,16 +8,48 @@
   "sample_rate": 24000,
   "speed": 0.98,
   "max_speed": 1.12,
-  "duration": 28.0,
+  "duration": 28,
   "background_gain": 0.18,
   "cues": [
-    {"start":0.85,"end":2.22,"text":"You earn it."},
-    {"start":2.70,"end":4.20,"text":"You spend it."},
-    {"start":4.75,"end":6.85,"text":"Then what?"},
-    {"start":8.15,"end":11.85,"text":"What if the pattern could change?"},
-    {"start":14.05,"end":17.35,"text":"Small decisions. A different direction."},
-    {"start":20.25,"end":22.10,"text":"Let's fix money."},
-    {"start":22.45,"end":24.20,"text":"Coming soon."},
-    {"start":24.50,"end":27.60,"text":"Subscribe for the first episode."}
+    {
+      "start": 0.55,
+      "end": 2.33,
+      "text": "You earn it."
+    },
+    {
+      "start": 2.5,
+      "end": 4.28,
+      "text": "You spend it."
+    },
+    {
+      "start": 4.75,
+      "end": 6.85,
+      "text": "Then what?"
+    },
+    {
+      "start": 8.15,
+      "end": 11.85,
+      "text": "What if the pattern could change?"
+    },
+    {
+      "start": 14.05,
+      "end": 17.35,
+      "text": "Small decisions. A different direction."
+    },
+    {
+      "start": 20.25,
+      "end": 22.1,
+      "text": "Let's fix money."
+    },
+    {
+      "start": 22.45,
+      "end": 24.2,
+      "text": "Coming soon."
+    },
+    {
+      "start": 24.5,
+      "end": 27.6,
+      "text": "Subscribe for the first episode."
+    }
   ]
 }

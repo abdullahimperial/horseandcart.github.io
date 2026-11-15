@@ -45,7 +45,16 @@ def main():
                 for p in phones:
                     if parts:parts.append(np.zeros(round(.1*rate),dtype=np.float32))
                     parts.append(model(p,voice[len(p)-1],speed=speed).numpy().astype(np.float32))
-            samples=np.concatenate(parts);seconds=len(samples)/rate
+            samples=np.concatenate(parts)
+            # Kokoro includes edge silence. Retain 60 ms before and 100 ms after
+            # audible content; never remove internal pauses or stretch speech.
+            active=np.flatnonzero(np.abs(samples)>max(.0001,float(np.abs(samples).max())*.002))
+            if not len(active):raise ValueError(f'Cue {i} is silent')
+            first=max(0,int(active[0])-round(.06*rate))
+            last=min(len(samples),int(active[-1])+1+round(.10*rate))
+            samples=samples[first:last]
+            seconds=len(samples)/rate
+            print(f'Cue {i+1} attempt {attempt+1}: {seconds:.3f}s / {budget:.3f}s, speed {speed:.3f}',flush=True)
             if seconds<=budget:break
             if speed>=plan['max_speed']:raise ValueError(f'Cue {i} does not fit naturally; edit narration')
             speed=min(plan['max_speed'],speed*seconds/budget*1.01)
