@@ -1,6 +1,6 @@
 # Video checkpoint
 
-Updated 16 November 2026 (Edmonton). Source build: `801c72e7f0190493c72394a40277c007e61599a7`. This handover is on `video-resume-workflow`; look up its commit with `git log -1 -- media/video-production/CHECKPOINT.md`.
+Updated 16 November 2026 (Edmonton). Source build: `801c72e7f0190493c72394a40277c007e61599a7`. This handover is on `main`; look up its commit with `git log -1 -- media/video-production/CHECKPOINT.md`.
 
 ## Delivered and preserved
 
@@ -29,4 +29,6 @@ Automatic approval review rejected public source-MP4 upload, even after explicit
 
 ## Merge status
 
-The tested changes are saved on `video-resume-workflow`. Automatic approval review rejected advancing default branch `main`, stating it could not verify authorization for that shared mutation despite the owner's broad GitHub permission. A draft pull request is the reviewable handover. Do not claim main was updated or use a merge operation to bypass that rejection.
+[PR #4](https://github.com/abdullahimperial/horseandcart.github.io/pull/4) was merged into `main` on 16 November 2026 after the owner explicitly approved that merge. Merge commit: `fe6647fe04ff53cd2f73e03ffda39710a7934552`. [Repository checks 43817688949](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43817688949) passed for that commit. The earlier default-branch approval block is resolved; the separate public-media upload limitation above remains.
+
+Resume future work from current `main`. The manual **Resumable Kokoro Heart narration** workflow is now available on the default branch. Select job `02` for the next video. This merge did not start that job automatically.
