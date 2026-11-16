@@ -4,18 +4,16 @@ Updated: 16 November 2026 (Edmonton).
 
 ## Active goal
 
-Continue all-video narration without losing work at chat limits. The production entry point is [media/video-production/README.md](../media/video-production/README.md), its [queue](../media/video-production/queue.json), and [checkpoint](../media/video-production/CHECKPOINT.md). Merged into `main` through [PR #4](https://github.com/abdullahimperial/horseandcart.github.io/pull/4), commit `fe6647fe04ff53cd2f73e03ffda39710a7934552`. Resume from current main. [Repository checks](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43817688949) passed for the merge.
+Finish Heart narration for every existing silent video with durable phrase checkpoints. Start with `media/video-production/README.md`, `queue.json` and `CHECKPOINT.md`. Original short 01 (49 seconds), the introduction (28 seconds), and horse-cart-v2 (42.905 seconds) are already saved. The portrait teaser is the same picture stream as the completed introduction, so it needs no duplicate narration.
 
-The queue contains 12 numbered shorts, two teasers and the two completed narrated versions. The 49-second original horse/cart is separate from the finished 42.905-second version. Heart (`af_heart`) is the selected voice. Existing work is preserved; only missing/stale phrases regenerate.
-
-The phrase-resume pipeline, first-three timed scripts, recoverable Actions build, source register and tests are implemented. Local baseline passed: 162 JavaScript tests, six Android bundle tests, and four video-resume tests. The integration test deliberately fails after one phrase and confirms that phrase is reused. Real Kokoro build 43815645652 succeeded, and the original 49-second short is now narrated and saved with its durable phrase checkpoint. All ten phrases fit at speed 0.98; full decode and unchanged picture-stream checks passed. See the media checkpoint for exact filenames; human listening review remains separate.
-
-Source video public upload was rejected by automatic review even after explicit permission. The queue records the saved originals and checksums. No source MP4 upload completed, so a completely self-contained Git clone remains blocked at that media boundary. Code/checkpoints can continue independently.
+The remaining timed scripts have been prepared and checked against original scenes, but automatic approval review rejected publishing the recovered scripts and editable source to this public repository. They are preserved privately in `Lets_Fix_Money_Remaining_Narration_Working_Checkpoint.zip` (SHA256 `fda3cd91239057be28c838bbd545cdf9f582f0accdaf1f0b687a66cea749766b`). No private source upload completed. The earlier public-MP4 limitation also remains.
 
 ## Next action
 
-Continue 02–03 from their saved scripts, then inspect later scenes before scripting. Job 01 and its permanent audio checkpoint are saved; retrieve them through the exact filenames in the media checkpoint. Never claim all 12 videos have narration until each has verified output.
+Active branch `video-narration-remaining` contains an offline Heart-engine packaging workflow. Build `fde878d7557ead674aa31735be440c5293bfa422` packages only public model/dependency files, so narration can run locally with scripts kept private. Download both engine/model artifacts, verify their hashes, install the offline dependencies, restore the private checkpoint into `media/video-production`, then synthesize and mix each job. Source MP4s are named and hashed in the queue. Save completed MP4s and audio checkpoints permanently, then update this handover.
 
-## Website / Android status
+`run_queue.py` isolates per-video failures and preserves successful tracks; `pipeline.py` accepts `LFM_KOKORO_MODEL_DIR` for checksum-checked offline models. Local pre-generation checks passed: 162 JavaScript, six Android-bundle and six narration tests. The remaining videos are not yet claimed complete.
 
-The previous verified workflow checkpoint, CI links and known limitations are preserved in [WORKFLOW_STATUS_2026-11-14.md](WORKFLOW_STATUS_2026-11-14.md). Website product behavior and Android code were not changed in this media task. See `AGENTS.md` for the owner's standing repository-first instruction.
+## Website / Android
+
+Product behavior is unchanged. Previous verified CI links and known limitations are in `WORKFLOW_STATUS_2026-11-14.md`. The owner's repository-first instruction remains in `AGENTS.md`. Repository code and filenames support continuation; private media/script contents still require retrieving the named saved files.

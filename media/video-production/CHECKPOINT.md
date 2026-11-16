@@ -32,3 +32,11 @@ Automatic approval review rejected public source-MP4 upload, even after explicit
 [PR #4](https://github.com/abdullahimperial/horseandcart.github.io/pull/4) was merged into `main` on 16 November 2026 after the owner explicitly approved that merge. Merge commit: `fe6647fe04ff53cd2f73e03ffda39710a7934552`. [Repository checks 43817688949](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43817688949) passed for that commit. The earlier default-branch approval block is resolved; the separate public-media upload limitation above remains.
 
 Resume future work from current `main`. The manual **Resumable Kokoro Heart narration** workflow is now available on the default branch. Select job `02` for the next video. This merge did not start that job automatically.
+
+## Private local continuation
+
+Prepared scripts for the remaining shorts and landscape teaser are saved as `Lets_Fix_Money_Remaining_Narration_Working_Checkpoint.zip`, SHA256 `fda3cd91239057be28c838bbd545cdf9f582f0accdaf1f0b687a66cea749766b`. Automatic approval review rejected publishing recovered source/scripts to this public repository; those contents were not committed. The archive is a working checkpoint, not finished narration. It contains the private queue and plans, batch runner, tests and scene notes.
+
+The portrait teaser and narrated introduction have identical video packet SHA256 `498e090d865e93b9c731fecf686f6915edd26987e5906df8aac61068253f297a`. Preserve the existing introduction. The separate landscape teaser still needs narration.
+
+Use the offline-engine workflow on `video-narration-remaining` to package public dependencies/model files only, then generate speech locally. Restore the private checkpoint before `run_queue.py --job pending`. This is the active next action and supersedes the earlier next-action text above. Six video tests pass, including failure isolation and exclusion of already completed jobs.

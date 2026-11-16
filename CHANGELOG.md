@@ -1,5 +1,12 @@
 # Changelog
 
+## 16 November 2026 — private local narration continuation
+
+- Add public engine packaging and checksum-checked offline model loading so unpublished scripts can stay local.
+- Add failure-isolating pending-batch execution and two regression tests.
+- Preserve the private working narration checkpoint; record the public-script disclosure block honestly.
+- Verify the existing introduction already covers the portrait teaser using identical picture-stream hashes.
+
 ## 16 November 2026 — resumable video production
 
 - Register 12 numbered shorts, two teasers, and two existing Heart-narrated videos with exact source filenames and SHA-256 checks.

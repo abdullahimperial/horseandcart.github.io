@@ -47,3 +47,11 @@ python3 scripts/check.py
 ```
 
 Tests exercise overlap rejection, voice/speed constraints, input-based invalidation, corrupted WAV rejection, and a deliberate mid-job failure followed by reuse. The synthesis integration fixture is synthetic and does not claim voice quality; actual Kokoro requires the Actions/dependency environment.
+
+## Private scripts and offline generation
+
+Recovered scripts for the later videos could not be published to this public repository: automatic approval review rejected that disclosure. `CHECKPOINT.md` identifies the permanent private working archive. Restore its plans/queue locally before continuing those jobs. The existing portrait teaser is already covered by the completed introduction; their video packet checksums match.
+
+The `Build offline Heart voice engine` workflow packages the public pinned model and Python 3.12 Linux wheels into two downloadable artifacts, with `SHA256.json` and model-card/license metadata. No private scripts or source video are uploaded. Install the wheels in a local virtual environment with `pip install --no-index --no-deps engine/wheels/*.whl`, set `LFM_KOKORO_MODEL_DIR` to the extracted model folder and `HF_HUB_OFFLINE=1`. The original model/voice SHA256 checks still apply. Then run `python media/video-production/run_queue.py --job pending`. This selects only `script_ready` jobs, records an atomic batch report, and continues to the next job after a failure. Reruns preserve validated completed tracks and phrases.
+
+Engine artifacts expire after 30 days but the workflow can rebuild them. Narration/audio checkpoints must still be saved permanently. Never treat the public queue as evidence that private scripts or final videos have been published.
