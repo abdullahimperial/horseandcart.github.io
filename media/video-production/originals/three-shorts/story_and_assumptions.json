@@ -1,0 +1,281 @@
+{
+  "format": "1080x1920, 30 fps, H.264/AAC. Single continuous animated stage in each video. On-screen narration; original sound effects; no spoken voice.",
+  "book_source": "Let’s Fix Money, edited manuscript version 11, Chapter 2, pp. 24–29 in the 79-page rendering.",
+  "true_cost": {
+    "price": 100,
+    "sales_tax": 5,
+    "take_home_fraction": 0.75,
+    "gross_required": 140,
+    "gross_hourly_pay": 20,
+    "work_hours": 7
+  },
+  "positive_spiral": {
+    "monthly_income": 4000,
+    "monthly_expenses": [
+      3500,
+      3490,
+      3480,
+      3470,
+      3460,
+      3450
+    ],
+    "cumulative_net_worth": [
+      0,
+      500,
+      1010,
+      1530,
+      2060,
+      2600,
+      3150
+    ]
+  },
+  "negative_spiral": {
+    "starting_net_worth": 0,
+    "income": 4000,
+    "base_expenses": 4500,
+    "monthly_debt_interest": 0.02,
+    "end_month_debt": [
+      0.0,
+      500.0,
+      1010.0,
+      1530.2,
+      2060.804,
+      2602.0200800000002,
+      3154.0604816000005
+    ],
+    "recovery_income": 4500,
+    "recovery_expenses_including_interest": 3950,
+    "new_debt_repayment": 550,
+    "recovery_net_worth": -2604.0604816000005
+  },
+  "scope": "Illustrations only; assumed rates are not tax advice or forecasts. Surpluses saved or applied to debt; deficits borrowed. No asset-price changes. Expenses exclude saving and extra principal repayments.",
+  "captions": {
+    "1": [
+      [
+        0,
+        4,
+        [
+          "Working hard.",
+          "Still going nowhere?"
+        ]
+      ],
+      [
+        4,
+        8.5,
+        [
+          "Two brothers. One horse.",
+          "One cart."
+        ]
+      ],
+      [
+        8.5,
+        13,
+        [
+          "One brother tied the horse behind",
+          "the cart. Now it had to push."
+        ]
+      ],
+      [
+        13,
+        18.5,
+        [
+          "His brother changed the order."
+        ]
+      ],
+      [
+        18.5,
+        23,
+        [
+          "Same horse. Same cart.",
+          "A much easier journey."
+        ]
+      ],
+      [
+        23,
+        28,
+        [
+          "That is how I think",
+          "about my money."
+        ]
+      ],
+      [
+        28,
+        33,
+        [
+          "Buy first, and tomorrow’s income",
+          "can pay for yesterday’s purchase."
+        ]
+      ],
+      [
+        33,
+        39,
+        [
+          "Save first, and the order changes:",
+          "earn, save, then buy."
+        ]
+      ],
+      [
+        39,
+        44,
+        [
+          "My “payments” can build savings",
+          "for the next purchase."
+        ]
+      ],
+      [
+        44,
+        49,
+        [
+          "Put the cart behind the horse."
+        ]
+      ]
+    ],
+    "2": [
+      [
+        0,
+        4,
+        [
+          "A $100 purchase can require",
+          "$140 in earnings."
+        ]
+      ],
+      [
+        4,
+        9,
+        [
+          "The price tag is only",
+          "the starting point."
+        ]
+      ],
+      [
+        9,
+        14,
+        [
+          "Add $5 in sales tax.",
+          "Now I need $105 to spend."
+        ]
+      ],
+      [
+        14,
+        20.5,
+        [
+          "If I keep 75% of my pay,",
+          "I have to earn $140."
+        ]
+      ],
+      [
+        20.5,
+        27,
+        [
+          "The other $35 goes to income tax",
+          "and payroll deductions."
+        ]
+      ],
+      [
+        27,
+        34,
+        [
+          "At $20 an hour before deductions,",
+          "that is seven hours of work."
+        ]
+      ],
+      [
+        34,
+        40.5,
+        [
+          "Is this purchase worth",
+          "that much of my time?"
+        ]
+      ],
+      [
+        40.5,
+        46,
+        [
+          "The real price includes my time."
+        ]
+      ]
+    ],
+    "3": [
+      [
+        0,
+        4,
+        [
+          "The holy grail of",
+          "personal finance?"
+        ]
+      ],
+      [
+        4,
+        10,
+        [
+          "Income minus expenses.",
+          "What is left each month?"
+        ]
+      ],
+      [
+        10,
+        17,
+        [
+          "Save the surplus. A buffer can",
+          "help avoid fees and borrowing."
+        ]
+      ],
+      [
+        17,
+        24,
+        [
+          "Lower costs can leave",
+          "an even bigger surplus."
+        ]
+      ],
+      [
+        24,
+        28,
+        [
+          "Now rewind. Same starting point.",
+          "A different monthly gap."
+        ]
+      ],
+      [
+        28,
+        35,
+        [
+          "Spend $500 more than you earn.",
+          "Borrow the difference."
+        ]
+      ],
+      [
+        35,
+        43,
+        [
+          "Interest adds another expense.",
+          "Next month, the gap grows."
+        ]
+      ],
+      [
+        43,
+        49,
+        [
+          "I work on both sides:",
+          "earn more, spend less."
+        ]
+      ],
+      [
+        49,
+        55,
+        [
+          "A surplus can turn the direction",
+          "before net worth turns positive."
+        ]
+      ],
+      [
+        55,
+        59,
+        [
+          "Change the equation.",
+          "Change the direction."
+        ]
+      ]
+    ]
+  }
+}

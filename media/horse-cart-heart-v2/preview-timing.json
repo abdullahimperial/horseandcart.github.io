@@ -1,0 +1,78 @@
+{
+  "timing_status": "ESTIMATED ONLY: Kokoro generation pending approval",
+  "duration": 46.23,
+  "cues": [
+    {
+      "index": 0,
+      "text": "Working hard, but still going nowhere?",
+      "start": 0.3,
+      "end": 2.9499999999999997
+    },
+    {
+      "index": 1,
+      "text": "Two brothers had one horse and one cart.",
+      "start": 3.09,
+      "end": 6.54
+    },
+    {
+      "index": 2,
+      "text": "One put the horse behind the cart. Pushing was a struggle.",
+      "start": 6.68,
+      "end": 11.33
+    },
+    {
+      "index": 3,
+      "text": "His brother moved the horse to the front.",
+      "start": 11.469999999999999,
+      "end": 14.919999999999998
+    },
+    {
+      "index": 4,
+      "text": "Same horse. Same cart. A much easier journey.",
+      "start": 15.059999999999999,
+      "end": 18.509999999999998
+    },
+    {
+      "index": 5,
+      "text": "Money can work the same way.",
+      "start": 18.65,
+      "end": 21.299999999999997
+    },
+    {
+      "index": 6,
+      "text": "Buy first, and tomorrow's income pays for yesterday's purchase.",
+      "start": 21.439999999999998,
+      "end": 25.29
+    },
+    {
+      "index": 7,
+      "text": "Where you can, change the order. Earn, save, then buy.",
+      "start": 25.43,
+      "end": 29.68
+    },
+    {
+      "index": 8,
+      "text": "Imagine making car payments into savings before buying your next car.",
+      "start": 29.82,
+      "end": 34.47
+    },
+    {
+      "index": 9,
+      "text": "Then keep saving for its replacement.",
+      "start": 34.61,
+      "end": 37.26
+    },
+    {
+      "index": 10,
+      "text": "Your payments build savings, instead of repaying a loan with interest.",
+      "start": 37.4,
+      "end": 42.05
+    },
+    {
+      "index": 11,
+      "text": "Put the horse first. Let's fix money.",
+      "start": 42.19,
+      "end": 45.239999999999995
+    }
+  ]
+}

@@ -29,3 +29,8 @@ GitHub Pages serves static HTML/CSS/JavaScript and local images/fonts. There is 
 **The course stands alone.** Book references are supplementary. Activities remain in lessons and the workbook. Fictional scenarios must not become claims about the author.
 
 **Continuity is source-controlled.** `AGENTS.md` defines the workflow, `DEVELOPMENT.md` its commands, `PROJECT_STATUS.md` the current checkpoint and `CHANGELOG.md` the history. Component READMEs explain local assumptions. Editorial originals have a separate source register.
+
+
+## Video production
+
+`media/video-production/queue.json` owns job identities and source checksums; `plans/` owns timed scripts. `pipeline.py` separates speech synthesis from picture mixing so Actions can generate audio without source-video access. Cached phrases are keyed by text, model/voice hashes, speed, sample rate, synthesis version and available duration. Only validated entries are reused. State updates are atomic; source/audio checksums prevent stale mixing. Existing speech/animation generators are preserved in sibling folders. Media bytes currently remain in owner-accessible saved files because public-upload approval review blocked transfer; exact references and restore steps are documented.
