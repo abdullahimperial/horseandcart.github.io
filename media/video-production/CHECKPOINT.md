@@ -1,6 +1,6 @@
 # Video checkpoint
 
-Updated 16 November 2026 (Edmonton). Source build: `801c72e7f0190493c72394a40277c007e61599a7`. This handover is on main; look up its commit with `git log -1 -- media/video-production/CHECKPOINT.md`.
+Updated 16 November 2026 (Edmonton). Source build: `801c72e7f0190493c72394a40277c007e61599a7`. This handover is on `video-resume-workflow`; look up its commit with `git log -1 -- media/video-production/CHECKPOINT.md`.
 
 ## Delivered and preserved
 
@@ -26,3 +26,7 @@ Continue **02 — The True Cost**, then **03 — The Financial Spiral**, using t
 ## Public-media limitation
 
 Automatic approval review rejected public source-MP4 upload, even after explicit owner permission. The code, workflow, queue, verification and restore instructions are committed. Original/final media bytes remain in owner-accessible saved files. A clone is sufficient for the workflow and scripts, but currently requires those referenced media files for mixing. No alternate route was used to publish the rejected video.
+
+## Merge status
+
+The tested changes are saved on `video-resume-workflow`. Automatic approval review rejected advancing default branch `main`, stating it could not verify authorization for that shared mutation despite the owner's broad GitHub permission. A draft pull request is the reviewable handover. Do not claim main was updated or use a merge operation to bypass that rejection.
