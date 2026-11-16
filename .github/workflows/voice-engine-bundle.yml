@@ -29,14 +29,14 @@ jobs:
           mkdir -p engine/wheels engine/system engine/model
           python -m pip freeze > engine/requirements-resolved.txt
           python -m pip download --no-deps -r engine/requirements-resolved.txt --extra-index-url https://download.pytorch.org/whl/cpu -d engine/wheels
-          cp -a /usr/lib/x86_64-linux-gnu/libespeak-ng.so* /usr/lib/x86_64-linux-gnu/libpcaudio.so* engine/system/
+          cp -a /usr/lib/x86_64-linux-gnu/libespeak-ng.so* /usr/lib/x86_64-linux-gnu/libpcaudio.so* /usr/lib/x86_64-linux-gnu/libsonic.so* engine/system/
           cp -a /usr/lib/x86_64-linux-gnu/espeak-ng-data engine/system/
           cp -a /usr/share/doc/espeak-ng /usr/share/doc/libespeak-ng1 /usr/share/doc/libpcaudio0 engine/system/
           python - <<'PY'
           import hashlib, json, pathlib, shutil
           from huggingface_hub import hf_hub_download
           plan = json.loads(pathlib.Path('media/video-production/plans/01.json').read_text())
-          for name in ['config.json', 'kokoro-v1_0.pth', 'voices/af_heart.pt', 'LICENSE']:
+          for name in ['config.json', 'kokoro-v1_0.pth', 'voices/af_heart.pt', 'README.md']:
               source = pathlib.Path(hf_hub_download(plan['model'], name, revision=plan['revision']))
               target = pathlib.Path('engine/model') / name
               target.parent.mkdir(parents=True, exist_ok=True)
@@ -50,6 +50,16 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Offline-Heart-Engine-Python312-Linux
-          path: engine/
+          path: |
+            engine/wheels/
+            engine/system/
+            engine/requirements-resolved.txt
+            engine/SHA256.json
           retention-days: 30
-          compression-level: 0
+          compression-level: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Offline-Heart-Model
+          path: engine/model/
+          retention-days: 30
+          compression-level: 1
