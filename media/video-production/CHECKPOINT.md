@@ -1,42 +1,40 @@
 # Video checkpoint
 
-Updated 16 November 2026 (Edmonton). Source build: `801c72e7f0190493c72394a40277c007e61599a7`. This handover is on `main`; look up its commit with `git log -1 -- media/video-production/CHECKPOINT.md`.
+Updated: 16 November 2026 (Edmonton). **Narration production complete.** The public commit containing this handover is discoverable with `git log -1 -- media/video-production/CHECKPOINT.md`.
 
-## Delivered and preserved
+## Delivered
 
-- Queue contains 12 numbered shorts, two teasers and two existing narrated versions, with exact source hashes and saved-file names.
-- Original **01, 49 seconds**, now has Kokoro `af_heart` narration. All ten phrases fit at speed 0.98. The entire MP4 decoded successfully. Video packet SHA-256 matches the original, so picture frames are unchanged. Audio peak is -2.0 dBFS. Scene/caption alignment was inspected; human listening review has not been performed.
-- [Speech build 43815645652](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43815645652) succeeded at `801c72e7`. Artifact 14202302760 was downloaded and verified, then preserved as a durable checkpoint; do not rely on its 90-day Actions retention.
-- Existing 28-second introduction and 42.905-second horse-cart-v2 remain separate and preserved.
-- Local checks: 162 JavaScript tests, six Android bundle tests, four resume tests. The new Actions build also passed resume tests and real synthesis.
+All twelve numbered shorts now have Kokoro `af_heart` narration. This continuation produced 02–12 and the landscape teaser: twelve new outputs, 111 phrases, all at speed 0.98. The original 49-second short 01, existing 28-second introduction, and separate 42.905-second horse-cart-v2 are preserved. The portrait teaser is already represented by the introduction: their picture-stream SHA256 is identical. There are fifteen unique narrated videos across the sixteen inventory entries.
 
-## Durable files
+The complete set and every new MP4 were saved successfully. The cumulative audio checkpoint was saved after each completed output (final version 11). Exact individual filenames and hashes are in `queue.json`.
 
-| File | Retrieval | Purpose |
+| Permanent saved file | SHA256 | Contents |
 | --- | --- | --- |
-| Lets_Fix_Money_01_Horse_and_Cart_Heart_49s.mp4 | Search the exact filename in the owner’s saved files | Finished 49-second narrated MP4 |
-| Lets_Fix_Money_Video_01_Heart_Checkpoint.zip | Search the exact filename in the owner’s saved files | Ten validated phrase WAVs, metadata, narration track, captions and state |
+| Lets_Fix_Money_Complete_Heart_Video_Set.zip | d84e2fc9289aa2c2473f778325df87b1324e7fa04d678ac81100f7579f356b87 | Fifteen MP4s, available captions, file index |
+| Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip | cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045 | Current private plans/queue, phrase cache, narration WAVs, captions and states |
 
-Checksums are in `queue.json` and `verification-01.json`. Restore the checkpoint ZIP into `media/video-production/work/`. The original source MP4 filename is also in the queue. No chat history is needed to identify any input or output.
+Search these exact filenames in the owner's saved files. The earlier working-checkpoint archive is historical; use the final cumulative checkpoint above.
 
-## Next concrete action
+## Verification
 
-Continue **02 — The True Cost**, then **03 — The Financial Spiral**, using their existing timed scripts. Use the manual workflow job selector, download/save the checkpoint, and mix locally with the registered source. For 04–12 inspect source scenes and create timed scripts first. A source-04 contact sheet has been inspected; see `SCENE_NOTES.md`. Do not describe the remaining shorts as narrated.
+- Source MP4 hashes matched before mixing; all twelve new outputs fully decoded.
+- Every phrase finishes within its scene; all 111 new phrases fit at 0.98 without truncation or time stretching.
+- Each output's video-packet hash matches its original: picture frames are unchanged.
+- Encoded audio peaks range from -2.0 to -1.9 dBFS. Detailed output checks are in `verification-remaining.json`; 01's earlier verification remains separate.
+- Restored the final ZIP into an empty directory, then validated all thirteen production audio checkpoints (01–12 and landscape) without the speech engine installed. Every completed narration WAV remained byte-identical.
+- Local repository checks passed: 162 JavaScript, six Android-bundle and six narration tests. [Branch CI](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43821022590) passed for `e4ea2eb7`.
+- Human listening review has **not** been performed. Technical checks do not certify pronunciation or editorial delivery; preview the saved videos before publication.
 
-## Public-media limitation
+## Resume without conversation history
 
-Automatic approval review rejected public source-MP4 upload, even after explicit owner permission. The code, workflow, queue, verification and restore instructions are committed. Original/final media bytes remain in owner-accessible saved files. A clone is sufficient for the workflow and scripts, but currently requires those referenced media files for mixing. No alternate route was used to publish the rejected video.
+No unfinished synthesis jobs remain. For a requested revision, retrieve the final checkpoint, verify its SHA256, and extract it into `media/video-production/`. This restores the current private `plans/`, `queue.json` and `work/`. Do not use historical public plans as replacements for those scripts. The public queue deliberately leaves private-plan entries unset and names the required checkpoint.
 
-## Merge status
+Use `pipeline.py synthesize --job ID` to reuse validated speech, then `pipeline.py mix --job ID --source /path/to/original.mp4`. Exact original filenames/hashes are in the restored queue. `run_queue.py --job pending` selects only `script_ready` jobs; mark a deliberately revised job ready before batching. The final queue is complete, so the pending batch is empty.
 
-[PR #4](https://github.com/abdullahimperial/horseandcart.github.io/pull/4) was merged into `main` on 16 November 2026 after the owner explicitly approved that merge. Merge commit: `fe6647fe04ff53cd2f73e03ffda39710a7934552`. [Repository checks 43817688949](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43817688949) passed for that commit. The earlier default-branch approval block is resolved; the separate public-media upload limitation above remains.
+The [offline engine build](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43820588707) succeeded at `fde878d7557ead674aa31735be440c5293bfa422`. It contains public dependencies/model files only. Download the engine and model artifacts (30-day retention), or rebuild them using `.github/workflows/voice-engine-bundle.yml`. See README for installation, including the docopt source archive. Set `LFM_KOKORO_MODEL_DIR` and `HF_HUB_OFFLINE=1`; the pinned model/voice hashes remain mandatory.
 
-Resume future work from current `main`. The manual **Resumable Kokoro Heart narration** workflow is now available on the default branch. Select job `02` for the next video. This merge did not start that job automatically.
+## Public/private boundary
 
-## Private local continuation
+Automatic approval review rejected public upload of source MP4s and, separately, recovered scripts/editable source because the latter came from saved material without approval for that specific public disclosure. No rejected content was published through an alternate route. The safer path packaged the public engine and generated narration locally. The public repository contains code, workflows, tests, verification, source/output filenames and restore instructions. Private scripts, media and audio checkpoints remain in the owner's saved files. A bare clone therefore needs the referenced checkpoint/media for full production continuity.
 
-Prepared scripts for the remaining shorts and landscape teaser are saved as `Lets_Fix_Money_Remaining_Narration_Working_Checkpoint.zip`, SHA256 `fda3cd91239057be28c838bbd545cdf9f582f0accdaf1f0b687a66cea749766b`. Automatic approval review rejected publishing recovered source/scripts to this public repository; those contents were not committed. The archive is a working checkpoint, not finished narration. It contains the private queue and plans, batch runner, tests and scene notes.
-
-The portrait teaser and narrated introduction have identical video packet SHA256 `498e090d865e93b9c731fecf686f6915edd26987e5906df8aac61068253f297a`. Preserve the existing introduction. The separate landscape teaser still needs narration.
-
-Use the offline-engine workflow on `video-narration-remaining` to package public dependencies/model files only, then generate speech locally. Restore the private checkpoint before `run_queue.py --job pending`. This is the active next action and supersedes the earlier next-action text above. Six video tests pass, including failure isolation and exclusion of already completed jobs.
+All deliverables are complete; only owner listening review and any explicitly requested revisions or publication remain.

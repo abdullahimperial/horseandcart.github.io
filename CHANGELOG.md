@@ -4,7 +4,9 @@
 
 - Add public engine packaging and checksum-checked offline model loading so unpublished scripts can stay local.
 - Add failure-isolating pending-batch execution and two regression tests.
-- Preserve the private working narration checkpoint; record the public-script disclosure block honestly.
+- Complete and save shorts 02–12 plus the landscape teaser: twelve new outputs and 111 phrases at Heart speed 0.98; preserve all prior narrated versions.
+- Save the complete fifteen-video set and cumulative phrase checkpoint. Verify full decode, source/output picture hashes, scene timing and audio levels; restore thirteen audio checkpoints byte-for-byte without the speech engine.
+- Keep blocked recovered scripts/media private; publish code and precise filename/hash recovery records.
 - Verify the existing introduction already covers the portrait teaser using identical picture-stream hashes.
 
 ## 16 November 2026 — resumable video production
