@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "voice": "af_heart",
-  "active_job": "01",
+  "active_job": "02",
   "jobs": [
     {
       "id": "horse-cart-v2",
@@ -15,9 +15,7 @@
       "status": "existing_narration",
       "plan": null,
       "saved_file": {
-        "filename": "Horse_and_Cart_Kokoro_Heart.mp4",
-        "library_file_id": "libfile_fde3_f-10633c0522dc819194fb471074aeecd8_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Horse_and_Cart_Kokoro_Heart.mp4"
       },
       "source_in_git": false,
       "next_action": "preserve existing narration; no regeneration"
@@ -31,15 +29,23 @@
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "script_ready",
+      "status": "narrated_technical_checks_passed",
       "plan": "plans/01.json",
       "saved_file": {
-        "filename": "Lets_Fix_Money_01_Horse_and_Cart_Short.mp4",
-        "library_file_id": "libfile_fde3_f-0600d8326c8481918b8e982ffcc60fff_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_01_Horse_and_Cart_Short.mp4"
       },
       "source_in_git": false,
-      "next_action": "synthesize then mix with saved source"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_01_Horse_and_Cart_Heart_49s.mp4",
+        "sha256": "e499dd47651275d7497360d32e3b01793525f86c484730008aa870f1dc626793"
+      },
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_Video_01_Heart_Checkpoint.zip",
+        "sha256": "ddab993558e2f7f9f6717b3edd5411782b949fec1b81ec5550b048d6c022aa46"
+      },
+      "run_id": 43815645652,
+      "human_listening_review": "not performed"
     },
     {
       "id": "02",
@@ -53,9 +59,7 @@
       "status": "script_ready",
       "plan": "plans/02.json",
       "saved_file": {
-        "filename": "Lets_Fix_Money_02_The_True_Cost_Short.mp4",
-        "library_file_id": "libfile_fde3_f-30606051b7b081919b0821aa9613d3d8_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_02_The_True_Cost_Short.mp4"
       },
       "source_in_git": false,
       "next_action": "synthesize then mix with saved source"
@@ -72,9 +76,7 @@
       "status": "script_ready",
       "plan": "plans/03.json",
       "saved_file": {
-        "filename": "Lets_Fix_Money_03_The_Financial_Spiral_Short.mp4",
-        "library_file_id": "libfile_fde3_f-fb6c1b4e74ac8191b848b2c3094da423_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_03_The_Financial_Spiral_Short.mp4"
       },
       "source_in_git": false,
       "next_action": "synthesize then mix with saved source"
@@ -91,9 +93,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_04_Poverty_Charges_Interest_Short.mp4",
-        "library_file_id": "libfile_fde3_f-fa4491079d9081919e67804f82122a2d_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "2"
+        "filename": "Lets_Fix_Money_04_Poverty_Charges_Interest_Short.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -110,9 +110,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_05_Small_Packs_and_Delayed_Repairs_Short.mp4",
-        "library_file_id": "libfile_fde3_f-15f9d7e06194819180eeaf3281ef5c6f_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_05_Small_Packs_and_Delayed_Repairs_Short.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -129,9 +127,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_06_Four_Pillars_of_Saving_Short.mp4",
-        "library_file_id": "libfile_fde3_f-90dc64c89c248191945f056e60eb0d85_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "2"
+        "filename": "Lets_Fix_Money_06_Four_Pillars_of_Saving_Short.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -148,9 +144,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_07_Phone_Bill_Four_Pillars_Example.mp4",
-        "library_file_id": "libfile_fde3_f-b3d37fd619c481918e599b9909db72f8_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_07_Phone_Bill_Four_Pillars_Example.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -167,9 +161,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_08_The_Silent_Toilet_Leak.mp4",
-        "library_file_id": "libfile_fde3_f-74968ccd01988191ac2fe01e229c2c41_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_08_The_Silent_Toilet_Leak.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -186,9 +178,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_09_Where_Did_My_Money_Go.mp4",
-        "library_file_id": "libfile_fde3_f-728927826e1c8191bc90ceb63214aff4_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_09_Where_Did_My_Money_Go.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -205,9 +195,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_10_Check_The_Bill.mp4",
-        "library_file_id": "libfile_fde3_f-cb9a8d2752d4819185005b234531f624_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_10_Check_The_Bill.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -224,9 +212,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_11_Dont_Let_Interest_Eat_Your_Cashback.mp4",
-        "library_file_id": "libfile_fde3_f-bd135c821e308191b9762c6e5795d3cc_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_11_Dont_Let_Interest_Eat_Your_Cashback.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -243,9 +229,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_12_Compare_Before_Replacing.mp4",
-        "library_file_id": "libfile_fde3_f-2260b0624190819196670325fbcfeb25_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_12_Compare_Before_Replacing.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -262,9 +246,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_Coming_Soon_1080p.mp4",
-        "library_file_id": "libfile_fde3_f-d1974a4d295c8191bb8a390f26be692f_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_Coming_Soon_1080p.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"
@@ -281,9 +263,7 @@
       "status": "existing_narration",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_Introduction_Kokoro_Heart.mp4",
-        "library_file_id": "libfile_fde3_f-69d5ac7ced308191a64289fbf1fcf2d9_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_Introduction_Kokoro_Heart.mp4"
       },
       "source_in_git": false,
       "next_action": "preserve existing narration; no regeneration"
@@ -300,9 +280,7 @@
       "status": "awaiting_script",
       "plan": null,
       "saved_file": {
-        "filename": "Lets_Fix_Money_YouTube_Short_1080x1920.mp4",
-        "library_file_id": "libfile_fde3_f-b75f51db096c819184216af57dedb4ba_d7c5c3e9eaec81918947a3af9e2c5243",
-        "version": "0"
+        "filename": "Lets_Fix_Money_YouTube_Short_1080x1920.mp4"
       },
       "source_in_git": false,
       "next_action": "inspect source scenes and write timed narration"

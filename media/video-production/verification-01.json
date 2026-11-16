@@ -1,0 +1,15 @@
+{
+  "source_commit": "801c72e7f0190493c72394a40277c007e61599a7",
+  "run_id": 43815645652,
+  "artifact_id": 14202302760,
+  "restore": "Extract this archive into media/video-production/work, then use pipeline.py mix --job 01 --source <registered original MP4>.",
+  "video_sha256": "e499dd47651275d7497360d32e3b01793525f86c484730008aa870f1dc626793",
+  "video_packet_sha256": "3d2a2ed3ba947205bd0383f30d26538a2e0846c4331866f4d759c7eb9fa75dc8",
+  "full_decode": "passed",
+  "all_ten_cues_within_scene": true,
+  "all_speeds": 0.98,
+  "peak_dbfs": -2.0,
+  "visual_scene_review": "passed",
+  "human_listening_review": "not performed",
+  "restore_test": "passed: ten real phrase caches validated without Kokoro; completed narration preserved byte-for-byte"
+}

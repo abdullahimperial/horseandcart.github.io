@@ -79,6 +79,10 @@ class ResumeTests(unittest.TestCase):
                 self.assertEqual(state['stage'], 'audio_ready')
                 self.assertTrue(state['completed'][0]['reused'])
                 self.assertEqual(generated.count(plan['cues'][0]['text']), 1)
+                original_audio = p.digest(root / '01/narration.wav')
+                with patch.object(p, 'run', side_effect=AssertionError('Completed audio must not be normalized again')):
+                    p.synthesize('01', root)
+                self.assertEqual(original_audio, p.digest(root / '01/narration.wav'))
 
 
 if __name__ == '__main__':

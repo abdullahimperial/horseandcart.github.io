@@ -2,10 +2,11 @@
 
 ## 16 November 2026 — resumable video production
 
-- Register 12 numbered shorts, two teasers, and two existing Heart-narrated videos with exact saved-source references and SHA-256 checks.
+- Register 12 numbered shorts, two teasers, and two existing Heart-narrated videos with exact source filenames and SHA-256 checks.
 - Recover previous narration code; preserve the separate 49-second and 42.905-second horse/cart versions.
 - Add first-three timed scripts, atomic phrase checkpoints, checksum-based reuse, natural timing limits, stream-copy mixing and full decode verification.
 - Add interrupted-run tests and a recoverable Actions speech build; document expiring artifacts and mandatory durable backups.
+- Rendered and saved original 49-second short 01 with Heart narration and a durable reusable audio checkpoint; actual synthesis, timing, full decode and unchanged picture stream verified.
 - Public video upload remains blocked by automatic approval review despite owner permission. Source MP4s are not committed.
 
 

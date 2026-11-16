@@ -170,6 +170,22 @@ def synthesize(job_id, state_root):
     state = {'schema_version': 1, 'job': job_id, 'plan_sha256': hashlib.sha256(
              json.dumps(plan, sort_keys=True).encode()).hexdigest(), 'stage': 'synthesizing', 'completed': []}
     state_file = folder / 'state.json'
+    # Preserve a completed track byte-for-byte, including its normalization.
+    # Re-running FFmpeg on another machine can change headers or DSP rounding.
+    try:
+        previous = json.loads(state_file.read_text())
+        completed_track = folder / 'narration.wav'
+        if (previous.get('plan_sha256') == state['plan_sha256']
+                and previous.get('stage') in ['audio_ready', 'verified']
+                and len(previous.get('completed', [])) == len(plan['cues'])
+                and digest(completed_track) == previous['audio_sha256']
+                and all(cached_phrase(cache, phrase_key(plan, cue), plan['sample_rate'],
+                                      cue['end'] - cue['start'] - .08) for cue in plan['cues'])):
+            write_captions(plan, folder / 'captions.srt')
+            print(f'{job_id}: validated all {len(plan["cues"])} phrases; preserving completed narration', flush=True)
+            return
+    except (OSError, ValueError, KeyError):
+        pass
     atomic_json(state_file, state)
     engine = None
     rate = plan['sample_rate']
