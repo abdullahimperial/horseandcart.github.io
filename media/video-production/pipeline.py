@@ -39,6 +39,8 @@ def load_plan(job_id):
     if job is None:
         raise ValueError('Unknown job: ' + job_id)
     if not job.get('plan'):
+        if job.get('private_plan_checkpoint'):
+            raise ValueError('Restore the current private plans from ' + job['private_plan_checkpoint'])
         raise ValueError('No reviewed timed script for ' + job_id + '; inspect scenes first.')
     plan = json.loads((HERE / job['plan']).read_text())
     validate(plan)
