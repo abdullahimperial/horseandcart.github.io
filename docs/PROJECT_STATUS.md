@@ -14,7 +14,7 @@ Read `media/video-production/CHECKPOINT.md` for permanent filenames, SHA256 valu
 
 Automatic approval review blocked public source-video/script disclosure. The safe completed path packages the public engine and runs speech locally. Code, workflow, tests, output records and recovery instructions are in GitHub; referenced media and private scripts are in saved files. The repository can direct continuation without chat history, but those files must be retrieved.
 
-Local checks passed: 162 JavaScript, six Android bundle and six narration tests. Engine build 43820588707 succeeded; branch repository checks 43821022590 passed. Current task branch: `video-narration-remaining`, PR #5. The final merge/CI status should be checked on GitHub.
+Local checks passed: 162 JavaScript, six Android bundle and six narration tests. Engine build 43820588707 succeeded; branch repository checks 43821022590 passed. Current task branch: `video-narration-remaining`, [PR #5](https://github.com/abdullahimperial/horseandcart.github.io/pull/5). Final code checks passed at `d244108766611a62d9792d2b0b5b431c4a0c3d25` (run 43822404372). Automatic approval review rejected the attempted squash merge because it requires explicit permission for this new PR. PR #5 is ready and open; no merge occurred. The next repository action is owner approval to merge PR #5 into main. Do not work around the merge block.
 
 ## Website / Android
 

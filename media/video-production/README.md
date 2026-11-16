@@ -33,7 +33,7 @@ The model and voice downloads are pinned to a revision and checked by SHA-256. S
 
 ## GitHub Actions and durable checkpoints
 
-`Resumable Kokoro Heart narration` generates speech without uploading source video. On the `video-resume-workflow` branch, changes to the pipeline, plans, requirements or workflow trigger job 01. Its manual Run workflow control supports historical public jobs 01–03; restore the current private checkpoint for later work. A rerun of a failed job is also supported.
+`Resumable Kokoro Heart narration` generates speech without uploading source video. On the `video-resume-workflow` branch, changes to the pipeline, plans, requirements or workflow trigger job 01. Its manual control lists historical jobs 01–03. Current job 02 uses a private revised plan, so restore its checkpoint and run locally; the public queue deliberately blocks use of its historical script. A rerun of a failed job is also supported.
 
 The workflow restores phrase cache and always uploads complete/partial `work/` as `Video-<id>-Heart-Checkpoint`, including failures. Actions caches can be evicted and artifacts expire after 90 days: **neither is the permanent source of truth**. Before ending a session, download the checkpoint artifact, save a durable checkpoint ZIP to the owner's saved files, and record the exact filename, run ID, commit and checksum in `CHECKPOINT.md`. Future sessions restore that ZIP into `work/`. Do not leave an artifact link as the only backup. A hard runner kill may bypass final artifact upload; previous durable checkpoints remain usable.
 
@@ -50,7 +50,7 @@ Tests exercise overlap rejection, voice/speed constraints, input-based invalidat
 
 ## Private scripts and offline generation
 
-Recovered scripts for the later videos could not be published to this public repository: automatic approval review rejected that disclosure. `CHECKPOINT.md` identifies the permanent private working archive. Restore its plans/queue locally before continuing those jobs. The existing portrait teaser is already covered by the completed introduction; their video packet checksums match.
+Recovered scripts for the later videos could not be published to this public repository: automatic approval review rejected that disclosure. `CHECKPOINT.md` identifies the final permanent private archive. Restore its plans/queue locally before continuing those jobs. The existing portrait teaser is already covered by the completed introduction; their video packet checksums match.
 
 The `Build offline Heart voice engine` workflow packages the public pinned model and Python 3.12 Linux wheels into two downloadable artifacts, with `SHA256.json` and model-card/license metadata. No private scripts or source video are uploaded. Extract the engine artifact into `engine/` and the model artifact into `engine/model/`. Verify every entry in `engine/SHA256.json`. Create a Python 3.12 virtual environment, install `engine/wheels/*.whl` using `pip install --no-index --no-deps`, then install `engine/wheels/docopt-0.6.2.tar.gz` with `--no-index --no-deps --no-build-isolation`. The second step is required: docopt is supplied as a source archive. Set `LFM_KOKORO_MODEL_DIR` to the extracted model folder and `HF_HUB_OFFLINE=1`. The original model/voice SHA256 checks still apply. Then run `python media/video-production/run_queue.py --job pending`. This selects only `script_ready` jobs, records an atomic batch report, and continues to the next job after a failure. Reruns preserve validated completed tracks and phrases.
 
