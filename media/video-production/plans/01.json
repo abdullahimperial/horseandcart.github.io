@@ -1,0 +1,67 @@
+{
+  "model": "hexgrad/Kokoro-82M",
+  "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "voice": "af_heart",
+  "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "voice_sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+  "sample_rate": 24000,
+  "speed": 0.98,
+  "max_speed": 1.12,
+  "pipeline_version": 1,
+  "background_gain": 0,
+  "id": "01",
+  "duration": 49.0,
+  "source_sha256": "f7e731ffe0b5c10912e02380acd6106cbd45ef365ecc216410ea0ad71f4d284b",
+  "cues": [
+    {
+      "start": 0.15,
+      "end": 3.9,
+      "text": "Working hard. Still going nowhere?"
+    },
+    {
+      "start": 4.15,
+      "end": 8.4,
+      "text": "Two brothers. One horse. One cart."
+    },
+    {
+      "start": 8.65,
+      "end": 12.9,
+      "text": "One brother tied the horse behind the cart. Now it had to push."
+    },
+    {
+      "start": 13.15,
+      "end": 18.4,
+      "text": "His brother changed the order."
+    },
+    {
+      "start": 18.65,
+      "end": 22.9,
+      "text": "Same horse. Same cart. A much easier journey."
+    },
+    {
+      "start": 23.15,
+      "end": 27.9,
+      "text": "That is how I think about my money."
+    },
+    {
+      "start": 28.15,
+      "end": 32.9,
+      "text": "Buy first, and tomorrow’s income can pay for yesterday’s purchase."
+    },
+    {
+      "start": 33.15,
+      "end": 38.9,
+      "text": "Save first, and the order changes: earn, save, then buy."
+    },
+    {
+      "start": 39.15,
+      "end": 43.9,
+      "text": "My “payments” can build savings for the next purchase."
+    },
+    {
+      "start": 44.15,
+      "end": 48.9,
+      "text": "Put the cart behind the horse."
+    }
+  ]
+}

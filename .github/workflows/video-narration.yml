@@ -1,0 +1,70 @@
+name: Resumable Kokoro Heart narration
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: 'Queue id with a reviewed timed script (01, 02, 03)'
+        default: '01'
+        required: true
+        type: choice
+        options: ['01', '02', '03']
+  push:
+    branches: [video-resume-workflow]
+    paths:
+      - 'media/video-production/pipeline.py'
+      - 'media/video-production/plans/**'
+      - 'media/video-production/requirements.txt'
+      - '.github/workflows/video-narration.yml'
+permissions:
+  contents: read
+concurrency:
+  group: video-narration-${{ github.ref }}-${{ inputs.job || '01' }}
+  cancel-in-progress: false
+jobs:
+  narration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      HF_HUB_DISABLE_XET: '1'
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      VIDEO_JOB: ${{ inputs.job || '01' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: media/video-production/requirements.txt
+      - name: Validate queue and restore rules
+        run: python media/video-production/pipeline.py validate
+      - uses: actions/cache/restore@v4
+        with:
+          path: media/video-production/work
+          key: voice-v1-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            voice-v1-${{ github.ref_name }}-
+      - name: Install pinned speech engine
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg espeak-ng
+          python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r media/video-production/requirements.txt
+      - name: Test interruption recovery
+        run: python -m unittest discover -s media/video-production -p 'test_*.py'
+      - name: Generate missing phrases and save each one
+        run: python media/video-production/pipeline.py synthesize --job "$VIDEO_JOB"
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: media/video-production/work
+          key: voice-v1-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Preserve complete and partial work
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Video-${{ env.VIDEO_JOB }}-Heart-Checkpoint
+          path: media/video-production/work/
+          if-no-files-found: warn
+          retention-days: 90

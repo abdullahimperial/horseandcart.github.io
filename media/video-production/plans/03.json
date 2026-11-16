@@ -1,0 +1,67 @@
+{
+  "model": "hexgrad/Kokoro-82M",
+  "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "voice": "af_heart",
+  "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "voice_sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+  "sample_rate": 24000,
+  "speed": 0.98,
+  "max_speed": 1.12,
+  "pipeline_version": 1,
+  "background_gain": 0,
+  "id": "03",
+  "duration": 59.0,
+  "source_sha256": "14e8269be76f7ff2b29ae237e827c30a69c7be40735d8259bc14c4eb3c7efc53",
+  "cues": [
+    {
+      "start": 0.15,
+      "end": 3.9,
+      "text": "The holy grail of personal finance?"
+    },
+    {
+      "start": 4.15,
+      "end": 9.9,
+      "text": "Income minus expenses. What is left each month?"
+    },
+    {
+      "start": 10.15,
+      "end": 16.9,
+      "text": "Save the surplus. A buffer can help avoid fees and borrowing."
+    },
+    {
+      "start": 17.15,
+      "end": 23.9,
+      "text": "Lower costs can leave an even bigger surplus."
+    },
+    {
+      "start": 24.15,
+      "end": 27.9,
+      "text": "Now rewind. Same starting point. A different monthly gap."
+    },
+    {
+      "start": 28.15,
+      "end": 34.9,
+      "text": "Spend $500 more than you earn. Borrow the difference."
+    },
+    {
+      "start": 35.15,
+      "end": 42.9,
+      "text": "Interest adds another expense. Next month, the gap grows."
+    },
+    {
+      "start": 43.15,
+      "end": 48.9,
+      "text": "I work on both sides: earn more, spend less."
+    },
+    {
+      "start": 49.15,
+      "end": 54.9,
+      "text": "A surplus can turn the direction before net worth turns positive."
+    },
+    {
+      "start": 55.15,
+      "end": 58.9,
+      "text": "Change the equation. Change the direction."
+    }
+  ]
+}

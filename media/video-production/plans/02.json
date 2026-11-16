@@ -1,0 +1,57 @@
+{
+  "model": "hexgrad/Kokoro-82M",
+  "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "voice": "af_heart",
+  "model_sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "voice_sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+  "sample_rate": 24000,
+  "speed": 0.98,
+  "max_speed": 1.12,
+  "pipeline_version": 1,
+  "background_gain": 0,
+  "id": "02",
+  "duration": 46.0,
+  "source_sha256": "606f4e3ea564522dafaaea2fb4bd53b280acace203dc3efbea3d84058bbf28a9",
+  "cues": [
+    {
+      "start": 0.15,
+      "end": 3.9,
+      "text": "A $100 purchase can require $140 in earnings."
+    },
+    {
+      "start": 4.15,
+      "end": 8.9,
+      "text": "The price tag is only the starting point."
+    },
+    {
+      "start": 9.15,
+      "end": 13.9,
+      "text": "Add $5 in sales tax. Now I need $105 to spend."
+    },
+    {
+      "start": 14.15,
+      "end": 20.4,
+      "text": "If I keep 75% of my pay, I have to earn $140."
+    },
+    {
+      "start": 20.65,
+      "end": 26.9,
+      "text": "The other $35 goes to income tax and payroll deductions."
+    },
+    {
+      "start": 27.15,
+      "end": 33.9,
+      "text": "At $20 an hour before deductions, that is seven hours of work."
+    },
+    {
+      "start": 34.15,
+      "end": 40.4,
+      "text": "Is this purchase worth that much of my time?"
+    },
+    {
+      "start": 40.65,
+      "end": 45.9,
+      "text": "The real price includes my time."
+    }
+  ]
+}

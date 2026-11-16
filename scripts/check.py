@@ -25,6 +25,7 @@ def main():
     commands = [
         [node, '--test', *[str(p.relative_to(ROOT)) for p in sorted(tests)]],
         [sys.executable, '-m', 'unittest', 'discover', '-s', 'android/tests', '-p', 'test_*.py'],
+        [sys.executable, '-m', 'unittest', 'discover', '-s', 'media/video-production', '-p', 'test_*.py'],
     ]
     for command in commands:
         print('+ ' + ' '.join(command), flush=True)
@@ -37,3 +38,4 @@ if __name__ == '__main__':
         main()
     except subprocess.CalledProcessError as error:
         sys.exit(error.returncode)
+
