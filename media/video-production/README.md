@@ -57,3 +57,8 @@ The `Build offline Heart voice engine` workflow packages the public pinned model
 Engine artifacts expire after 30 days but the workflow can rebuild them. Narration/audio checkpoints must still be saved permanently. Never treat the public queue as evidence that private scripts or final videos have been published.
 
 Offline execution was verified on Linux with Python 3.12 and the bundled espeakng-loader; source/model hashes and successful real speech generation are separate from the synthetic interruption tests.
+
+
+## New book-based illustrated Shorts
+
+The separate [illustrated Shorts producer](../new-shorts-production/README.md) uses measured narration timing, four illustrated scenes and burned-in captions. Resume its N-prefixed series from the latest private `Lets_Fix_Money_New_50_Video_Production_Checkpoint.zip`; it is distinct from the older numbered videos documented above.

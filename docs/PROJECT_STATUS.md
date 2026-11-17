@@ -19,3 +19,8 @@ Local checks passed: 162 JavaScript, six Android bundle and six narration tests.
 ## Website / Android
 
 Product behavior is unchanged. Earlier verified CI links and known limitations are in `WORKFLOW_STATUS_2026-11-14.md`. The repository-first instruction remains in `AGENTS.md`.
+
+
+## New illustrated Shorts producer
+
+A separate N-prefixed producer now supports audio-first, sentence-cached narration, measured scene timing, open captions, illustrated portrait rendering and verified resumption. See [the continuation guide](../media/new-shorts-production/README.md). Reusable code and tests are in this branch; current content, media, save identities and publication receipts are in the owner's latest `Lets_Fix_Money_New_50_Video_Production_Checkpoint.zip`. Read that checkpoint for current progress rather than inferring it from chat history. No account-specific publication records or private scripts are committed here. Existing PR integration restrictions still apply.

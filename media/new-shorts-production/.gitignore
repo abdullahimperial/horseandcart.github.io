@@ -1,0 +1,10 @@
+inputs/
+work/
+outputs/
+queue.json
+preservation.json
+publication_requests.json
+*receipt*
+*.mp4
+*.wav
+__pycache__/
