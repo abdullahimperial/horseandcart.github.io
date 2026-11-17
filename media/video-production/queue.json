@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "voice": "af_heart",
-  "active_job": "02",
+  "active_job": null,
   "jobs": [
     {
       "id": "horse-cart-v2",
@@ -25,7 +25,7 @@
       "title": "01 Horse and Cart Short",
       "source": "sources/Lets_Fix_Money_01_Horse_and_Cart_Short.mp4",
       "sha256": "f7e731ffe0b5c10912e02380acd6106cbd45ef365ecc216410ea0ad71f4d284b",
-      "duration": 49.0,
+      "duration": 49,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
@@ -41,8 +41,8 @@
         "sha256": "e499dd47651275d7497360d32e3b01793525f86c484730008aa870f1dc626793"
       },
       "checkpoint": {
-        "filename": "Lets_Fix_Money_Video_01_Heart_Checkpoint.zip",
-        "sha256": "ddab993558e2f7f9f6717b3edd5411782b949fec1b81ec5550b048d6c022aa46"
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
       },
       "run_id": 43815645652,
       "human_listening_review": "not performed"
@@ -52,211 +52,331 @@
       "title": "02 The True Cost Short",
       "source": "sources/Lets_Fix_Money_02_The_True_Cost_Short.mp4",
       "sha256": "606f4e3ea564522dafaaea2fb4bd53b280acace203dc3efbea3d84058bbf28a9",
-      "duration": 46.0,
+      "duration": 46,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "script_ready",
-      "plan": "plans/02.json",
+      "status": "narrated_technical_checks_passed",
+      "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_02_The_True_Cost_Short.mp4"
       },
       "source_in_git": false,
-      "next_action": "synthesize then mix with saved source"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_02_The_True_Cost_Heart.mp4",
+        "sha256": "c8fdacb65206a7ae409351ecff0dd6bace22cde9c0fb13fb42fda67c568be777"
+      },
+      "human_listening_review": "not performed",
+      "historical_public_plan": "plans/02.json",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "03",
       "title": "03 The Financial Spiral Short",
       "source": "sources/Lets_Fix_Money_03_The_Financial_Spiral_Short.mp4",
       "sha256": "14e8269be76f7ff2b29ae237e827c30a69c7be40735d8259bc14c4eb3c7efc53",
-      "duration": 59.0,
+      "duration": 59,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "script_ready",
+      "status": "narrated_technical_checks_passed",
       "plan": "plans/03.json",
       "saved_file": {
         "filename": "Lets_Fix_Money_03_The_Financial_Spiral_Short.mp4"
       },
       "source_in_git": false,
-      "next_action": "synthesize then mix with saved source"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_03_The_Financial_Spiral_Heart.mp4",
+        "sha256": "d858e62024c26436126c669a9007facc05b45ca2b48377006ad1667a37fd43e8"
+      },
+      "human_listening_review": "not performed",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "04",
       "title": "04 Poverty Charges Interest Short",
       "source": "sources/Lets_Fix_Money_04_Poverty_Charges_Interest_Short.mp4",
       "sha256": "088e3eaa3a040f910265ed62ac6a3c8f4209e2dd1cdad7d28772c3c73d6792c4",
-      "duration": 56.0,
+      "duration": 56,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_04_Poverty_Charges_Interest_Short.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_04_Poverty_Charges_Interest_Heart.mp4",
+        "sha256": "fe4a1666b00857a68f517f09fa0242dd61a5e0c3f93e497199b561a2673f2182"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "05",
       "title": "05 Small Packs and Delayed Repairs Short",
       "source": "sources/Lets_Fix_Money_05_Small_Packs_and_Delayed_Repairs_Short.mp4",
       "sha256": "511e9751a0b4ddbb9ff879c9cf4f3318cd1ee994a2aca3efa093b859f551688a",
-      "duration": 60.0,
+      "duration": 60,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_05_Small_Packs_and_Delayed_Repairs_Short.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_05_Small_Packs_and_Delayed_Repairs_Heart.mp4",
+        "sha256": "dd1d183c02c932c96f4bf1006dd791c04851c1d5fc2ac45ebb3762d230aac321"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "06",
       "title": "06 Four Pillars of Saving Short",
       "source": "sources/Lets_Fix_Money_06_Four_Pillars_of_Saving_Short.mp4",
       "sha256": "596fadac5eff43304461b8793597c68b685078cbd6fdc6ca84e2dd8673c5c83c",
-      "duration": 74.0,
+      "duration": 74,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_06_Four_Pillars_of_Saving_Short.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_06_Four_Pillars_of_Saving_Heart.mp4",
+        "sha256": "37aa4c0d0a88138619d86f949e0406f9e8f7a3453ac8c78b5ecc813689607758"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "07",
       "title": "07 Phone Bill Four Pillars Example",
       "source": "sources/Lets_Fix_Money_07_Phone_Bill_Four_Pillars_Example.mp4",
       "sha256": "e1a56fc6b24d36f52ea634c48f5d781d3119338fc01d593b461915bbccf2a9b3",
-      "duration": 76.0,
+      "duration": 76,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_07_Phone_Bill_Four_Pillars_Example.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_07_Phone_Bill_Four_Pillars_Example_Heart.mp4",
+        "sha256": "09c36d6d2184a165081b2f6a0eaa6b21dc0eb47ec68e5fdee3d5ad4b4a12d6b4"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "08",
       "title": "08 The Silent Toilet Leak",
       "source": "sources/Lets_Fix_Money_08_The_Silent_Toilet_Leak.mp4",
       "sha256": "fc04d6ee1962c8d56590412f913509f9197f5d20ff7d73e639460c5a5323db34",
-      "duration": 45.0,
+      "duration": 45,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_08_The_Silent_Toilet_Leak.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_08_The_Silent_Toilet_Leak_Heart.mp4",
+        "sha256": "9264148a9c75e6d7689269fc8675c19834477dce84d2f12bb27613f9cefb2b00"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "09",
       "title": "09 Where Did My Money Go",
       "source": "sources/Lets_Fix_Money_09_Where_Did_My_Money_Go.mp4",
       "sha256": "d465c7d1e1fe971f8667caf23a454ce028615edaa61fb331cd227399303125eb",
-      "duration": 52.0,
+      "duration": 52,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_09_Where_Did_My_Money_Go.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_09_Where_Did_My_Money_Go_Heart.mp4",
+        "sha256": "1fcec30d985e0f8f53950aa9e030d2dabe11bec520f65ad22db89c556a6f5503"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "10",
       "title": "10 Check The Bill",
       "source": "sources/Lets_Fix_Money_10_Check_The_Bill.mp4",
       "sha256": "164327d0024ce0e46ae788ecaed535ffc9d23274f0887f80e3f9dceba6d03569",
-      "duration": 42.0,
+      "duration": 42,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_10_Check_The_Bill.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_10_Check_The_Bill_Heart.mp4",
+        "sha256": "c8c211c40334e010acdeaa1fe80a4ce62f7d442dae22ef8b4b87961fe56da157"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "11",
       "title": "11 Dont Let Interest Eat Your Cashback",
       "source": "sources/Lets_Fix_Money_11_Dont_Let_Interest_Eat_Your_Cashback.mp4",
       "sha256": "4a540c53ce17ad187415984103a500d1e0bdaf2d35b8b68b300e841d9298280b",
-      "duration": 45.0,
+      "duration": 45,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_11_Dont_Let_Interest_Eat_Your_Cashback.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_11_Dont_Let_Interest_Eat_Your_Cashback_Heart.mp4",
+        "sha256": "0cca49adcc39e0ac3e5fec5380b81cf57f3959098555db705812a7a11f301107"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "12",
       "title": "12 Compare Before Replacing",
       "source": "sources/Lets_Fix_Money_12_Compare_Before_Replacing.mp4",
       "sha256": "ac71fee0f7a66e2cea3521fcc5e4fe7affb31030b36293ea38cdeb7f21f7591f",
-      "duration": 45.0,
+      "duration": 45,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_12_Compare_Before_Replacing.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_12_Compare_Before_Replacing_Heart.mp4",
+        "sha256": "2afde5a0b0601b64bcb4844bef03767cf1750fba567f33fb14138355b5b821fd"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "teaser-landscape",
       "title": "Coming Soon 1080p",
       "source": "sources/Lets_Fix_Money_Coming_Soon_1080p.mp4",
       "sha256": "a1a6a90e27272987b8d51ab132ee2620eb08c9a04a43439232e380232e7716c3",
-      "duration": 28.0,
+      "duration": 28,
       "width": 1920,
       "height": 1080,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "narrated_technical_checks_passed",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_Coming_Soon_1080p.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "owner listening review; preserve completed output",
+      "output": {
+        "filename": "Lets_Fix_Money_Coming_Soon_Landscape_Heart.mp4",
+        "sha256": "42d895d7f21594d5c75399d667aaf9ff2d4bf66758da437da3e42c8b15e7a699"
+      },
+      "human_listening_review": "not performed",
+      "private_plan_checkpoint": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+      "checkpoint": {
+        "filename": "Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip",
+        "sha256": "cd43e2722c4bca54732681d65fc2a68dab36f90ca686a912334e04582fb2e045"
+      }
     },
     {
       "id": "introduction",
       "title": "Introduction Kokoro Heart",
       "source": "sources/Lets_Fix_Money_Introduction_Kokoro_Heart.mp4",
       "sha256": "fe5e62c880d2c7eed3df9521076b05566922c7314e89973e39ee6c9740a03467",
-      "duration": 28.0,
+      "duration": 28,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
@@ -273,17 +393,24 @@
       "title": "YouTube Short 1080x1920",
       "source": "sources/Lets_Fix_Money_YouTube_Short_1080x1920.mp4",
       "sha256": "2a87c94dbfe9fd33980b1abd8f111fa25dca4ddb01980ee4b864f287a5158d07",
-      "duration": 28.0,
+      "duration": 28,
       "width": 1080,
       "height": 1920,
       "has_audio_stream": true,
-      "status": "awaiting_script",
+      "status": "covered_by_existing_narration",
       "plan": null,
       "saved_file": {
         "filename": "Lets_Fix_Money_YouTube_Short_1080x1920.mp4"
       },
       "source_in_git": false,
-      "next_action": "inspect source scenes and write timed narration"
+      "next_action": "use existing introduction; identical video packet checksum confirmed",
+      "covered_by": "introduction",
+      "picture_stream_sha256": "498e090d865e93b9c731fecf686f6915edd26987e5906df8aac61068253f297a"
     }
-  ]
+  ],
+  "delivery": {
+    "filename": "Lets_Fix_Money_Complete_Heart_Video_Set.zip",
+    "sha256": "d84e2fc9289aa2c2473f778325df87b1324e7fa04d678ac81100f7579f356b87",
+    "unique_videos": 15
+  }
 }

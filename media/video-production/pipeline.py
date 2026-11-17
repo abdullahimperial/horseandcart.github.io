@@ -39,6 +39,8 @@ def load_plan(job_id):
     if job is None:
         raise ValueError('Unknown job: ' + job_id)
     if not job.get('plan'):
+        if job.get('private_plan_checkpoint'):
+            raise ValueError('Restore the current private plans from ' + job['private_plan_checkpoint'])
         raise ValueError('No reviewed timed script for ' + job_id + '; inspect scenes first.')
     plan = json.loads((HERE / job['plan']).read_text())
     validate(plan)
@@ -108,6 +110,14 @@ class Heart:
         torch.set_num_threads(2)
         torch.manual_seed(0)
         def download(name):
+            # A prebuilt engine keeps unpublished scripts on the local machine.
+            # The same pinned model/voice checksums still apply below.
+            local_model = os.environ.get('LFM_KOKORO_MODEL_DIR')
+            if local_model:
+                path = Path(local_model) / name
+                if not path.is_file():
+                    raise FileNotFoundError('Offline model file missing: ' + name)
+                return path
             return Path(hf_hub_download(plan['model'], name, revision=plan['revision']))
         config, weights = download('config.json'), download('kokoro-v1_0.pth')
         voice = download('voices/' + plan['voice'] + '.pt')

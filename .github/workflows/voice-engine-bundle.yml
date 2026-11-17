@@ -1,0 +1,65 @@
+name: Build offline Heart voice engine
+on:
+  workflow_dispatch:
+  push:
+    branches: [video-narration-remaining]
+    paths: ['.github/workflows/voice-engine-bundle.yml']
+permissions:
+  contents: read
+jobs:
+  engine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      HF_HUB_DISABLE_XET: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing pinned engine
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y espeak-ng
+          python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r media/video-production/requirements.txt
+      - name: Package public dependencies for private local rendering
+        run: |
+          mkdir -p engine/wheels engine/system engine/model
+          python -m pip freeze > engine/requirements-resolved.txt
+          python -m pip download --no-deps -r engine/requirements-resolved.txt --extra-index-url https://download.pytorch.org/whl/cpu -d engine/wheels
+          cp -a /usr/lib/x86_64-linux-gnu/libespeak-ng.so* /usr/lib/x86_64-linux-gnu/libpcaudio.so* /usr/lib/x86_64-linux-gnu/libsonic.so* engine/system/
+          cp -a /usr/lib/x86_64-linux-gnu/espeak-ng-data engine/system/
+          cp -a /usr/share/doc/espeak-ng /usr/share/doc/libespeak-ng1 /usr/share/doc/libpcaudio0 engine/system/
+          python - <<'PY'
+          import hashlib, json, pathlib, shutil
+          from huggingface_hub import hf_hub_download
+          plan = json.loads(pathlib.Path('media/video-production/plans/01.json').read_text())
+          for name in ['config.json', 'kokoro-v1_0.pth', 'voices/af_heart.pt', 'README.md']:
+              source = pathlib.Path(hf_hub_download(plan['model'], name, revision=plan['revision']))
+              target = pathlib.Path('engine/model') / name
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, target)
+          for name, key in [('kokoro-v1_0.pth', 'model_sha256'), ('voices/af_heart.pt', 'voice_sha256')]:
+              assert hashlib.sha256((pathlib.Path('engine/model')/name).read_bytes()).hexdigest() == plan[key]
+          files = {str(p.relative_to('engine')): hashlib.sha256(p.read_bytes()).hexdigest()
+                   for p in pathlib.Path('engine').rglob('*') if p.is_file()}
+          pathlib.Path('engine/SHA256.json').write_text(json.dumps(files, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Offline-Heart-Engine-Python312-Linux
+          path: |
+            engine/wheels/
+            engine/system/
+            engine/requirements-resolved.txt
+            engine/SHA256.json
+          retention-days: 30
+          compression-level: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Offline-Heart-Model
+          path: engine/model/
+          retention-days: 30
+          compression-level: 1

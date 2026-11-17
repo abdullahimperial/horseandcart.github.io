@@ -2,20 +2,25 @@
 
 Updated: 16 November 2026 (Edmonton).
 
-## Active goal
+## Completed goal
 
-Continue all-video narration without losing work at chat limits. The production entry point is [media/video-production/README.md](../media/video-production/README.md), its [queue](../media/video-production/queue.json), and [checkpoint](../media/video-production/CHECKPOINT.md). Merged into `main` through [PR #4](https://github.com/abdullahimperial/horseandcart.github.io/pull/4), commit `fe6647fe04ff53cd2f73e03ffda39710a7934552`. Resume from current main. [Repository checks](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43817688949) passed for the merge.
+All existing silent videos now have Kokoro Heart narration. The complete set contains fifteen unique narrated videos: twelve numbered shorts, the portrait introduction, landscape teaser, and alternate Horse and Cart version. The portrait teaser is a duplicate of the introduction's picture stream and is already covered.
 
-The queue contains 12 numbered shorts, two teasers and the two completed narrated versions. The 49-second original horse/cart is separate from the finished 42.905-second version. Heart (`af_heart`) is the selected voice. Existing work is preserved; only missing/stale phrases regenerate.
+This continuation produced twelve new videos (02–12 and landscape). All 111 phrases fit at speed 0.98. Source hashes, full output decode, scene timing, unchanged picture streams and audio levels passed. Every MP4 and the final cumulative checkpoint were saved. Restoring the final checkpoint recovered all thirteen production tracks byte-for-byte without the speech engine. Human listening review remains separate and was not performed.
 
-The phrase-resume pipeline, first-three timed scripts, recoverable Actions build, source register and tests are implemented. Local baseline passed: 162 JavaScript tests, six Android bundle tests, and four video-resume tests. The integration test deliberately fails after one phrase and confirms that phrase is reused. Real Kokoro build 43815645652 succeeded, and the original 49-second short is now narrated and saved with its durable phrase checkpoint. All ten phrases fit at speed 0.98; full decode and unchanged picture-stream checks passed. See the media checkpoint for exact filenames; human listening review remains separate.
+## Continue here
 
-Source video public upload was rejected by automatic review even after explicit permission. The queue records the saved originals and checksums. No source MP4 upload completed, so a completely self-contained Git clone remains blocked at that media boundary. Code/checkpoints can continue independently.
+Read `media/video-production/CHECKPOINT.md` for permanent filenames, SHA256 values, restore commands, engine build and detailed verification. `Lets_Fix_Money_Complete_Heart_Video_Set.zip` contains the finished set. `Lets_Fix_Money_All_Videos_Heart_Checkpoint.zip` contains current private scripts, queue, audio and phrase states. No synthesis remains pending. Restore that checkpoint before any requested revision; do not overwrite it with historical public scripts.
 
-## Next action
+Automatic approval review blocked public source-video/script disclosure. The safe completed path packages the public engine and runs speech locally. Code, workflow, tests, output records and recovery instructions are in GitHub; referenced media and private scripts are in saved files. The repository can direct continuation without chat history, but those files must be retrieved.
 
-Continue 02–03 from their saved scripts, then inspect later scenes before scripting. Job 01 and its permanent audio checkpoint are saved; retrieve them through the exact filenames in the media checkpoint. Never claim all 12 videos have narration until each has verified output.
+Local checks passed: 162 JavaScript, six Android bundle and six narration tests. Engine build 43820588707 succeeded; branch repository checks 43821022590 passed. Current task branch: `video-narration-remaining`, [PR #5](https://github.com/abdullahimperial/horseandcart.github.io/pull/5). Final code checks passed at `d244108766611a62d9792d2b0b5b431c4a0c3d25` (run 43822404372). Automatic approval review rejected the attempted squash merge because it requires explicit permission for this new PR. PR #5 is ready and open; no merge occurred. The next repository action is owner approval to merge PR #5 into main. Do not work around the merge block.
 
-## Website / Android status
+## Website / Android
 
-The previous verified workflow checkpoint, CI links and known limitations are preserved in [WORKFLOW_STATUS_2026-11-14.md](WORKFLOW_STATUS_2026-11-14.md). Website product behavior and Android code were not changed in this media task. See `AGENTS.md` for the owner's standing repository-first instruction.
+Product behavior is unchanged. Earlier verified CI links and known limitations are in `WORKFLOW_STATUS_2026-11-14.md`. The repository-first instruction remains in `AGENTS.md`.
+
+
+## New illustrated Shorts producer
+
+A separate N-prefixed producer now supports audio-first, sentence-cached narration, measured scene timing, open captions, illustrated portrait rendering and verified resumption. See [the continuation guide](../media/new-shorts-production/README.md). Reusable code and tests are in this branch; current content, media, save identities and publication receipts are in the owner's latest `Lets_Fix_Money_New_50_Video_Production_Checkpoint.zip`. Read that checkpoint for current progress rather than inferring it from chat history. No account-specific publication records or private scripts are committed here. Existing PR integration restrictions still apply.
