@@ -1,4 +1,4 @@
-.lesson-videos{margin-block:2rem;padding-block:1.5rem;border-block-start:1px solid #ccd5c7}
+.lesson-videos{margin:1.5rem 18px;padding-block:1.5rem;border-block-start:1px solid #ccd5c7}
 .lesson-videos h2{margin-block:0 .5rem}
 .lesson-video{margin-block:1.5rem;max-width:24rem}
 .lesson-video h3{font-size:1.05rem;overflow-wrap:anywhere}
@@ -8,6 +8,6 @@
 .lesson-video-note{max-width:18rem;margin:0;text-align:center;font-size:.9rem}
 .lesson-video-link{display:inline-block;margin-block-start:.75rem;text-underline-offset:.2em}
 .lesson-video button:focus-visible,.lesson-video-link:focus-visible{outline:3px solid #b84932;outline-offset:4px}
-.course-video-channel{margin-block:1.5rem;padding:1.25rem;border:1px solid #ccd5c7;border-radius:12px}
+.course-video-channel{width:min(1220px,calc(100% - 32px));margin:1.5rem auto;padding:1.25rem;border:1px solid #ccd5c7;border-radius:12px}
 .course-video-channel p{margin-block:.5rem 0}
 @media print{.lesson-video-player{display:none}.lesson-video-link:after{content:' (' attr(href) ')'}}
