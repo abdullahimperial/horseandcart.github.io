@@ -34,3 +34,8 @@ GitHub Pages serves static HTML/CSS/JavaScript and local images/fonts. There is 
 ## Video production
 
 `media/video-production/queue.json` owns job identities and source checksums; `plans/` owns timed scripts. `pipeline.py` separates speech synthesis from picture mixing so Actions can generate audio without source-video access. Cached phrases are keyed by text, model/voice hashes, speed, sample rate, synthesis version and available duration. Only validated entries are reused. State updates are atomic; source/audio checksums prevent stale mixing. Existing speech/animation generators are preserved in sibling folders. Media bytes currently remain in owner-accessible saved files because public-upload approval review blocked transfer; exact references and restore steps are documented.
+
+
+## Lesson video integration
+
+`course/assets/lesson-videos.js` separates planned topic-to-lesson associations from verified public YouTube IDs. Only valid published entries render. The existing course renderer mounts the optional video block without changing progress keys or lesson hashes. The player is created only after a learner click, uses the privacy-enhanced YouTube domain and retains a direct Shorts link. `video-copy.js` augments the Urdu catalog before the shared language runtime initializes. Private scheduling receipts are not website data. See `course/VIDEOS.md` for how to add a publication and check it.

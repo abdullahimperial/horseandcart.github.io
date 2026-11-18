@@ -12,7 +12,8 @@ Source for Abdullah Mohiuddin’s book companion website, interactive course, fi
 4. [Architecture](docs/ARCHITECTURE.md): where behavior lives and why.
 5. [Changelog](CHANGELOG.md): meaningful changes.
 6. [Video narration queue](media/video-production/README.md): source inventory, Heart voice, restart commands and checkpoints.
-7. [Editorial source register](docs/CONTENT_SOURCES.md): book/workshop originals outside this public software repository.
+7. [Course video integration](course/VIDEOS.md): lesson mappings, confirmed YouTube IDs and publication follow-up.
+8. [Editorial source register](docs/CONTENT_SOURCES.md): book/workshop originals outside this public software repository.
 
 ## Run the website
 
@@ -70,4 +71,5 @@ Course notes can be saved locally. Imported financial records stay in memory unt
 ## Finish every work session
 
 Update relevant component documentation, `CHANGELOG.md` and `docs/PROJECT_STATUS.md` with what changed, why, checks actually run, limitations and the next concrete step. Commit and push authorized changes, then verify the remote commit and applicable workflows. Checkpoint substantial work before a long build or interruption. Necessary decisions and unfinished-work notes must not exist only in chat.
+
 
