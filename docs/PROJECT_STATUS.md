@@ -1,8 +1,18 @@
 # Current project checkpoint
 
-Updated: 16 November 2026 (Edmonton).
+Updated: 17 November 2026 (Edmonton).
 
-## Active goal
+## Current course-video checkpoint
+
+Work branch: `course-youtube-shorts`, based on main `c6d7b33d0440be41c19fa866fa5e97f81a28cfcc`. The user asked when scheduled Shorts will appear and to connect relevant Shorts to course lessons.
+
+Implemented: 62 planned video-to-lesson mappings, an empty confirmed-publication registry, optional portrait players and direct YouTube links, channel link on course home, English/Urdu controls, regression tests and `course/VIDEOS.md`. No live YouTube IDs were available from Metricool analytics; the first scheduled video was still PENDING at the 17 November check. No video is represented as already live. The registry needs verified public IDs before lesson players appear.
+
+Local validation: 23 course/language tests passed. The full `python3 scripts/check.py` was attempted on the connector-materialized partial snapshot; the Android test directory was not present, so full validation must run in repository CI. Local Chromium launch was blocked by the environment socket policy before any browser assertion. The dedicated CI workflow provides the six English/Urdu viewport checks; its result must be checked before release. Real YouTube playback requires the first published ID.
+
+Next concrete action: check the first narrated publication, verify its voice and embed availability, and add its actual YouTube ID as O11 for module 3 lesson 5. Follow `course/VIDEOS.md`; preserve private publication records separately. The new integration does not depend on or merge the separate narration work branch/PR.
+
+## Earlier narration checkpoint (historical)
 
 Continue all-video narration without losing work at chat limits. The production entry point is [media/video-production/README.md](../media/video-production/README.md), its [queue](../media/video-production/queue.json), and [checkpoint](../media/video-production/CHECKPOINT.md). Merged into `main` through [PR #4](https://github.com/abdullahimperial/horseandcart.github.io/pull/4), commit `fe6647fe04ff53cd2f73e03ffda39710a7934552`. Resume from current main. [Repository checks](https://github.com/abdullahimperial/horseandcart.github.io/actions/runs/43817688949) passed for the merge.
 
@@ -19,3 +29,4 @@ Continue 02–03 from their saved scripts, then inspect later scenes before scri
 ## Website / Android status
 
 The previous verified workflow checkpoint, CI links and known limitations are preserved in [WORKFLOW_STATUS_2026-11-14.md](WORKFLOW_STATUS_2026-11-14.md). Website product behavior and Android code were not changed in this media task. See `AGENTS.md` for the owner's standing repository-first instruction.
+

@@ -1,5 +1,12 @@
 # Changelog
 
+## 17 November 2026 — lesson-specific YouTube Shorts
+
+- Map 62 planned narrated Shorts to existing course lessons, with an initially empty registry for confirmed public YouTube IDs.
+- Add a channel link to the course homepage and optional click-to-load portrait players with direct Shorts links. Pending videos remain hidden.
+- Translate controls and explanatory text into Urdu; preserve original English video titles, existing lesson URLs, activities and saved progress.
+- Add mapping/registry tests and a browser fixture workflow for keyboard loading and phone/desktop layouts. Record publication activation steps in `course/VIDEOS.md`.
+
 ## 16 November 2026 — resumable video production
 
 - Register 12 numbered shorts, two teasers, and two existing Heart-narrated videos with exact source filenames and SHA-256 checks.
@@ -26,4 +33,5 @@ Meaningful changes belong here; Git commits hold the full diff and `docs/PROJECT
 - `0116c3f`: English/Urdu site and manuscript-based copy; Pages succeeded, Android CI failed on a stale renderer assertion.
 - `9020f194`: earlier successful Android build, predating Urdu.
 - Course and historical manuscript work are documented in `course/README.md` and `docs/BOOK_SYNC_STATUS.md`; these are not new verification claims.
+
 

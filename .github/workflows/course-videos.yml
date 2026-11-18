@@ -1,0 +1,35 @@
+name: Course video browser checks
+on:
+  pull_request:
+    paths: ['course/**', 'assets/i18n/**', '.github/workflows/course-videos.yml']
+  push:
+    branches: [main]
+    paths: ['course/**', 'assets/i18n/**', '.github/workflows/course-videos.yml']
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright==1.58.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Test lesson videos in English and Urdu at phone and desktop widths
+        run: |
+          python3 -m http.server 8010 > /tmp/course-server.log 2>&1 &
+          python3 - <<'PY'
+          import time, urllib.request
+          for attempt in range(50):
+              try:
+                  urllib.request.urlopen('http://localhost:8010/course/index.html', timeout=1)
+                  break
+              except OSError:
+                  time.sleep(.1)
+          else:
+              raise SystemExit('Course test server did not start')
+          PY
+          python3 course/tests/videos-browser.py

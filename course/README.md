@@ -33,3 +33,8 @@ Card repayments are excluded from spending when purchases were already recorded;
 Run `node --test course/tests/learning.test.cjs` from the repository root. Tests cover arithmetic and boundary cases, all pillar combinations, activity mappings, quiz answers, dependency order, no-JavaScript summaries and reduced-motion styles.
 
 Browser checks for the interactive revision covered all 102 lessons and nine workbooks, duplicate IDs, quiz feedback, saved answers after reload, cash-flow changes using the keyboard, and mobile layouts at 320 and 390 pixels. Existing tool links resolve against repository paths; those tools are not modified by this revision.
+
+
+## Relevant YouTube Shorts
+
+Lessons can display confirmed public narrated Shorts with a portrait player loaded on request and a direct YouTube link. All 62 planned videos are mapped to existing lessons; unconfirmed videos remain hidden. The course homepage links to the channel. See [VIDEOS.md](VIDEOS.md) for publication checks, the registry and how to continue. Controls support English and Urdu, while the video language remains English.
