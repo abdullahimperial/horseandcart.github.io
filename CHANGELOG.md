@@ -1,5 +1,11 @@
 # Changelog
 
+## 18 November 2026 — activate the first course video
+
+- Register the published cashback-versus-interest Short in module 3, lesson 5, enabling its existing player and direct YouTube link.
+- Refresh the catalog asset version on lesson pages and adapt browser tests to validate published links while testing empty catalogs separately.
+- Record the confirmed public ID and the remaining playback-verification limitation in the course handover. Pending uploads remain hidden.
+
 ## 17 November 2026 — lesson-specific YouTube Shorts
 
 - Map 62 planned narrated Shorts to existing course lessons, with an initially empty registry for confirmed public YouTube IDs.

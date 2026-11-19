@@ -1,8 +1,16 @@
 # Current project checkpoint
 
-Updated: 17 November 2026 (Edmonton).
+Updated: 18 November 2026 (Edmonton).
 
-## Current course-video checkpoint
+## Published course links — current
+
+O11 is registered with public YouTube ID `XdHPFFxMaDs` and title “When $20 Cashback Costs $35 in Interest” for `course/module-3.html#slide-5`. Metricool returned PUBLISHED with the exact Shorts URL on 18 November. O12 (repair/replace) and O01 (horse/cart) were still pending at this check. The course now has actual published-video data rather than only an empty registry.
+
+Changed: the video catalog, catalog cache version on all nine lesson pages, browser fixture expectations and course documentation. Browser coverage now checks actual registered links before injecting a fixture; it no longer assumes the public catalog is empty. Full repository and bilingual browser checks run in CI for this change; check their exact commit results before calling deployment complete. The public-web reader blocked YouTube, so direct playback/audio and embed-permission verification remain unconfirmed. The direct YouTube link is available independently of the player.
+
+Next: when each additional upload is PUBLISHED, add its verified public ID to its planned lesson and deploy. O12 belongs to module 3 lesson 6. This catalog update is not automatic; no new monitoring task was created. This checkpoint supersedes the initial empty-registry state below.
+
+## Initial course-video checkpoint (17 November)
 
 Work branch: `course-youtube-shorts`, based on main `c6d7b33d0440be41c19fa866fa5e97f81a28cfcc`. The user asked when scheduled Shorts will appear and to connect relevant Shorts to course lessons.
 
