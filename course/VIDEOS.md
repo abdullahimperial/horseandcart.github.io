@@ -6,7 +6,7 @@ The course supports relevant narrated YouTube Shorts within lessons, with a dire
 
 `assets/lesson-videos.js` contains 62 planned associations: O01–O12 (original videos) and N01–N50 (new videos). Module and lesson numbers are one-based and match existing `module-N.html#slide-N` URLs. Do not confuse O01 with N01. A video is assigned to its most relevant existing lesson; the course remains complete without it.
 
-The `published` registry starts empty. As checked on 17 November 2026, the narrated series was scheduled and its first scheduled entry was still pending. No live YouTube IDs were confirmed. Pending videos produce no heading, empty player, fake link or student-facing release promise.
+The first confirmed publication is now registered: O11, [When $20 Cashback Costs $35 in Interest](https://www.youtube.com/shorts/XdHPFFxMaDs), in [module 3, lesson 5](module-3.html#slide-5). Metricool returned PUBLISHED and that exact public URL on the 18 November 2026 recheck. O12 and O01 were still pending. Publication and the intended media identity were checked through Metricool; direct YouTube playback/audio and embed permissions could not be independently inspected because the public-web reader was blocked. Pending videos produce no heading, empty player, fake link or student-facing release promise.
 
 ## Add each confirmed publication
 

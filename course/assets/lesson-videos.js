@@ -30,7 +30,9 @@
   // allowed embedding. Example shape (no invented IDs):
   // O11: {videoId: verifiedYouTubeId, title: publishedTitle, verifiedOn: 'YYYY-MM-DD'}
   // A Metricool PENDING entry or a planner/media URL is not a YouTube video ID.
-  const published = {};
+  const published = {
+    O11: {videoId: 'XdHPFFxMaDs', title: 'When $20 Cashback Costs $35 in Interest', verifiedOn: '2026-11-18'}
+  };
   const validId = id => typeof id === 'string' && /^[A-Za-z0-9_-]{11}$/.test(id);
 
   function forLesson(moduleNumber, lessonNumber, registry = published) {

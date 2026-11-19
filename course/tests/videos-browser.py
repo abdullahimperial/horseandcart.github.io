@@ -14,6 +14,9 @@ with sync_playwright() as p:
             page.route('https://www.youtube-nocookie.com/**', lambda route: route.fulfill(status=200,content_type='text/html',body='<p>Local test player</p>'))
             page.goto(f'{BASE}/course/module-3.html?lang={lang}#slide-5')
             page.wait_for_selector('#current-heading')
+            expected = page.evaluate("CourseVideos.forLesson(3,5).map(v => 'https://www.youtube.com/shorts/' + v.videoId)")
+            assert page.locator('.lesson-video-link').evaluate_all('(links) => links.map(a => a.href)') == expected
+            page.evaluate("CourseVideos.mount(document.querySelector('#lesson-video-slot'),3,5,{})")
             assert page.locator('#lesson-video-slot').is_hidden()
             assert not any('youtube' in url for url in requests)
             page.evaluate("""() => {
@@ -38,7 +41,7 @@ with sync_playwright() as p:
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (width,lang)
             page.locator('#next').click()
             assert page.locator('iframe').count() == 0
-            assert page.locator('#lesson-video-slot').is_hidden()
+            assert page.locator('.lesson-video-link').count() == page.evaluate('CourseVideos.forLesson(3,6).length')
             page.goto(f'{BASE}/course/index.html?lang={lang}')
             assert page.locator('.course-video-channel a').get_attribute('href') == 'https://www.youtube.com/@letsfixmoneycom/shorts'
             if lang=='ur':
