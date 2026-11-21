@@ -26,72 +26,130 @@
     ['N49',8,4], ['N50',8,5]
   ].map(([key, module, lesson]) => ({key, module, lesson}));
 
-  // Add an entry only after checking the public video, audible narration and
-  // allowed embedding. Example shape (no invented IDs):
-  // O11: {videoId: verifiedYouTubeId, title: publishedTitle, verifiedOn: 'YYYY-MM-DD'}
-  // A Metricool PENDING entry or a planner/media URL is not a YouTube video ID.
+  // Register public narrated uploads by their planned key.
   const published = {
-    O11: {videoId: 'XdHPFFxMaDs', title: 'When $20 Cashback Costs $35 in Interest', verifiedOn: '2026-11-18'}
+    O01: {videoId: 'smArxMmswFM', title: 'Put the Horse Before the Cart | Save First, Then Buy', verifiedOn: '2026-11-20', coverTitle: 'Save first, then buy'},
+    O02: {videoId: 'OD3ZF6pPTrA', title: 'A $100 Purchase Can Take $140 of Earnings | The True Cost', verifiedOn: '2026-11-20', coverTitle: 'The true cost'},
+    O11: {videoId: 'XdHPFFxMaDs', title: 'When $20 Cashback Costs $35 in Interest', verifiedOn: '2026-11-18', coverTitle: 'Cashback vs. interest'},
+    O12: {videoId: 'aPTh_ZN4j0M', title: 'Repair or Replace? A $20 Fix Versus a $200 Chair', verifiedOn: '2026-11-20', coverTitle: 'Repair or replace?'}
   };
   const validId = id => typeof id === 'string' && /^[A-Za-z0-9_-]{11}$/.test(id);
 
+  function catalog(registry = published) {
+    return planned.flatMap(plan => {
+      const video = registry[plan.key];
+      return video && validId(video.videoId) && typeof video.title === 'string' && video.title.trim()
+        ? [{...video, ...plan}] : [];
+    });
+  }
+
   function forLesson(moduleNumber, lessonNumber, registry = published) {
-    return planned.filter(p => p.module === moduleNumber && p.lesson === lessonNumber)
-      .flatMap(p => {
-        const video = registry[p.key];
-        return video && validId(video.videoId) && typeof video.title === 'string' && video.title.trim()
-          ? [{...p, ...video}] : [];
-      });
+    return catalog(registry).filter(v => v.module === moduleNumber && v.lesson === lessonNumber);
+  }
+
+  function element(tag, className, text) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text) el.textContent = text;
+    return el;
+  }
+
+  function englishTitle(tag, video) {
+    const title = element(tag, '', video.title);
+    title.lang = 'en';
+    title.dir = 'ltr';
+    title.translate = false;
+    return title;
+  }
+
+  function videoCard(video, courseBase, showLessonLink) {
+    const card = element('article', 'lesson-video');
+    const title = englishTitle('h3', video);
+    const player = element('div', 'lesson-video-player');
+    const load = element('button', 'video-load');
+    load.type = 'button';
+    const cover = element('span', 'video-cover');
+    cover.setAttribute('aria-hidden', 'true');
+    cover.dataset.key = video.key;
+    cover.append(element('span', 'video-cover-brand', 'Let’s Fix Money'),
+      element('strong', 'video-cover-title', video.coverTitle || video.title));
+    load.append(cover);
+    load.append(element('span', 'video-load-label', 'Load video'));
+    player.append(load);
+    load.addEventListener('click', () => {
+      const frame = element('iframe');
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + video.videoId + '?playsinline=1&cc_load_policy=1';
+      frame.title = video.title;
+      frame.translate = false;
+      frame.lang = 'en';
+      frame.allow = 'encrypted-media; picture-in-picture; web-share';
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.tabIndex = 0;
+      player.replaceChildren(frame);
+      frame.focus();
+    }, {once:true});
+    const details = element('div', 'video-details');
+    const links = element('div', 'video-links');
+    const youtube = element('a', 'lesson-video-link', 'Watch on YouTube');
+    youtube.href = 'https://www.youtube.com/shorts/' + video.videoId;
+    links.append(youtube);
+    if (showLessonLink) {
+      const lesson = element('a', 'video-lesson-link', 'Open this lesson');
+      lesson.href = courseBase + 'module-' + video.module + '.html#slide-' + video.lesson;
+      links.append(lesson);
+    }
+    details.append(title, links, element('p', 'lesson-video-note', 'Loading the player connects to YouTube.'));
+    card.append(player, details);
+    return card;
   }
 
   function mount(container, moduleNumber, lessonNumber, registry = published) {
     if (!container) return;
     container.replaceChildren();
     const videos = forLesson(moduleNumber, lessonNumber, registry);
-    if (!videos.length) { container.hidden = true; return; }
-    container.hidden = false;
-    const doc = container.ownerDocument;
-    function element(tag, className, text) {
-      const el = doc.createElement(tag);
-      if (className) el.className = className;
-      if (text) el.textContent = text;
-      return el;
-    }
+    container.hidden = videos.length === 0;
+    if (container.hidden) return;
     const section = element('section', 'lesson-videos');
     const heading = element('h2', '', 'Watch a related Short');
     heading.id = 'lesson-videos-heading';
     section.setAttribute('aria-labelledby', heading.id);
     section.append(heading, element('p', '', 'English narration and on-screen captions.'));
-    for (const video of videos) {
-      const card = element('article', 'lesson-video');
-      const title = element('h3', '', video.title);
-      // The actual published title and video are English in either interface.
-      title.lang = 'en'; title.dir = 'ltr'; title.translate = false;
-      const player = element('div', 'lesson-video-player');
-      const load = element('button', 'btn light', 'Load video');
-      load.type = 'button';
-      const note = element('p', 'lesson-video-note', 'Loading the player connects to YouTube.');
-      player.append(load, note);
-      load.addEventListener('click', () => {
-        const frame = doc.createElement('iframe');
-        frame.src = 'https://www.youtube-nocookie.com/embed/' + video.videoId + '?playsinline=1&cc_load_policy=1';
-        frame.title = video.title;
-        frame.setAttribute('translate', 'no');
-        frame.setAttribute('lang', 'en');
-        frame.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        frame.allowFullscreen = true;
-        frame.referrerPolicy = 'strict-origin-when-cross-origin';
-        frame.tabIndex = 0;
-        player.replaceChildren(frame);
-        frame.focus();
-      }, {once:true});
-      const link = element('a', 'lesson-video-link', 'Watch on YouTube');
-      link.href = 'https://www.youtube.com/shorts/' + video.videoId;
-      // A normal same-tab link leaves browser navigation under learner control.
-      card.append(title, player, link);
-      section.append(card);
-    }
+    for (const video of videos) section.append(videoCard(video, './', false));
     container.append(section);
   }
-  return {planned, published, validId, forLesson, mount};
+
+  function mountGallery(container) {
+    const videos = catalog();
+    if (!videos.length) return;
+    const courseBase = container.dataset.courseBase;
+    const featured = element('div', 'video-featured');
+    const choices = element('div', 'video-choices');
+    choices.setAttribute('role', 'group');
+    choices.setAttribute('aria-label', 'Choose a video');
+    function selectVideo(video, selected) {
+      featured.replaceChildren(videoCard(video, courseBase, true));
+      for (const button of choices.children) {
+        button.setAttribute('aria-pressed', String(button === selected));
+      }
+    }
+    for (const video of videos) {
+      const button = element('button', 'video-choice');
+      button.type = 'button';
+      button.dataset.key = video.key;
+      button.append(englishTitle('span', video));
+      button.addEventListener('click', () => {
+        if (button.getAttribute('aria-pressed') !== 'true') selectVideo(video, button);
+      });
+      choices.append(button);
+    }
+    selectVideo(videos[0], choices.firstElementChild);
+    container.replaceChildren(featured, choices);
+  }
+
+  if (typeof document !== 'undefined') {
+    const gallery = document.querySelector('[data-course-base]');
+    if (gallery) mountGallery(gallery);
+  }
+  return {planned, published, validId, catalog, forLesson, mount};
 });

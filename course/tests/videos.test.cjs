@@ -37,7 +37,23 @@ test('every module loads the video renderer and copy before their consumers', ()
   }
   const copyContext={window:{LFM_UR:{}}};
   vm.runInNewContext(fs.readFileSync(path.join(root,'course/assets/video-copy.js'),'utf8'),copyContext);
-  for(const label of ['Watch a related Short','English narration and on-screen captions.','Load video','Loading the player connects to YouTube.','Watch on YouTube','Short videos on YouTube','Follow the channel for short explanations from the book.']){
+  for(const label of ['Watch a related Short','English narration and on-screen captions.','Load video','Loading the player connects to YouTube.','Watch on YouTube','Short videos on YouTube','Video lessons','Watch videos','Open this lesson','Choose a video','Follow the channel for short explanations from the book.']){
     assert.match(copyContext.window.LFM_UR[label],/[\u0600-\u06FF]/);
+  }
+});
+
+test('the first four published Shorts have matching lessons and both entry points load the catalog', () => {
+  for (const [key, id, module, lesson] of [
+    ['O01','smArxMmswFM',2,1], ['O02','OD3ZF6pPTrA',2,6],
+    ['O11','XdHPFFxMaDs',3,5], ['O12','aPTh_ZN4j0M',3,6]
+  ]) {
+    assert.ok(videos.forLesson(module,lesson).some(v => v.key === key && v.videoId === id));
+  }
+  assert.deepEqual(videos.catalog({}), []);
+  for (const file of ['index.html','course/index.html']) {
+    const html = fs.readFileSync(path.join(root,file),'utf8');
+    assert.match(html,/id="videos"/);
+    assert.ok(html.indexOf('video-copy.js') < html.indexOf('i18n.js'));
+    assert.ok(html.includes('lesson-videos.js'));
   }
 });

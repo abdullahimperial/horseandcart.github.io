@@ -1,14 +1,14 @@
 # Current project checkpoint
 
-Updated: 18 November 2026 (Edmonton).
+Updated 20 November 2026 (Edmonton).
 
-## Published course links — current
+## Published videos on the homepage and in the course
 
-O11 is registered with public YouTube ID `XdHPFFxMaDs` and title “When $20 Cashback Costs $35 in Interest” for `course/module-3.html#slide-5`. Metricool returned PUBLISHED with the exact Shorts URL on 18 November. O12 (repair/replace) and O01 (horse/cart) were still pending at this check. The course now has actual published-video data rather than only an empty registry.
+The homepage and course index feature a selectable video gallery at `#videos`. Explore links to the gallery. Four public Shorts are registered in their matching lessons. See [the course video guide](../course/VIDEOS.md) for the public links, lesson assignments and catalog workflow. Future publications share this same catalog.
 
-Changed: the video catalog, catalog cache version on all nine lesson pages, browser fixture expectations and course documentation. Browser coverage now checks actual registered links before injecting a fixture; it no longer assumes the public catalog is empty. Full repository and bilingual browser checks run in CI for this change; check their exact commit results before calling deployment complete. The public-web reader blocked YouTube, so direct playback/audio and embed-permission verification remain unconfirmed. The direct YouTube link is available independently of the player.
+Local course tests pass. The homepage preview was exercised through video selection and navigation to the matching True Cost lesson. The review environment blocks YouTube playback. Repository checks and the bilingual 320/390/1280-pixel browser suite run in CI. Confirm the Pages run for the merge commit when releasing.
 
-Next: when each additional upload is PUBLISHED, add its verified public ID to its planned lesson and deploy. O12 belongs to module 3 lesson 6. This catalog update is not automatic; no new monitoring task was created. This checkpoint supersedes the initial empty-registry state below.
+Next publication step: add each newly confirmed public ID to the existing lesson map after it publishes. The website uses a static catalog.
 
 ## Initial course-video checkpoint (17 November)
 

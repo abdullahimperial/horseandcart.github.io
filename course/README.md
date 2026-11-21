@@ -37,6 +37,4 @@ Browser checks for the interactive revision covered all 102 lessons and nine wor
 
 ## Relevant YouTube Shorts
 
-Lessons can display confirmed public narrated Shorts with a portrait player loaded on request and a direct YouTube link. All 62 planned videos are mapped to existing lessons; unconfirmed videos remain hidden. The course homepage links to the channel. See [VIDEOS.md](VIDEOS.md) for publication checks, the registry and how to continue. Controls support English and Urdu, while the video language remains English.
-
-The first linked Short is [cashback versus interest, module 3 lesson 5](module-3.html#slide-5). Its public YouTube ID is registered; other scheduled videos remain hidden until their public URLs are confirmed.
+[Video lessons](index.html#videos) lets learners choose a published Short, open its matching lesson or watch on YouTube. The website homepage offers the same selection. Each related lesson shows its video after the opening explanation, with English or Urdu controls and a locally rendered title card. See [VIDEOS.md](VIDEOS.md) for the public links, lesson mappings, and how to register a new publication.
