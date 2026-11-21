@@ -1,5 +1,11 @@
 # Changelog
 
+## 20 November 2026 — visible video lessons
+
+- Add a shared video gallery to the homepage and course index, with title cards based on the public videos and links to the relevant lessons.
+- Register the horse-and-cart, true-cost and repair-or-replace publications alongside cashback. Show the player immediately below the introduction in each matching lesson.
+- Cover video discovery, selection, mobile layout and lesson navigation in both interface languages.
+
 ## 18 November 2026 — activate the first course video
 
 - Register the published cashback-versus-interest Short in module 3, lesson 5, enabling its existing player and direct YouTube link.

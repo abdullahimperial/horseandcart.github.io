@@ -1,6 +1,6 @@
 """Repeatable fixture test: never loads a real YouTube video or changes the catalog."""
 import os
-from pathlib import Path
+from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get('SITE_TEST_URL', 'http://localhost:8010').rstrip('/')
@@ -30,7 +30,7 @@ with sync_playwright() as p:
             assert page.locator('.lesson-video iframe').count() == 0
             assert not any('youtube' in url for url in requests)
             load = page.locator('.lesson-video button')
-            assert load.inner_text() == ('Load video' if lang=='en' else 'ویڈیو لوڈ کریں')
+            assert load.locator('.video-load-label').inner_text() == ('Load video' if lang=='en' else 'ویڈیو لوڈ کریں')
             load.focus(); page.keyboard.press('Enter')
             frame = page.locator('.lesson-video iframe')
             frame.wait_for()
@@ -42,10 +42,33 @@ with sync_playwright() as p:
             page.locator('#next').click()
             assert page.locator('iframe').count() == 0
             assert page.locator('.lesson-video-link').count() == page.evaluate('CourseVideos.forLesson(3,6).length')
-            page.goto(f'{BASE}/course/index.html?lang={lang}')
-            assert page.locator('.course-video-channel a').get_attribute('href') == 'https://www.youtube.com/@letsfixmoneycom/shorts'
-            if lang=='ur':
-                assert page.locator('.course-video-channel a').inner_text()=='یوٹیوب پر مختصر ویڈیوز'
+            for entry in ['/', '/course/index.html']:
+                requests.clear()
+                page.goto(f'{BASE}{entry}?lang={lang}#videos')
+                gallery = page.locator('#videos')
+                choices = gallery.locator('.video-choice')
+                catalog = page.evaluate('CourseVideos.catalog()')
+                assert choices.count() == len(catalog) and len(catalog) >= 4
+                assert gallery.locator('h2').inner_text() == ('Video lessons' if lang == 'en' else 'ویڈیو اسباق')
+                assert gallery.locator('.video-cover-title').is_visible()
+                for index, video in enumerate(catalog):
+                    choices.nth(index).click()
+                    link = gallery.locator('.video-lesson-link')
+                    dest = urlsplit(link.get_attribute('href'))
+                    assert dest.path.endswith(f"module-{video['module']}.html") and dest.fragment == f"slide-{video['lesson']}"
+                    assert gallery.locator('h3').inner_text() == video['title']
+                    assert gallery.locator('.lesson-video-link').get_attribute('href').endswith('/' + video['videoId'])
+                assert gallery.locator('iframe').count() == 0
+                assert not any('youtube' in url for url in requests)
+                assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (entry, width, lang)
+                gallery.locator('.video-load').press('Enter')
+                frame = gallery.locator('iframe')
+                assert '/embed/' + catalog[-1]['videoId'] in frame.get_attribute('src')
+                choices.first.click()
+                assert gallery.locator('iframe').count() == 0
+                gallery.locator('.video-lesson-link').click()
+                assert page.locator('#lesson-video-slot h3').first.inner_text() == catalog[0]['title']
+
             page.close()
             print(f'PASS width={width} language={lang}: pending hidden, click-to-load, keyboard, layout, navigation, channel link')
     browser.close()

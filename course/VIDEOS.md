@@ -6,7 +6,16 @@ The course supports relevant narrated YouTube Shorts within lessons, with a dire
 
 `assets/lesson-videos.js` contains 62 planned associations: O01–O12 (original videos) and N01–N50 (new videos). Module and lesson numbers are one-based and match existing `module-N.html#slide-N` URLs. Do not confuse O01 with N01. A video is assigned to its most relevant existing lesson; the course remains complete without it.
 
-The first confirmed publication is now registered: O11, [When $20 Cashback Costs $35 in Interest](https://www.youtube.com/shorts/XdHPFFxMaDs), in [module 3, lesson 5](module-3.html#slide-5). Metricool returned PUBLISHED and that exact public URL on the 18 November 2026 recheck. O12 and O01 were still pending. Publication and the intended media identity were checked through Metricool; direct YouTube playback/audio and embed permissions could not be independently inspected because the public-web reader was blocked. Pending videos produce no heading, empty player, fake link or student-facing release promise.
+The [homepage](../index.html#videos) and [course index](index.html#videos) share a gallery generated from the same registry as the individual lessons. Explore also links to the course gallery. A learner can select a Short, load its player, open YouTube directly or follow the matching lesson. In a lesson the video appears immediately after the opening explanation.
+
+| Public Short | Lesson |
+| --- | --- |
+| [Put the Horse Before the Cart](https://www.youtube.com/shorts/smArxMmswFM) | [2.1](module-2.html#slide-1) |
+| [The True Cost](https://www.youtube.com/shorts/OD3ZF6pPTrA) | [2.6](module-2.html#slide-6) |
+| [Cashback versus interest](https://www.youtube.com/shorts/XdHPFFxMaDs) | [3.5](module-3.html#slide-5) |
+| [Repair or Replace?](https://www.youtube.com/shorts/aPTh_ZN4j0M) | [3.6](module-3.html#slide-6) |
+
+All four entries had public visibility and a published YouTube URL on 20 November 2026. The illustrated title cards use local CSS and public titles. In-browser playback on YouTube needs separate verification when the viewing environment permits it.
 
 ## Add each confirmed publication
 
@@ -16,7 +25,7 @@ The first confirmed publication is now registered: O11, [When $20 Cashback Costs
 4. Run `node --test course/tests/*.test.cjs` and `python3 scripts/check.py`; check the affected lesson in both interface languages. Commit through the normal repository workflow and confirm Pages deployed the intended commit. The course does not poll Metricool or discover new IDs automatically.
 5. Check the live lesson and its Watch on YouTube link. Record the ID in the private production checkpoint as well to preserve publication history.
 
-First expected association: O11 (cashback versus interest) → `module-3.html#slide-5`. Then O12 (repair versus replacement) → `module-3.html#slide-6`; O01 (horse and cart) → `module-2.html#slide-1`.
+A concise optional `coverTitle` appears on the local title card. Add its Urdu translation in `assets/video-copy.js`. The full published title is used when this field is omitted. Future confirmed entries appear in both galleries and their mapped lessons from a single catalog edit.
 
 Private continuation files are named `Lets_Fix_Money_New_50_Video_Progress.md` and `Lets_Fix_Money_Publication_Recovery_Checkpoint.json`. Their current versions supersede historical media queue dates. Retrieve these from the owner's saved files when managing publication; do not commit their contents.
 

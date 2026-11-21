@@ -3,12 +3,13 @@
 <!-- Shared language preference: English is the default. -->
 <link rel="stylesheet" href="assets/i18n/i18n.css?v=20261112-ur1">
 <script src="assets/i18n/ur.js?v=20261112-ur1"></script>
+<script src="course/assets/video-copy.js?v=20261120-gallery"></script>
 <script src="assets/i18n/i18n.js?v=20261112-ur1"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#061b22"><meta name="description" content="Explore the seven stages of Let’s Fix Money: Understand, Save, Build Resilience, Preserve, Grow, Transfer and Give."><title>Let’s Fix Money — Your journey starts here</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#061b22;color:#f4f5e9;font-family:Arial,Helvetica,sans-serif}
 #lfm-future{min-height:100vh;min-height:100svh;background:radial-gradient(ellipse at 50% 38%,#133f3b,#061b22 48%,#050e18);padding:clamp(18px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between}
-header,footer{display:flex;align-items:center;justify-content:space-between;gap:16px;width:min(1180px,100%);margin:0 auto}header strong{font-size:clamp(15px,2vw,20px);letter-spacing:.13em}
+header,footer{display:flex;align-items:center;justify-content:space-between;gap:16px;width:min(1180px,100%);margin:0 auto}header strong{font-size:clamp(15px,2vw,20px);letter-spacing:.13em}.intro-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:.5rem}#lfm-future>header{flex-wrap:wrap}
 button,.skip{background:#132e35;color:#f4dfaf;border:1px solid #69877e;border-radius:24px;padding:12px 20px;min-height:44px;font:15px Arial;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 a:focus-visible,button:focus-visible{outline:3px solid #f4dfaf;outline-offset:4px}
 .scene{width:min(100%,1000px);height:clamp(240px,44vh,480px);margin:8px auto 0}canvas{width:100%;height:100%;display:block}
@@ -20,17 +21,21 @@ li a:hover{background:#294b46;border-color:#91b9a8}li.active a{background:#34463
 @media(max-width:480px){#lfm-future{padding:18px 16px}.scene{height:260px}.caption{min-height:80px}ol{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px auto 20px}li:last-child{grid-column:1/-1}li a{flex-direction:row;min-height:56px;font-size:15px;padding:12px 8px}header strong{font-size:13px}.skip{padding:11px 14px}.caption p,footer{font-size:13px}}
 @media(max-height:560px) and (min-width:700px){.scene{height:200px}#lfm-future{padding:18px}.caption{min-height:65px}ol{margin:10px auto}li a{min-height:60px}}
 footer{flex-wrap:wrap}.site-copyright{flex-basis:100%;margin:4px 0 0;font-size:12px;line-height:1.6}.site-copyright small{font-size:11px}
-</style><link rel="stylesheet" href="assets/legal.css?v=20261105-safeguards"></head><body><main id="lfm-future" aria-label="Let’s Fix Money entry">
-<header><strong>LET’S FIX MONEY</strong><a class="skip" id="lfm-skip" href="explore.html">Skip intro ↗</a></header>
+</style><link rel="stylesheet" href="assets/legal.css?v=20261105-safeguards"><link rel="stylesheet" href="course/assets/lesson-videos.css?v=20261120-gallery"><script defer src="course/assets/lesson-videos.js?v=20261120-gallery"></script></head><body><main id="lfm-future" aria-label="Let’s Fix Money entry">
+<header><strong>LET’S FIX MONEY</strong><div class="intro-links"><a class="skip" href="#videos">Watch videos</a><a class="skip" id="lfm-skip" href="explore.html">Skip intro ↗</a></div></header>
 <div class="scene"><canvas role="img" aria-label="A Personal finance framework banner becomes points of light and forms a luminous spiral that widens as it rises and joins a constellation. Choose a learning stage below."></canvas></div>
 <div class="caption"><h2>Understand</h2><p>One step at a time. More possibilities ahead.</p></div>
 <ol id="explore" aria-label="Choose your learning stage"><li><a href="stage.html?stage=understand" data-label="Understand"><span>01</span>Understand</a></li><li><a href="stage.html?stage=save" data-label="Save"><span>02</span>Save</a></li><li><a href="stage.html?stage=resilience" data-label="Build Resilience"><span>03</span>Build Resilience</a></li><li><a href="stage.html?stage=preserve" data-label="Preserve"><span>04</span>Preserve</a></li><li><a href="stage.html?stage=grow" data-label="Grow"><span>05</span>Grow</a></li><li><a href="stage.html?stage=transfer" data-label="Transfer"><span>06</span>Transfer</a></li><li><a href="stage.html?stage=give" data-label="Give"><span>07</span>Give</a></li></ol>
+<section class="video-library" id="videos" aria-labelledby="video-heading">
+  <div class="video-library-head"><h2 id="video-heading">Video lessons</h2><a href="https://www.youtube.com/@letsfixmoneycom/shorts">Short videos on YouTube</a></div>
+  <div class="video-gallery" data-course-base="course/"><a href="https://www.youtube.com/shorts/smArxMmswFM" lang="en" dir="ltr" translate="no">Put the Horse Before the Cart | Save First, Then Buy</a></div>
+</section>
 <footer><span id="lfm-status">Choose a stage, or skip to explore all destinations.</span><button type="button" id="lfm-replay">Replay</button><a class="skip" href="https://www.youtube.com/@letsfixmoneycom">YouTube ↗</a><p class="site-copyright">© 2026 Abdullah Mohiuddin. All rights reserved.<br><small>Third-party materials, trademarks and linked content belong to their respective owners.</small></p><nav class="site-legal" aria-label="Legal and privacy"><a href="terms.html">Terms of Use</a><a href="privacy.html">Privacy Policy</a><a href="contact.html">Report an issue</a></nav></footer>
 <noscript><p>Choose any stage above, or use Skip to explore the tools.</p></noscript></main>
 <script>(()=>{'use strict';
 const root=document.getElementById('lfm-future');if(!root)return;
 const canvas=root.querySelector('canvas'),c=canvas.getContext('2d');if(!c)return;
-const steps=[...root.querySelectorAll('li')],title=root.querySelector('h2'),caption=root.querySelector('.caption'),status=root.querySelector('#lfm-status'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const steps=[...root.querySelectorAll('#explore li')],title=root.querySelector('h2'),caption=root.querySelector('.caption'),status=root.querySelector('#lfm-status'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const HOLD=2.1,MORPH=1.9,SPIRAL=6,TOTAL=HOLD+MORPH+SPIRAL;
 let w=0,h=0,raf=0,start=null,elapsed=0,done=false,particles=[],banner={};
 const clamp=n=>Math.max(0,Math.min(1,n)),ease=n=>{n=clamp(n);return n*n*(3-2*n);};
