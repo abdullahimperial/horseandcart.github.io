@@ -1,14 +1,14 @@
 # Current project checkpoint
 
-Updated 20 November 2026 (Edmonton).
+Updated 22 November 2026 (Edmonton).
 
-## Published videos on the homepage and in the course
+## YouTube videos in the lessons
 
-The homepage and course index feature a selectable video gallery at `#videos`. Explore links to the gallery. Four public Shorts are registered in their matching lessons. See [the course video guide](../course/VIDEOS.md) for the public links, lesson assignments and catalog workflow. Future publications share this same catalog.
+The homepage introduces the seven stages and links to the channel through a small footer icon. The course overview and Explore link to [Video lessons](../course/index.html#videos), a compact topic list generated from the publication registry. Each link opens its lesson, where **Load video** opens the embedded player. Old homepage video bookmarks lead to the course list.
 
-Local course tests pass. The homepage preview was exercised through video selection and navigation to the matching True Cost lesson. The review environment blocks YouTube playback. Repository checks and the bilingual 320/390/1280-pixel browser suite run in CI. Confirm the Pages run for the merge commit when releasing.
+Four Shorts are registered in lessons 2.1, 2.6, 3.5 and 3.6. The [course video guide](../course/VIDEOS.md) records the public URLs and explains how to add the next confirmed publication.
 
-Next publication step: add each newly confirmed public ID to the existing lesson map after it publishes. The website uses a static catalog.
+Local repository checks passed. The **Course video browser checks** workflow exercises the homepage, the course list and each lesson player in English and Urdu at 320, 390 and 1280 pixels. It uses an intercepted player. Actual YouTube streaming requires a separate playback check.
 
 ## Initial course-video checkpoint (17 November)
 

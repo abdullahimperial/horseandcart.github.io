@@ -37,4 +37,4 @@ Browser checks for the interactive revision covered all 102 lessons and nine wor
 
 ## Relevant YouTube Shorts
 
-[Video lessons](index.html#videos) lets learners choose a published Short, open its matching lesson or watch on YouTube. The website homepage offers the same selection. Each related lesson shows its video after the opening explanation, with English or Urdu controls and a locally rendered title card. See [VIDEOS.md](VIDEOS.md) for the public links, lesson mappings, and how to register a new publication.
+[Video lessons](index.html#videos) lists the lessons with published Shorts. Select a topic to open its lesson, then select **Load video** below the opening explanation. The homepage footer links to the YouTube channel. The play icon on Explore opens the course list. See [VIDEOS.md](VIDEOS.md) for lesson mappings and publication updates.

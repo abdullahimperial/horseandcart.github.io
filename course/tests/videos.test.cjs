@@ -42,7 +42,7 @@ test('every module loads the video renderer and copy before their consumers', ()
   }
 });
 
-test('the first four published Shorts have matching lessons and both entry points load the catalog', () => {
+test('the first four published Shorts have matching lessons', () => {
   for (const [key, id, module, lesson] of [
     ['O01','smArxMmswFM',2,1], ['O02','OD3ZF6pPTrA',2,6],
     ['O11','XdHPFFxMaDs',3,5], ['O12','aPTh_ZN4j0M',3,6]
@@ -50,10 +50,15 @@ test('the first four published Shorts have matching lessons and both entry point
     assert.ok(videos.forLesson(module,lesson).some(v => v.key === key && v.videoId === id));
   }
   assert.deepEqual(videos.catalog({}), []);
-  for (const file of ['index.html','course/index.html']) {
-    const html = fs.readFileSync(path.join(root,file),'utf8');
-    assert.match(html,/id="videos"/);
-    assert.ok(html.indexOf('video-copy.js') < html.indexOf('i18n.js'));
-    assert.ok(html.includes('lesson-videos.js'));
-  }
+});
+
+test('the homepage links to the channel and the course indexes lessons without a player', () => {
+  const home = fs.readFileSync(path.join(root,'index.html'),'utf8');
+  assert.match(home, /href="https:\/\/www.youtube.com\/@letsfixmoneycom"/);
+  assert.doesNotMatch(home, /lesson-videos\.(?:js|css)|video-copy\.js|<iframe|class="video-library"/);
+  const overview = fs.readFileSync(path.join(root,'course/index.html'),'utf8');
+  assert.match(overview, /id="videos"/);
+  assert.match(overview, /id="video-lesson-list"/);
+  assert.ok(overview.includes('lesson-videos.js'));
+  assert.doesNotMatch(overview, /<iframe|class="video-gallery"/);
 });
