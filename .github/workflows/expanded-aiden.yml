@@ -1,0 +1,93 @@
+name: Record expanded Aiden lessons
+on:
+  workflow_dispatch:
+  push:
+    branches: [media/expanded-aiden-series]
+    paths: ['.github/workflows/expanded-aiden.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  voice:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        lane: ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15']
+    env:
+      LANE: ${{ matrix.lane }}
+      QWEN_NARRATION_CONTEXT: '640'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Prepare temporary public key
+        run: /usr/bin/python3 media/expanded-aiden/worker_keys.py open
+      - uses: actions/upload-artifact@v4
+        with:
+          name: key-${{ matrix.lane }}
+          path: public.pem
+          retention-days: 3
+      - uses: actions/download-artifact@v4
+        id: prebuilt
+        continue-on-error: true
+        with:
+          name: qwen3-cpu-runtime
+          run-id: 45144020166
+          path: kit
+          github-token: ${{ github.token }}
+      - name: Install audio support and verify pinned weights
+        run: |
+          set -euo pipefail
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y ffmpeg python3-numpy python3-scipy python3-cryptography
+          mkdir -p kit
+          if [[ -f kit/binaries.sha256 ]]; then
+            (cd kit && sha256sum -c binaries.sha256)
+          else
+            git clone -q https://github.com/ServeurpersoCom/qwentts.cpp engine
+            git -C engine checkout -q 2edb35f87b709a070b2d5379f77e5c52a1daa585
+            git -C engine submodule update --init --recursive --depth 1
+            cmake -S engine -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
+            cmake --build build --target tts-server --parallel 4
+            cp build/tts-server kit/
+          fi
+          chmod +x kit/tts-server
+          root=https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/resolve/b7ee2e8c7459c3bea99da23e3d178125a7d1713c
+          curl -fsSL --retry 5 "$root/qwen-talker-1.7b-customvoice-Q4_K_M.gguf" -o kit/talker
+          curl -fsSL --retry 5 "$root/qwen-tokenizer-12hz-Q8_0.gguf" -o kit/codec
+          echo 'cc328834a631bc08bf9f43e62fa23f8a1383d9b429864ce6690cfb172077fc4a  kit/talker' | sha256sum -c
+          echo '1883beeed99348fc35e23dd225e9082f93f6f8c109330a33d935baa8acdbfd94  kit/codec' | sha256sum -c
+      - name: Receive the private episode packet
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for poll in $(seq 1 90); do
+            if gh api -H 'Accept: application/vnd.github.raw+json' "repos/$GITHUB_REPOSITORY/contents/media/expanded-aiden/packets/$GITHUB_RUN_ID.json?ref=media/expanded-aiden-series" > envelope.tmp 2>/dev/null; then
+              mv envelope.tmp envelope.json
+              /usr/bin/python3 media/expanded-aiden/worker_keys.py unlock
+              exit 0
+            fi
+            sleep 30
+          done
+          exit 1
+      - name: Record Aiden narration
+        run: |
+          set -euo pipefail
+          export QWEN_NARRATION_THREADS=$(nproc)
+          ./kit/tts-server --model kit/talker --codec kit/codec --alias qwen3-tts --lang English --host 127.0.0.1 --port 18751 --max-batch 8 > "$RUNNER_TEMP/engine.log" 2>&1 &
+          engine=$!
+          trap 'kill "$engine" 2>/dev/null || true' EXIT
+          /usr/bin/python3 media/expanded-aiden/voice.py input.json --jobs 8
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-${{ matrix.lane }}
+          path: sealed-audio/*.sealed
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 7
