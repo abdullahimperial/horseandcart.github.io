@@ -27,8 +27,9 @@ jobs:
           mkdir -p parts/00 parts/01 parts/02 parts/03 parts/04 parts/05 parts/06 parts/07
           repo=Serveurperso/Qwen3-TTS-GGUF
           if [[ "$ASSET" == review ]]; then repo=ggerganov/whisper.cpp; fi
-          curl -fsSL --retry 4 "https://huggingface.co/api/models/$repo?blobs=true" -o snapshot.json
-          revision=$(jq -er '.sha' snapshot.json)
+          revision=b7ee2e8c7459c3bea99da23e3d178125a7d1713c
+          if [[ "$ASSET" == review ]]; then revision=5359861c739e955e79d9a303bcbc70fb988958b1; fi
+          curl -fsSL --retry 4 "https://huggingface.co/api/models/$repo/revision/$revision?blobs=true" -o snapshot.json
           expected=$(jq -er --arg f "$MODEL_FILE" '.siblings[] | select(.rfilename==$f) | .lfs.sha256' snapshot.json)
           curl -fsSL --retry 4 "https://huggingface.co/$repo/resolve/$revision/$MODEL_FILE" -o "$MODEL_FILE"
           echo "$expected  $MODEL_FILE" | sha256sum -c
@@ -109,6 +110,31 @@ jobs:
           git clone --quiet https://github.com/ServeurpersoCom/qwentts.cpp qwen
           git -C qwen checkout --quiet 2edb35f87b709a070b2d5379f77e5c52a1daa585
           git -C qwen submodule update --init --recursive --depth 1
+          # These shortsized requests never approach the general-purpose 4096-token cache.
+          # Retain upstream defaults unless an offline producer sets an explicit limit.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('qwen/src/pipeline-tts.cpp')
+          old='pt->talker.head_dim, 4096, pt->max_batch'
+          new='pt->talker.head_dim, narration_ctx, pt->max_batch'
+          txt=p.read_text(); assert txt.count(old)==1
+          txt=txt.replace(old,new)
+          needle='if (!kv_cache_init('
+          if needle not in txt:
+              import re
+              needle=re.search(r'if \(![a-z_]+\(&pt->talker_kv',txt).group(0)
+          pos=txt.rfind(needle,0,txt.index(new))
+          assert pos>=0
+          txt=txt[:pos]+'''const char * requested_ctx = std::getenv("QWEN_NARRATION_CONTEXT");
+              const int narration_ctx = requested_ctx ? std::max(512, std::min(4096, std::atoi(requested_ctx))) : 4096;
+              '''+txt[pos:]
+          p.write_text('#include <cstdlib>\n#include <algorithm>\n'+txt)
+          p=Path('qwen/src/backend.h')
+          txt=p.read_text(); old='return n > 0 ? n : 1;'
+          assert txt.count(old)==1
+          txt=txt.replace(old,'const char * threads = std::getenv("QWEN_NARRATION_THREADS");\n    return threads ? std::max(1, std::min(64, std::atoi(threads))) : (n > 0 ? n : 1);')
+          p.write_text('#include <cstdlib>\n#include <algorithm>\n'+txt)
+          PY
           cmake -S qwen -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF -DGGML_AVX512=ON -DGGML_AVX512_VNNI=ON
           cmake --build build --target qwen-tts tts-server --parallel 4
           cp build/qwen-tts build/tts-server kit/
