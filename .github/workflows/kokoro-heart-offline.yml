@@ -1,0 +1,103 @@
+name: Prepare offline Kokoro Heart narration assets
+on:
+  workflow_dispatch:
+  push:
+    branches: [media/kokoro-heart-offline]
+    paths: ['.github/workflows/kokoro-heart-offline.yml']
+permissions: {}
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch and verify public Kokoro 1.0 assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p kit parts
+          origin=https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/1939ad2a8e416c0acfeecc08a694d14ef25f2231
+          for file in onnx/model.onnx voices/af_heart.bin tokenizer.json; do
+            curl --fail --silent --show-error --location --retry 3 "$origin/$file" --output "kit/${file##*/}"
+          done
+          cd kit
+          echo '8fbea51ea711f2af382e88c833d9e288c6dc82ce5e98421ea61c058ce21a34cb  model.onnx' | sha256sum -c
+          echo 'd583ccff3cdca2f7fae535cb998ac07e9fcb90f09737b9a41fa2734ec44a8f0b  af_heart.bin' | sha256sum -c
+          npm pack --silent phonemizer@1.2.1
+          python -m pip download --only-binary=:all: --no-deps 'onnxruntime==1.21.0'
+          sha256sum model.onnx af_heart.bin tokenizer.json *.tgz *.whl > SHA256SUMS
+          split -b 40M -d -a 2 model.onnx ../parts/model.
+          rm model.onnx
+      - name: Save voice, tokenizer and Linux Python 3.12 runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-heart-runtime
+          path: kit/
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 1 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-00
+          path: parts/model.00
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 2 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-01
+          path: parts/model.01
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 3 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-02
+          path: parts/model.02
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 4 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-03
+          path: parts/model.03
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 5 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-04
+          path: parts/model.04
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 6 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-05
+          path: parts/model.05
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 7 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-06
+          path: parts/model.06
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
+      - name: Save model part 8 of 8
+        uses: actions/upload-artifact@v4
+        with:
+          name: kokoro-model-07
+          path: parts/model.07
+          compression-level: 0
+          retention-days: 3
+          if-no-files-found: error
