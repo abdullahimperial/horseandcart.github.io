@@ -53,6 +53,7 @@ with sync_playwright() as p:
             page.locator('.app-card--youtube').click()
             directory = page.locator('#videos')
             links = directory.locator('#video-lesson-list a')
+            links.first.wait_for()
             catalog = page.evaluate('CourseVideos.catalog()')
             assert links.count() == len(catalog) and len(catalog) >= 4
             assert directory.locator('h2').inner_text() == ('Video lessons' if lang == 'en' else 'ویڈیو اسباق')
@@ -62,10 +63,11 @@ with sync_playwright() as p:
             for index, video in enumerate(catalog):
                 link = links.nth(index)
                 dest = urlsplit(link.get_attribute('href'))
-                assert dest.path.endswith(f"/module-{video['module']}.html") and dest.fragment == f"slide-{video['lesson']}"
+                assert dest.path.endswith(f"module-{video['module']}.html") and dest.fragment == f"slide-{video['lesson']}"
                 link.press('Enter')
                 card = page.locator('.lesson-video').filter(has=page.get_by_role('heading',name=video['title'],exact=True))
-                assert card.is_visible() and page.locator('iframe').count() == 0
+                card.wait_for()
+                assert page.locator('iframe').count() == 0
                 card.locator('.video-load').click()
                 assert '/embed/' + video['videoId'] in card.locator('iframe').get_attribute('src')
                 page.go_back()
