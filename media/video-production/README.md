@@ -47,3 +47,11 @@ python3 scripts/check.py
 ```
 
 Tests exercise overlap rejection, voice/speed constraints, input-based invalidation, corrupted WAV rejection, and a deliberate mid-job failure followed by reuse. The synthesis integration fixture is synthetic and does not claim voice quality; actual Kokoro requires the Actions/dependency environment.
+
+## Offline Heart narration for long-form films
+
+The [offline asset workflow](../../.github/workflows/kokoro-heart-offline.yml) prepares the public Kokoro 1.0 full-precision ONNX model and the `af_heart` American-English voice for production machines with restricted package access. The workflow has read-only public downloads, no repository-write permission, and takes no script or video as input. Its push trigger is scoped to the production branch and workflow file.
+
+Download the runtime artifact and all eight numbered model artifacts from a successful run. Extract them to one directory, concatenate `model.00` through `model.07` in numeric order into `model.onnx`, then run `sha256sum -c SHA256SUMS`. The wheel targets CPython 3.12 on x86-64 Linux. The phonemizer npm archive, voice file, and tokenizer are included. Retention is three days. Rerun the workflow to regenerate expired assets from the pinned upstream revision.
+
+For the seven-stage film, use Heart throughout, including the household example, reflections, chapter openings and the close. Let speech set each scene’s duration. Rebuild the captions, chapter markers and transcript timestamps from the same final audio timeline. Natural pauses after questions and exercises give the viewer time to follow the numbers.
