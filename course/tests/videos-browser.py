@@ -42,33 +42,37 @@ with sync_playwright() as p:
             page.locator('#next').click()
             assert page.locator('iframe').count() == 0
             assert page.locator('.lesson-video-link').count() == page.evaluate('CourseVideos.forLesson(3,6).length')
-            for entry in ['/', '/course/index.html']:
-                requests.clear()
-                page.goto(f'{BASE}{entry}?lang={lang}#videos')
-                gallery = page.locator('#videos')
-                choices = gallery.locator('.video-choice')
-                catalog = page.evaluate('CourseVideos.catalog()')
-                assert choices.count() == len(catalog) and len(catalog) >= 4
-                assert gallery.locator('h2').inner_text() == ('Video lessons' if lang == 'en' else 'ویڈیو اسباق')
-                assert gallery.locator('.video-cover-title').is_visible()
-                for index, video in enumerate(catalog):
-                    choices.nth(index).click()
-                    link = gallery.locator('.video-lesson-link')
-                    dest = urlsplit(link.get_attribute('href'))
-                    assert dest.path.endswith(f"module-{video['module']}.html") and dest.fragment == f"slide-{video['lesson']}"
-                    assert gallery.locator('h3').inner_text() == video['title']
-                    assert gallery.locator('.lesson-video-link').get_attribute('href').endswith('/' + video['videoId'])
-                assert gallery.locator('iframe').count() == 0
-                assert not any('youtube' in url for url in requests)
-                assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (entry, width, lang)
-                gallery.locator('.video-load').press('Enter')
-                frame = gallery.locator('iframe')
-                assert '/embed/' + catalog[-1]['videoId'] in frame.get_attribute('src')
-                choices.first.click()
-                assert gallery.locator('iframe').count() == 0
-                gallery.locator('.video-lesson-link').click()
-                assert page.locator('#lesson-video-slot h3').first.inner_text() == catalog[0]['title']
-
+            requests.clear()
+            page.goto(f'{BASE}/?lang={lang}')
+            channel = page.locator('footer a[href="https://www.youtube.com/@letsfixmoneycom"]')
+            assert channel.is_visible() and channel.locator('svg').count() == 1
+            assert page.locator('iframe, .lesson-video, .video-library').count() == 0
+            assert not page.evaluate("'CourseVideos' in window")
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (width,lang)
+            page.locator('#lfm-skip').click()
+            page.locator('.app-card--youtube').click()
+            directory = page.locator('#videos')
+            links = directory.locator('#video-lesson-list a')
+            catalog = page.evaluate('CourseVideos.catalog()')
+            assert links.count() == len(catalog) and len(catalog) >= 4
+            assert directory.locator('h2').inner_text() == ('Video lessons' if lang == 'en' else 'ویڈیو اسباق')
+            assert page.locator('iframe, .video-load').count() == 0
+            assert not any('youtube' in url for url in requests)
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (width,lang)
+            for index, video in enumerate(catalog):
+                link = links.nth(index)
+                dest = urlsplit(link.get_attribute('href'))
+                assert dest.path.endswith(f"/module-{video['module']}.html") and dest.fragment == f"slide-{video['lesson']}"
+                link.press('Enter')
+                card = page.locator('.lesson-video').filter(has=page.get_by_role('heading',name=video['title'],exact=True))
+                assert card.is_visible() and page.locator('iframe').count() == 0
+                card.locator('.video-load').click()
+                assert '/embed/' + video['videoId'] in card.locator('iframe').get_attribute('src')
+                page.go_back()
+                links.first.wait_for()
+            page.goto(f'{BASE}/?lang={lang}#videos')
+            page.wait_for_url(f'**/course/index.html?lang={lang}#videos')
+            assert links.first.is_visible() and page.locator('html').get_attribute('lang') == lang
             page.close()
-            print(f'PASS width={width} language={lang}: pending hidden, click-to-load, keyboard, layout, navigation, channel link')
+            print(f'PASS width={width} language={lang}: homepage, directory, lesson embeds, bookmarks and keyboard access')
     browser.close()

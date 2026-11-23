@@ -29,7 +29,7 @@ Open `http://localhost:8010/`. On Windows, `py -3` can replace `python3`. Serve 
 
 - [Live website](https://www.letsfixmoney.com/)
 - [Urdu website](https://www.letsfixmoney.com/?lang=ur)
-- [Course](https://www.letsfixmoney.com/course/index.html)
+- [Course](https://www.letsfixmoney.com/course/index.html) and [lessons with embedded videos](https://www.letsfixmoney.com/course/index.html#videos)
 - [Money Snapshot](https://www.letsfixmoney.com/apps/financial-reset/)
 
 English is the first-visit default. The top English/اردو control preserves the current page and entered values. A remembered preference applies later; `?lang=en` or `?lang=ur` overrides it.

@@ -1,5 +1,11 @@
 # Changelog
 
+## 22 November 2026 — watch videos inside the course
+
+- Restore the framework introduction on the homepage with a small YouTube channel link in the footer. Existing video bookmarks open the course video list.
+- Replace the course overview gallery with topic links to matching lessons. Each lesson offers its embedded player below the opening explanation.
+- Exercise the path from Explore to the video list and into each lesson in the bilingual browser suite.
+
 ## 20 November 2026 — visible video lessons
 
 - Add a shared video gallery to the homepage and course index, with title cards based on the public videos and links to the relevant lessons.

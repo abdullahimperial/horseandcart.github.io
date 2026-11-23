@@ -1,10 +1,10 @@
 name: Course video browser checks
 on:
   pull_request:
-    paths: ['course/**', 'assets/i18n/**', '.github/workflows/course-videos.yml']
+    paths: ['index.html', 'explore.html', 'course/**', 'assets/i18n/**', '.github/workflows/course-videos.yml']
   push:
     branches: [main]
-    paths: ['course/**', 'assets/i18n/**', '.github/workflows/course-videos.yml']
+    paths: ['index.html', 'explore.html', 'course/**', 'assets/i18n/**', '.github/workflows/course-videos.yml']
 permissions:
   contents: read
 jobs:

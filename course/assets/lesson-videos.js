@@ -62,7 +62,7 @@
     return title;
   }
 
-  function videoCard(video, courseBase, showLessonLink) {
+  function videoCard(video) {
     const card = element('article', 'lesson-video');
     const title = englishTitle('h3', video);
     const player = element('div', 'lesson-video-player');
@@ -94,11 +94,6 @@
     const youtube = element('a', 'lesson-video-link', 'Watch on YouTube');
     youtube.href = 'https://www.youtube.com/shorts/' + video.videoId;
     links.append(youtube);
-    if (showLessonLink) {
-      const lesson = element('a', 'video-lesson-link', 'Open this lesson');
-      lesson.href = courseBase + 'module-' + video.module + '.html#slide-' + video.lesson;
-      links.append(lesson);
-    }
     details.append(title, links, element('p', 'lesson-video-note', 'Loading the player connects to YouTube.'));
     card.append(player, details);
     return card;
@@ -115,41 +110,27 @@
     heading.id = 'lesson-videos-heading';
     section.setAttribute('aria-labelledby', heading.id);
     section.append(heading, element('p', '', 'English narration and on-screen captions.'));
-    for (const video of videos) section.append(videoCard(video, './', false));
+    for (const video of videos) section.append(videoCard(video));
     container.append(section);
   }
 
-  function mountGallery(container) {
-    const videos = catalog();
-    if (!videos.length) return;
-    const courseBase = container.dataset.courseBase;
-    const featured = element('div', 'video-featured');
-    const choices = element('div', 'video-choices');
-    choices.setAttribute('role', 'group');
-    choices.setAttribute('aria-label', 'Choose a video');
-    function selectVideo(video, selected) {
-      featured.replaceChildren(videoCard(video, courseBase, true));
-      for (const button of choices.children) {
-        button.setAttribute('aria-pressed', String(button === selected));
-      }
+  function listVideoLessons(list) {
+    for (const video of catalog()) {
+      const link = element('a');
+      link.href = 'module-' + video.module + '.html#slide-' + video.lesson;
+      const number = element('bdi', 'lesson-number', video.module + '.' + video.lesson);
+      number.dir = 'ltr';
+      const title = video.coverTitle ? element('span', '', video.coverTitle) : englishTitle('span', video);
+      link.append(number, title);
+      const item = element('li');
+      item.append(link);
+      list.append(item);
     }
-    for (const video of videos) {
-      const button = element('button', 'video-choice');
-      button.type = 'button';
-      button.dataset.key = video.key;
-      button.append(englishTitle('span', video));
-      button.addEventListener('click', () => {
-        if (button.getAttribute('aria-pressed') !== 'true') selectVideo(video, button);
-      });
-      choices.append(button);
-    }
-    selectVideo(videos[0], choices.firstElementChild);
-    container.replaceChildren(featured, choices);
   }
 
   if (typeof document !== 'undefined') {
-    const gallery = document.querySelector('[data-course-base]');
-    if (gallery) mountGallery(gallery);
+    const list = document.getElementById('video-lesson-list');
+    if (list) listVideoLessons(list);
   }
   return {planned, published, validId, catalog, forLesson, mount};
 });
