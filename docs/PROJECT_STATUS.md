@@ -1,5 +1,11 @@
 # Current project checkpoint
 
+## Long-form seven-stage narration
+
+The production branch `media/qwen3-offline-narration` adds the [Qwen3 offline build](../.github/workflows/qwen3-narration-kit.yml). The 39-scene reading companion opens with the book, then follows a fictional household through Understand, Save, Build Resilience, Preserve, Grow, Transfer and Give. Each stage ends with a decision viewers can try. Keep the manuscript, rendered audio and film in the owner's existing media workspace.
+
+The two voice editions use the same script. Kokoro uses `af_heart`. Qwen uses the English `aiden` speaker in 1.7B CustomVoice, with warm kitchen-table delivery. Generate the narration before building timed captions, visual reveals and chapter marks for that edition. The first build verified the GGUF talker and codec from model revision `b7ee2e8c7459c3bea99da23e3d178125a7d1713c` and compiled qwentts.cpp at `2edb35f87b709a070b2d5379f77e5c52a1daa585`. To rebuild offline, expand the artifacts into a common directory, concatenate each model's numbered parts in order, and check its supplied SHA-256 file. The kit includes an English speech recognizer for checking recorded words against the script.
+
 Updated 22 November 2026 (Edmonton).
 
 ## YouTube videos in the lessons
