@@ -1,0 +1,125 @@
+name: Prepare Qwen3 narration and voice review tools
+on:
+  workflow_dispatch:
+  push:
+    branches: [media/qwen3-offline-narration]
+    paths: ['.github/workflows/qwen3-narration-kit.yml']
+permissions: {}
+jobs:
+  models:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { asset: talker, file: qwen-talker-1.7b-customvoice-Q4_K_M.gguf }
+          - { asset: codec, file: qwen-tokenizer-12hz-Q8_0.gguf }
+          - { asset: review, file: ggml-tiny.en.bin }
+    steps:
+      - name: Verify and segment the public model
+        shell: bash
+        env:
+          ASSET: ${{ matrix.asset }}
+          MODEL_FILE: ${{ matrix.file }}
+        run: |
+          set -euo pipefail
+          mkdir -p parts/00 parts/01 parts/02 parts/03 parts/04 parts/05 parts/06 parts/07
+          repo=Serveurperso/Qwen3-TTS-GGUF
+          if [[ "$ASSET" == review ]]; then repo=ggerganov/whisper.cpp; fi
+          curl -fsSL --retry 4 "https://huggingface.co/api/models/$repo?blobs=true" -o snapshot.json
+          revision=$(jq -er '.sha' snapshot.json)
+          expected=$(jq -er --arg f "$MODEL_FILE" '.siblings[] | select(.rfilename==$f) | .lfs.sha256' snapshot.json)
+          curl -fsSL --retry 4 "https://huggingface.co/$repo/resolve/$revision/$MODEL_FILE" -o "$MODEL_FILE"
+          echo "$expected  $MODEL_FILE" | sha256sum -c
+          echo "$expected  $MODEL_FILE" > "parts/00/$ASSET.sha256"
+          echo "$repo@$revision" > "parts/00/$ASSET.revision"
+          split -b 38M -d -a 2 "$MODEL_FILE" "$ASSET."
+          for file in "$ASSET".??; do
+            index=${file##*.}
+            # Correlate every part with its immutable source and position.
+            bucket=$(printf '%02d' "$((10#$index % 8))")
+            mv "$file" "parts/$bucket/"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-00
+          path: parts/00/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-01
+          path: parts/01/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-02
+          path: parts/02/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-03
+          path: parts/03/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-04
+          path: parts/04/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-05
+          path: parts/05/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-06
+          path: parts/06/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-${{ matrix.asset }}-07
+          path: parts/07/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 3
+  runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Build pinned Qwen3 CPU engine and independent speech recognizer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir kit
+          git clone --quiet https://github.com/ServeurpersoCom/qwentts.cpp qwen
+          git -C qwen checkout --quiet 2edb35f87b709a070b2d5379f77e5c52a1daa585
+          git -C qwen submodule update --init --recursive --depth 1
+          cmake -S qwen -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF -DGGML_AVX512=ON -DGGML_AVX512_VNNI=ON
+          cmake --build build --target qwen-tts tts-server --parallel 4
+          cp build/qwen-tts build/tts-server kit/
+          git clone --quiet https://github.com/ggml-org/whisper.cpp whisper
+          git -C whisper checkout --quiet 5eaee0cc9024eb9e9a99469199920c8b7f5cb9ec
+          cmake -S whisper -B assess -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF -DWHISPER_BUILD_TESTS=OFF
+          cmake --build assess --target whisper-cli --parallel 4
+          cp assess/bin/whisper-cli kit/
+          (cd kit && sha256sum qwen-tts tts-server whisper-cli > binaries.sha256)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen3-cpu-runtime
+          path: kit/
+          retention-days: 3
