@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [media/shorts-aiden]
-    paths: ['.github/workflows/shorts-aiden.yml']
+    paths: ['.github/workflows/shorts-aiden.yml', 'media/shorts-aiden/*.py']
 permissions:
   contents: read
 jobs:

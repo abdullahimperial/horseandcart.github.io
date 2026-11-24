@@ -35,7 +35,7 @@ def render(task, directory, url):
         rms=np.sqrt(np.mean(x[:len(x)//240*240].astype('float32').reshape(-1,240)**2,axis=1))
         active=np.flatnonzero(rms>max(36,np.percentile(rms,90)*.016))
         if not len(active):continue
-        y=x[max(0,(active[0]-4)*240):min(len(x),(active[-1]+8)*240)]
+        y=x[max(0,(active[0]-4)*240):min(len(x),(active[-1]+8)*240)].copy()
         if len(y)/24000<max(.16,count*.11) or len(y)/24000>2.7+count*.95:continue
         edge=min(100,len(y)//6)
         y[:edge]=(y[:edge]*np.linspace(0,1,edge)).astype('<i2')
