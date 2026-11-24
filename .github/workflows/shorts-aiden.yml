@@ -1,0 +1,70 @@
+name: Record Aiden for original short-format finance videos
+on:
+  workflow_dispatch:
+  push:
+    branches: [media/shorts-aiden]
+    paths: ['.github/workflows/shorts-aiden.yml']
+permissions:
+  contents: read
+jobs:
+  engine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          sparse-checkout: media
+      - name: Build pinned CPU engine
+        run: |
+          git clone -q https://github.com/ServeurpersoCom/qwentts.cpp qwen
+          git -C qwen checkout -q 2edb35f87b709a070b2d5379f77e5c52a1daa585
+          git -C qwen submodule update --init --recursive --depth 1
+          python3 media/shorts-aiden/qwen-build.py qwen
+          cmake -S qwen -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF -DGGML_AVX512=OFF
+          cmake --build build --target tts-server --parallel 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shorts-qwen-engine
+          path: build/tts-server
+          retention-days: 2
+  speech:
+    needs: engine
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    env:
+      SHARD: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          sparse-checkout: media
+      - uses: actions/download-artifact@v4
+        with:
+          name: shorts-qwen-engine
+          path: /tmp/shorts-engine
+      - name: Generate timed speech clips
+        working-directory: media/shorts-aiden
+        run: |
+          set -euo pipefail
+          kit=/tmp/shorts-engine
+          chmod +x "$kit/tts-server"
+          base=https://huggingface.co/Serveurperso/Qwen3-TTS-GGUF/resolve/b7ee2e8c7459c3bea99da23e3d178125a7d1713c
+          for name in qwen-talker-1.7b-customvoice-Q4_K_M.gguf qwen-tokenizer-12hz-Q8_0.gguf; do
+            curl -fsSL --retry 3 "$base/$name" -o "$kit/$name"
+          done
+          python3 -m venv /tmp/shorts-env
+          /tmp/shorts-env/bin/pip -q install numpy scipy
+          python3 catalog.py --shard "$SHARD" --shards 4
+          /tmp/shorts-env/bin/python run_local.py "$kit" shard.json --threads 2 --batch 2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shorts-aiden-${{ matrix.shard }}
+          path: media/shorts-aiden/tts/
+          if-no-files-found: error
+          retention-days: 7

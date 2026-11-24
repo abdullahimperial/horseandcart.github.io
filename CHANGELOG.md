@@ -1,5 +1,9 @@
 # Changelog
 
+## November 23, 2026 · Original-format Aiden editions
+
+[Short-format production](media/shorts-aiden/README.md) uses the existing source scripts and warm conversational Qwen3-TTS Aiden delivery. The current stage is speech generation. The private production checkpoint tracks which finished videos have been delivered.
+
 ## 22 November 2026 — watch videos inside the course
 
 - Restore the framework introduction on the homepage with a small YouTube channel link in the footer. Existing video bookmarks open the course video list.

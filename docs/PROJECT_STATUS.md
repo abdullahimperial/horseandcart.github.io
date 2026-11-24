@@ -1,5 +1,9 @@
 # Current project checkpoint
 
+## November 23, 2026 · Original-format Aiden editions
+
+[Short-format production](../media/shorts-aiden/README.md) uses the existing source scripts and warm conversational Qwen3-TTS Aiden delivery. The current stage is speech generation. The private production checkpoint tracks which finished videos have been delivered.
+
 Updated 22 November 2026 (Edmonton).
 
 ## YouTube videos in the lessons
